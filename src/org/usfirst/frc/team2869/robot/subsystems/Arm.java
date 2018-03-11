@@ -115,6 +115,9 @@ public class Arm extends Subsystem {
                         case MOTION_MAGIC:
                             updateArmSetpoint();
                             return;
+                        case PIDF:
+                        	
+                        	return;
                         case ZEROING:
                             zeroArm();
                             return;
@@ -134,6 +137,14 @@ public class Arm extends Subsystem {
             }
         };
         enabledLooper.register(mLoop);
+    }
+    
+    private double calcHoldPosTorque(double armAngle){
+    	return 0;
+    }
+    
+    public void setArmAngle(double desiredAngle){
+    	
     }
 
     public void updateArmSetpoint() {

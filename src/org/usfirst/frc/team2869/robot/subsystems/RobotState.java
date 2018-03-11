@@ -26,6 +26,7 @@ public class RobotState {
 
 	public enum ArmControlState {
 		ZEROING,
+		PIDF,
 		MOTION_MAGIC,
 		OPEN_LOOP,
 	}
