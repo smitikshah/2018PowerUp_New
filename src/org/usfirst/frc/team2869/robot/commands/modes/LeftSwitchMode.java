@@ -7,31 +7,31 @@ import org.usfirst.frc.team2869.robot.commands.auto.actions.AutoModeEndedExcepti
 
 public class LeftSwitchMode extends AutoModeBase {
 
-	private GameObjectPosition position;
+    private GameObjectPosition position;
 
-	public LeftSwitchMode(AutoChooser.GameObjectPosition position) {
-		this.position = position;
-	}
+    public LeftSwitchMode(AutoChooser.GameObjectPosition position) {
+        this.position = position;
+    }
 
-	@Override
-	protected void routine() throws AutoModeEndedException {
-		switch (position) {
-			case LEFT:
-				leftRoutine();
-				break;
-			case RIGHT:
-				rightRoutine();
-				break;
-		}
-	}
+    @Override
+    protected void routine() throws AutoModeEndedException {
+        switch (position) {
+            case LEFT:
+                leftRoutine();
+                break;
+            case RIGHT:
+                rightRoutine();
+                break;
+        }
+    }
 
-	private void leftRoutine() throws AutoModeEndedException {
+    private void leftRoutine() throws AutoModeEndedException {
 
-	}
+    }
 
-	private void rightRoutine() throws AutoModeEndedException {
+    private void rightRoutine() throws AutoModeEndedException {
 
-	}
+    }
 
 
 }

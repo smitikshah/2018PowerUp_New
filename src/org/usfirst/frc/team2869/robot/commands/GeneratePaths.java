@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2869.robot.commands;
+
 import edu.wpi.first.wpilibj.command.Command;
 import jaci.pathfinder.*;
+
 /**
  *
  */
@@ -8,10 +10,10 @@ public class GeneratePaths extends Command {
 
     public GeneratePaths() {
         Waypoint[] points = new Waypoint[]{
-        		new Waypoint(-4, -1, Pathfinder.d2r(-45)),
-        		new Waypoint(-2, -2, 0),
-        		new Waypoint(-4, -1, 0)		
-        		
+                new Waypoint(-4, -1, Pathfinder.d2r(-45)),
+                new Waypoint(-2, -2, 0),
+                new Waypoint(-4, -1, 0)
+
         };
     }
 

@@ -1,28 +1,28 @@
 package org.usfirst.frc.team2869.robot.commands;
 
+import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2869.robot.Robot;
 import org.usfirst.frc.team2869.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2869.robot.trajectory.Path;
 import org.usfirst.frc.team2869.robot.trajectory.Trajectory;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 /**
  *
  */
 public class Rotate extends Command {
-	DriveTrain drive = Robot.driveTrain;
-	double angle;
+    DriveTrain drive = Robot.driveTrain;
+    double angle;
+
     public Rotate(double angle) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	this.angle = angle;
+        this.angle = angle;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	drive.setDrivePath(new Path("Straight Path", 
-    			new Trajectory.Pair(new Trajectory(1), new Trajectory(1))), 0, angle);
+        drive.setDrivePath(new Path("Straight Path",
+                new Trajectory.Pair(new Trajectory(1), new Trajectory(1))), 0, angle);
     }
 
     // Called repeatedly when this Command is scheduled to run
