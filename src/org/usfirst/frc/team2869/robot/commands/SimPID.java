@@ -26,7 +26,7 @@ public class SimPID{
 /**
  * Initializes the PID object. All parameters default to 0.
  */
-public PID (double p, double i, double d, double epsilon){
+public SimPID (double p, double i, double d, double epsilon){
 	m_p = p;
 	m_i = i;
 	m_d = d;

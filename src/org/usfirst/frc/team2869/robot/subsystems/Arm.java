@@ -1,15 +1,23 @@
 package org.usfirst.frc.team2869.robot.subsystems;
 
+import org.usfirst.frc.team2869.robot.Constants;
+import org.usfirst.frc.team2869.robot.Constants.ARM;
+import org.usfirst.frc.team2869.robot.Loop;
+import org.usfirst.frc.team2869.robot.Looper;
+import org.usfirst.frc.team2869.robot.MkMath;
+import org.usfirst.frc.team2869.robot.Subsystem;
+import org.usfirst.frc.team2869.robot.commands.SimPID;
+import org.usfirst.frc.team2869.robot.subsystems.RobotState.ArmControlState;
+import org.usfirst.frc.team2869.robot.subsystems.RobotState.ArmState;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team2869.robot.*;
-import org.usfirst.frc.team2869.robot.Constants.ARM;
-import org.usfirst.frc.team2869.robot.subsystems.RobotState.ArmControlState;
-import org.usfirst.frc.team2869.robot.subsystems.RobotState.ArmState;
 
 
 public class Arm extends Subsystem {
@@ -17,10 +25,13 @@ public class Arm extends Subsystem {
     public final TalonSRX armTalon;
     public final VictorSPX leftIntakeRollerTalon;
     public final VictorSPX rightIntakeRollerTalon;
+    public final Encoder armEncoder;
     private double setpoint = 0;
     private double maxVel = 0;
     private double gearRatio = 0;
     private double testMaxVel = 0;
+    
+    private SimPID armPID;
 
     public Arm() {
         armTalon = new TalonSRX(ARM.ARM_MASTER_TALON_ID);
@@ -46,13 +57,18 @@ public class Arm extends Subsystem {
         armTalon.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
         armTalon.setNeutralMode(NeutralMode.Brake);
 
-
         leftIntakeRollerTalon = new VictorSPX(Constants.ARM.ARM_LEFT_INTAKE_ROLLER_ID);
         rightIntakeRollerTalon = new VictorSPX(Constants.ARM.ARM_Right_INTAKE_ROLLER_ID);
         //rightIntakeRollerTalon.set(ControlMode.Follower, Constants.ARM.ARM_LEFT_INTAKE_ROLLER_ID);
         //leftIntakeRollerTalon.setInverted(true);
         leftIntakeRollerTalon.setNeutralMode(NeutralMode.Brake);
         rightIntakeRollerTalon.setNeutralMode(NeutralMode.Brake);
+        
+        armEncoder = new Encoder(Constants.ARM.ARM_ENCODER_PORT_A, Constants.ARM.ARM_ENCODER_PORT_B);
+        armEncoder.setDistancePerPulse(Constants.ARM.DEGREES_PER_PULSE);
+        
+        armPID = new SimPID(Constants.ARM.ARM_P, Constants.ARM.ARM_I, Constants.ARM.ARM_D, Constants.ARM.ARM_EBSILON);
+        armPID.setMaxOutput(Constants.ARM.MAX_OUTPUT);
     }
 
     public static Arm getInstance() {
@@ -116,7 +132,7 @@ public class Arm extends Subsystem {
                             updateArmSetpoint();
                             return;
                         case PIDF:
-                        	
+                        	setArmAngle();
                         	return;
                         case ZEROING:
                             zeroArm();
@@ -143,8 +159,11 @@ public class Arm extends Subsystem {
     	return 0;
     }
     
-    public void setArmAngle(double desiredAngle){
-    	
+    public void setArmAngle(){
+		armPID.setDesiredValue(RobotState.mArmState.state);
+		double currentArmAngle = armEncoder.get();
+		double output = armPID.calcPID(currentArmAngle) + calcHoldPosTorque(currentArmAngle);
+		armTalon.set(ControlMode.PercentOutput, output);
     }
 
     public void updateArmSetpoint() {

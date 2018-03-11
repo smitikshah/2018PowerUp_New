@@ -77,6 +77,9 @@ public final class Constants {
 		public static final int ARM_MASTER_TALON_ID = 6;
 		public static final int ARM_LEFT_INTAKE_ROLLER_ID = 10;
 		public static final int ARM_Right_INTAKE_ROLLER_ID = 11;
+		public static final int ARM_ENCODER_PORT_A = 0;
+		public static final int ARM_ENCODER_PORT_B = 1;
+		public static final double DEGREES_PER_PULSE = 1.0;//Maps pulses to degrees
 		public static final double RPM_MAX = 19.5; //RPM Max of Arm
 		public static final double GEAR_RATIO = 22.0
 				/ 336.0; //Gear Ratio between encoder and arm - Used to calulate arm position in degrees
@@ -86,6 +89,8 @@ public final class Constants {
 		public static final double ARM_I = 0;//ARM_P / 100.0;
 		public static final double ARM_D = ARM_P * 15;
 		public static final double ARM_F = (1023.0 / MAX_RAW_VEL);
+		public static final double ARM_EBSILON = 5;//Acceptable degrees of error
+		public static final double MAX_OUTPUT = .7;//Max allowable power
 
 		public static final double ARM_FORWARD_LIMIT = 250;
 		public static final double ARM_REVERSE_LIMIT = 0;
