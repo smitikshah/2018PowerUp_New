@@ -1,18 +1,14 @@
 package org.usfirst.frc.team2869.robot.commands;
 
-import org.usfirst.frc.team2869.robot.subsystems.Arm;
-import org.usfirst.frc.team2869.robot.subsystems.Cylinder;
-
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
 public class CubeGrab extends Command {
-	
+
     public CubeGrab() {
-    	
+
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }

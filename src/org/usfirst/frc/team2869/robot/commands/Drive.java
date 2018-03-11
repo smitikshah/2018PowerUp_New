@@ -1,20 +1,17 @@
 package org.usfirst.frc.team2869.robot.commands;
 
-import org.usfirst.frc.team2869.robot.Robot;
-import org.usfirst.frc.team2869.robot.subsystems.DriveTrain;
-
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.TimedCommand;
 
 /**
  *
  */
 public class Drive extends Command {
-	long timeStarted;
-	long timeToRun;
+    long timeStarted;
+    long timeToRun;
+
     public Drive(long time) {
         this.timeToRun = time;
-        
+
         //requires(driveTrain);
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -22,14 +19,14 @@ public class Drive extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	timeStarted = System.currentTimeMillis();
+        timeStarted = System.currentTimeMillis();
     }
 
     // Called repeatedly when this Command is scheduled to run
     @SuppressWarnings("deprecation")
-	protected void execute() {
-    	//Robot.driveTrain.drive.drive(.5, 0);
-    	System.out.println("Running Drive");
+    protected void execute() {
+        //Robot.driveTrain.drive.drive(.5, 0);
+        System.out.println("Running Drive");
     }
 
     // Called once after timeout
@@ -41,9 +38,9 @@ public class Drive extends Command {
     protected void interrupted() {
     }
 
-	@Override
-	protected boolean isFinished() {
-		// TODO Auto-generated method stub
-		return System.currentTimeMillis() - timeStarted >= timeToRun;
-	}
+    @Override
+    protected boolean isFinished() {
+        // TODO Auto-generated method stub
+        return System.currentTimeMillis() - timeStarted >= timeToRun;
+    }
 }
