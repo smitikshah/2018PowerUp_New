@@ -11,10 +11,7 @@ import edu.wpi.first.wpilibj.SpeedController;
  * floating around.
  */
 public class RobotMap {
-    public static int leftMotor1 = 5; //FrontLeft
-    public static int leftMotor2 = 1; //RearLeft
-    public static int rightMotor1 = 2; //FrontRight
-    public static int rightMotor2 = 3; //RearRight
+
     public static int climberSolenoid1 = 1;
     public static int climberSolenoid2 = 0;
     public static int rampSolenoid1 = 2;

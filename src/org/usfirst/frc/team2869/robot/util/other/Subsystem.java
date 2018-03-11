@@ -12,15 +12,7 @@ package org.usfirst.frc.team2869.robot.util.other;
  * instantializing all member components at the start of the match.
  */
 public abstract class Subsystem {
-
-    public void writeToLog() {
-    }
-
     public abstract void outputToSmartDashboard();
-
-    public abstract void stop();
-
-    public abstract void zeroSensors();
 
     public abstract void checkSystem();
 

@@ -14,10 +14,6 @@ public class AutoChooser {
     private static AutoModeExecuter mAutoModeExecuter = null;
     private static String gameData;
 
-    public static AutoModeExecuter getAutoModeExecuter() {
-        return mAutoModeExecuter;
-    }
-
     public static void loadChooser() {
         positionChooser.addDefault("Center", AutoPosition.CENTER);
         positionChooser.addObject("Left", AutoPosition.LEFT);

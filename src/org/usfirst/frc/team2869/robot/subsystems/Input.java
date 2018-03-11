@@ -6,11 +6,12 @@ import org.usfirst.frc.team2869.robot.util.drivers.Xbox360;
 import org.usfirst.frc.team2869.robot.util.other.*;
 
 public class Input extends Subsystem {
-    public static Xbox360 driverJoystick = new Xbox360(0);
-    public static Xbox360 operatorJoystick = new Xbox360(1);
+    private final Xbox360 driverJoystick;
+    private final Xbox360 operatorJoystick;
 
     public Input() {
-
+        driverJoystick = new Xbox360(0);
+        operatorJoystick = new Xbox360(1);
     }
 
     public static Input getInstance() {
@@ -20,15 +21,6 @@ public class Input extends Subsystem {
 
     @Override
     public void outputToSmartDashboard() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
-
-    public void zeroSensors() {
 
     }
 
@@ -72,11 +64,11 @@ public class Input extends Subsystem {
 
     public synchronized void updateArmInput() {
         if (operatorJoystick.GetYButton().get()) {
-            Arm.getInstance().setIntakeRollers(Constants.ARM.INTAKE_SPEED);
+            Claw.getInstance().setIntakeRollers(Constants.ARM.INTAKE_SPEED);
         } else if (operatorJoystick.GetAButton().get()) {
-            Arm.getInstance().setIntakeRollers(Constants.ARM.OUTTAKE_SPEED);
+            Claw.getInstance().setIntakeRollers(Constants.ARM.OUTTAKE_SPEED);
         } else {
-            Arm.getInstance().setIntakeRollers(0);
+            Claw.getInstance().setIntakeRollers(0);
         }
     }
 

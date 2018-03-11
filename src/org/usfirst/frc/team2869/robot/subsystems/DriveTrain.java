@@ -3,7 +3,6 @@ package org.usfirst.frc.team2869.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI.Port;
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.Constants.DRIVE;
 import org.usfirst.frc.team2869.robot.RobotState;
@@ -16,17 +15,17 @@ import org.usfirst.frc.team2869.robot.util.drivers.MkTalon.TalonPosition;
 import org.usfirst.frc.team2869.robot.util.other.DriveSignal;
 import org.usfirst.frc.team2869.robot.util.other.Loop;
 import org.usfirst.frc.team2869.robot.util.other.Looper;
+import org.usfirst.frc.team2869.robot.util.other.Subsystem;
 
 public class DriveTrain extends Subsystem {
-    public MkTalon leftDrive, rightDrive;
-    public AHRS navX;
+    private MkTalon leftDrive, rightDrive;
+    private AHRS navX;
     private PathFollower pathFollower = null;
     private TrajectoryStatus leftStatus;
     private TrajectoryStatus rightStatus;
     private DriveSignal currentSetpoint;
 
-    @SuppressWarnings("deprecation")
-    public DriveTrain() {
+    private DriveTrain() {
         leftDrive = new MkTalon(DRIVE.LEFT_MASTER_ID, DRIVE.LEFT_SLAVE_ID, TalonPosition.Left);
         rightDrive = new MkTalon(DRIVE.RIGHT_MASTER_ID, DRIVE.RIGHT_SLAVE_ID, TalonPosition.Right);
         leftDrive.setPIDF();
@@ -44,20 +43,9 @@ public class DriveTrain extends Subsystem {
         rightDrive.invertSlave(DRIVE.RIGHT_SLAVE_INVERT);
         rightDrive.setSensorPhase(DRIVE.RIGHT_INVERT_SENSOR);
 
-        //mCSVWriter = new ReflectingCSVWriter<>(LOGGING.DRIVE_LOG_PATH,
-        //DriveDebugOutput.class);
         leftStatus = TrajectoryStatus.NEUTRAL;
         rightStatus = TrajectoryStatus.NEUTRAL;
         currentSetpoint = DriveSignal.NEUTRAL;
-
-        //RobotDrive drive = new RobotDrive(RobotMap.leftMotor1, RobotMap.leftMotor2);
-        //If getting Output not updated often enough error,
-        // try doing
-        /*
-         * drive = new RobotDrive(new WPI_TalonSRX(RobotMap.leftMotor1),
-         *  new WPI_TalonSRX(RobotMap.rightMotor1), new WPI_TalonSRX(RobotMap.leftMotor2),
-         *   new WPI_TalonSRX(RobotMap.rightMotor2));
-         */
     }
 
 
@@ -160,16 +148,6 @@ public class DriveTrain extends Subsystem {
         }
     }
 
-    public void stop() {
-        setOpenLoop(DriveSignal.NEUTRAL);
-    }
-
-    public void zeroSensors() {
-        leftDrive.resetEncoder();
-        rightDrive.resetEncoder();
-        navX.zeroYaw();
-    }
-
     public void checkSystem() {
         leftDrive.testDrive();
         rightDrive.testDrive();
@@ -185,7 +163,9 @@ public class DriveTrain extends Subsystem {
             @Override
             public void onStart(double timestamp) {
                 synchronized (DriveTrain.this) {
-
+                    leftDrive.resetEncoder();
+                    rightDrive.resetEncoder();
+                    navX.zeroYaw();
                 }
             }
 
@@ -216,7 +196,7 @@ public class DriveTrain extends Subsystem {
 
             @Override
             public void onStop(double timestamp) {
-                stop();
+                setOpenLoop(DriveSignal.NEUTRAL);
             }
         };
         enabledLooper.register(mLoop);
@@ -224,16 +204,6 @@ public class DriveTrain extends Subsystem {
 
     private void zeroGyro() {
         navX.zeroYaw();
-    }
-
-    public double getYaw() {
-        return navX.getYaw();
-    }
-
-    @Override
-    protected void initDefaultCommand() {
-        // TODO Auto-generated method stub
-
     }
 
     public synchronized void updateRacingDrive(double forward, double reverse, double turn, boolean cubeInputs) {

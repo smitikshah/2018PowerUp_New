@@ -4,7 +4,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.Constants.ARM;
@@ -19,14 +18,14 @@ import org.usfirst.frc.team2869.robot.util.other.Subsystem;
 
 public class Arm extends Subsystem {
 
-    public final TalonSRX armTalon;
+    private final TalonSRX armTalon;
 
     private double setpoint = 0;
     private double maxVel = 0;
     private double gearRatio = 0;
     private double testMaxVel = 0;
 
-    public Arm() {
+    private Arm() {
         armTalon = new TalonSRX(ARM.ARM_MASTER_TALON_ID);
         armTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
         armTalon.setSensorPhase(true);
@@ -49,18 +48,10 @@ public class Arm extends Subsystem {
         /* zero the sensor */
         armTalon.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
         armTalon.setNeutralMode(NeutralMode.Brake);
-
-
-
     }
 
     public static Arm getInstance() {
         return InstanceHolder.mInstance;
-    }
-
-    @Override
-    public void writeToLog() {
-
     }
 
     @Override
@@ -74,16 +65,6 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm Error", armTalon.getClosedLoopError(Constants.kPIDLoopIdx));
         SmartDashboard.putNumber("Arm Max Vel", testMaxVel);
         SmartDashboard.putString("Arm Control Mode", RobotState.mArmControlState.toString());
-    }
-
-    @Override
-    public void stop() {
-        setpoint = 0;
-    }
-
-    @Override
-    public void zeroSensors() {
-        armTalon.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
     }
 
     @Override
@@ -129,7 +110,7 @@ public class Arm extends Subsystem {
 
             @Override
             public void onStop(double timestamp) {
-                stop();
+
             }
         };
         enabledLooper.register(mLoop);

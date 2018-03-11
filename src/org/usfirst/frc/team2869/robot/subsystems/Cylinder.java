@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  *
  */
 public class Cylinder extends Subsystem {
-    public static Solenoid leftCylinder = new Solenoid(0);
-    public static Solenoid rightCylinder = new Solenoid(1);
+    private static Solenoid leftCylinder = new Solenoid(0);
+    private static Solenoid rightCylinder = new Solenoid(1);
     private static boolean isActivated = leftCylinder.get();
 
 

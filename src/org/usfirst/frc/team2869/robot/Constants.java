@@ -17,11 +17,10 @@ public final class Constants {
     public static final double PI = 3.14159265359;
 
     public static class DRIVE {
-
-        public static final int LEFT_MASTER_ID = RobotMap.leftMotor1;
-        public static final int LEFT_SLAVE_ID = RobotMap.leftMotor2;
-        public static final int RIGHT_MASTER_ID = RobotMap.rightMotor1;
-        public static final int RIGHT_SLAVE_ID = RobotMap.rightMotor2;
+        public static final int LEFT_MASTER_ID = 5;
+        public static final int LEFT_SLAVE_ID = 1;
+        public static final int RIGHT_MASTER_ID = 2;
+        public static final int RIGHT_SLAVE_ID = 3;
 
 
         public static final boolean LEFT_MASTER_INVERT = false;
@@ -78,10 +77,10 @@ public final class Constants {
         public static final double CURRENT_HARDSTOP_LIMIT = 4;
         public static final double ZEROING_POWER = -0.25;
 
-       public static final double INTAKE_SPEED = -0.5;
-       public static final double OUTTAKE_SPEED = 0.4;
-       public static final boolean LEFT_INTAKE_ROLLER_INVERT = false;
-       public static final boolean RIGHT_INTAKE_ROLLER_INVERT = true;
+        public static final double INTAKE_SPEED = -0.5;
+        public static final double OUTTAKE_SPEED = 0.4;
+        public static final boolean LEFT_INTAKE_ROLLER_INVERT = false;
+        public static final boolean RIGHT_INTAKE_ROLLER_INVERT = true;
     }
 
     public static class INPUT {
