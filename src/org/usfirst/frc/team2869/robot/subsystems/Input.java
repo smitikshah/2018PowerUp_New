@@ -1,7 +1,8 @@
 package org.usfirst.frc.team2869.robot.subsystems;
 
 import org.usfirst.frc.team2869.robot.OI;
-import org.usfirst.frc.team2869.robot.subsystems.RobotState.DriveControlState;
+import org.usfirst.frc.team2869.robot.RobotState;
+import org.usfirst.frc.team2869.robot.RobotState.DriveControlState;
 import org.usfirst.frc.team2869.robot.util.drivers.Xbox360;
 import org.usfirst.frc.team2869.robot.util.other.*;
 

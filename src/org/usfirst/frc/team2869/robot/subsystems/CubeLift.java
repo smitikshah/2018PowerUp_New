@@ -11,8 +11,7 @@ public class CubeLift extends Subsystem {
     private static final double liftSpeed = 1;
     public static TalonSRX armTalon = Arm.getInstance().armTalon;
 
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
+
     public static void liftOrLower(boolean lift) {
         if (lift) {
             armTalon.set(ControlMode.PercentOutput, -liftSpeed);
@@ -22,8 +21,7 @@ public class CubeLift extends Subsystem {
     }
 
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+      
     }
 }
 

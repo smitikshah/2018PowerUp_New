@@ -1,18 +1,18 @@
 package org.usfirst.frc.team2869.robot;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.commands.Intake;
 import org.usfirst.frc.team2869.robot.commands.LiftArm;
 import org.usfirst.frc.team2869.robot.commands.LiftCube;
 import org.usfirst.frc.team2869.robot.commands.Outtake;
 import org.usfirst.frc.team2869.robot.subsystems.*;
-import org.usfirst.frc.team2869.robot.subsystems.RobotState;
-import org.usfirst.frc.team2869.robot.subsystems.RobotState.ArmControlState;
-import org.usfirst.frc.team2869.robot.subsystems.RobotState.MatchState;
+import org.usfirst.frc.team2869.robot.RobotState.ArmControlState;
+import org.usfirst.frc.team2869.robot.RobotState.MatchState;
 import org.usfirst.frc.team2869.robot.util.logging.CrashTracker;
 import org.usfirst.frc.team2869.robot.util.other.Looper;
 
@@ -51,10 +51,6 @@ public class Robot extends IterativeRobot {
     boolean armStateTest;
     Command autonomousCommand;
     boolean buttonToggle = false;
-    Timer timer = new Timer();
-    private double MAX_VEL = 0; //Find Max Vel in native units per 100ms
-    private double GEAR_RATIO = 0; //Put gear ratio from encoder to physical arm here
-    private double TEST_MAX = 0;
     //public static DoubleSolenoid armCylinder = new DoubleSolenoid(6,7);
     //public static Do5ubleSolenoid cubeGrabber = new DoubleSolenoid(4,5);
     private Looper mEnabledLooper = new Looper();
@@ -68,7 +64,6 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void robotInit() {
-        SmartDashboard.putNumber("Degrees", 0);
         oi = new OI();
         driveTrain = new DriveTrain();
         lightSwitch = new DigitalInput(1);
@@ -123,9 +118,7 @@ public class Robot extends IterativeRobot {
      */
     @Override
     public void disabledInit() {
-        if (autonomousCommand != null)
-            if (autonomousCommand.isRunning())
-                autonomousCommand.cancel();
+        AutoChooser.disableAuto();
     }
 
     @Override
@@ -153,11 +146,6 @@ public class Robot extends IterativeRobot {
      */
 
     public void autonomousInit() {
-        timer.reset();
-        timer.start();
-        @SuppressWarnings("unused")
-        String gameData;
-        gameData = DriverStation.getInstance().getGameSpecificMessage();
         try {
             CrashTracker.logAutoInit();
             RobotState.mMatchState = MatchState.AUTO;
@@ -180,6 +168,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopInit() {
+        AutoChooser.disableAuto();
         // This makes sure that the autonomous stops running when
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
@@ -198,12 +187,8 @@ public class Robot extends IterativeRobot {
         //OI.driverJoystick.GetBButton().toggleWhenPressed(new Rotate(180));
         RobotState.mArmControlState = ArmControlState.MOTION_MAGIC;
 
-        if (autonomousCommand != null)
-            autonomousCommand.cancel();
-        if (AutoChooser.getAutoModeExecuter() != null)
-            AutoChooser.getAutoModeExecuter().stop();
         input.registerEnabledLoops(mEnabledLooper);
-
+        mEnabledLooper.start();
 
     }
 

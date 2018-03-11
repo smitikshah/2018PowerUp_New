@@ -5,10 +5,11 @@ import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.Constants.DRIVE;
-import org.usfirst.frc.team2869.robot.subsystems.RobotState.DriveControlState;
-import org.usfirst.frc.team2869.robot.trajectory.Path;
-import org.usfirst.frc.team2869.robot.trajectory.PathFollower;
-import org.usfirst.frc.team2869.robot.trajectory.TrajectoryStatus;
+import org.usfirst.frc.team2869.robot.RobotState;
+import org.usfirst.frc.team2869.robot.RobotState.DriveControlState;
+import org.usfirst.frc.team2869.robot.auto.trajectory.Path;
+import org.usfirst.frc.team2869.robot.auto.trajectory.PathFollower;
+import org.usfirst.frc.team2869.robot.auto.trajectory.TrajectoryStatus;
 import org.usfirst.frc.team2869.robot.util.drivers.MkGyro;
 import org.usfirst.frc.team2869.robot.util.drivers.MkMath;
 import org.usfirst.frc.team2869.robot.util.drivers.MkTalon;
@@ -18,12 +19,9 @@ import org.usfirst.frc.team2869.robot.util.other.Loop;
 import org.usfirst.frc.team2869.robot.util.other.Looper;
 
 public class DriveTrain extends Subsystem {
-
-    //private final ReflectingCSVWriter<DriveDebugOutput> mCSVWriter;
     public MkTalon leftDrive, rightDrive;
     public MkGyro navX;
     private PathFollower pathFollower = null;
-    private DriveDebugOutput mDebug = new DriveDebugOutput();
     private TrajectoryStatus leftStatus;
     private TrajectoryStatus rightStatus;
     private DriveSignal currentSetpoint;
@@ -212,22 +210,14 @@ public class DriveTrain extends Subsystem {
             @Override
             public void onLoop(double timestamp) {
                 synchronized (DriveTrain.this) {
-                    updateDebugOutput(timestamp);
-                    //mCSVWriter.add(mDebug);
                     switch (RobotState.mDriveControlState) {
                         case OPEN_LOOP:
-                            zeroTrajectoryStatus();
                             return;
                         case VELOCITY_SETPOINT:
-                            zeroTrajectoryStatus();
                             return;
                         case PATH_FOLLOWING:
                             updatePathFollower();
-                            updateTrajectoryStatus();
                             return;
-                        case TURN_IN_PLACE:
-                            updateTurnInPlace();
-                            updateTrajectoryStatus();
                         default:
                             System.out
                                     .println("Unexpected drive control state: " + RobotState.mDriveControlState);
@@ -250,50 +240,6 @@ public class DriveTrain extends Subsystem {
 
     public double getYaw() {
         return navX.getYaw();
-    }
-
-    private void updateDebugOutput(double timestamp) {
-        mDebug.timestamp = timestamp;
-        mDebug.controlMode = RobotState.mDriveControlState.toString();
-        mDebug.leftOutput = leftDrive.getPercentOutput();
-        mDebug.rightOutput = rightDrive.getPercentOutput();
-        mDebug.rightPosition = leftDrive.getPosition();
-        mDebug.leftPosition = rightDrive.getPosition();
-        mDebug.leftVelocity = leftDrive.getSpeed();
-        mDebug.rightVelocity = rightDrive.getSpeed();
-        mDebug.heading = navX.getFullYaw();
-        mDebug.leftSetpoint = currentSetpoint.getLeft();
-        mDebug.rightSetpoint = currentSetpoint.getRight();
-    }
-
-    private void zeroTrajectoryStatus() {
-        mDebug.leftDesiredPos = 0;
-        mDebug.leftDesiredVel = 0;
-        mDebug.rightDesiredPos = 0;
-        mDebug.rightDesiredVel = 0;
-        mDebug.desiredHeading = 0;
-        mDebug.headingError = 0;
-        mDebug.leftVelError = 0;
-        mDebug.leftPosError = 0;
-        mDebug.rightVelError = 0;
-        mDebug.rightPosError = 0;
-        mDebug.desiredX = 0;
-        mDebug.desiredY = 0;
-    }
-
-    private void updateTrajectoryStatus() {
-        mDebug.leftDesiredPos = leftStatus.getSeg().pos;
-        mDebug.leftDesiredVel = leftStatus.getSeg().vel;
-        mDebug.rightDesiredPos = rightStatus.getSeg().pos;
-        mDebug.rightDesiredVel = rightStatus.getSeg().vel;
-        mDebug.desiredHeading = leftStatus.getSeg().heading;
-        mDebug.headingError = leftStatus.getAngError();
-        mDebug.leftVelError = leftStatus.getVelError();
-        mDebug.leftPosError = leftStatus.getPosError();
-        mDebug.rightVelError = rightStatus.getVelError();
-        mDebug.rightPosError = rightStatus.getPosError();
-        mDebug.desiredX = (leftStatus.getSeg().x + rightStatus.getSeg().x) / 2;
-        mDebug.desiredY = (leftStatus.getSeg().y + rightStatus.getSeg().y) / 2;
     }
 
     @Override
