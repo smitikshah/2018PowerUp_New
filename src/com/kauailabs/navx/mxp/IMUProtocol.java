@@ -61,7 +61,7 @@ public class IMUProtocol {
     final static int QUATERNION_UPDATE_MESSAGE_LENGTH = 53;
     public final static int IMU_PROTOCOL_MAX_MESSAGE_LENGTH = QUATERNION_UPDATE_MESSAGE_LENGTH;
 
-// Gyro/Raw Data Update packet - e.g., !g[gx][gy][gz][accelx][accely][accelz][magx][magy][magz][temp_c][cr][lf]
+    // Gyro/Raw Data Update packet - e.g., !g[gx][gy][gz][accelx][accely][accelz][magx][magy][magz][temp_c][cr][lf]
     final static int QUATERNION_UPDATE_QUAT1_VALUE_INDEX = 2;
     final static int QUATERNION_UPDATE_QUAT2_VALUE_INDEX = 6;
     final static int QUATERNION_UPDATE_QUAT3_VALUE_INDEX = 10;

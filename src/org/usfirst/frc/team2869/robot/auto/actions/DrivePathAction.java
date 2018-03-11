@@ -1,8 +1,8 @@
 package org.usfirst.frc.team2869.robot.auto.actions;
 
 import org.usfirst.frc.team2869.robot.Constants.DRIVE;
-import org.usfirst.frc.team2869.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2869.robot.auto.trajectory.Path;
+import org.usfirst.frc.team2869.robot.subsystems.DriveTrain;
 
 public class DrivePathAction implements Action {
 

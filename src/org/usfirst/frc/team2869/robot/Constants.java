@@ -55,18 +55,6 @@ public final class Constants {
         public static final double DRIVE_D = 15 * DRIVE_P;
         public static final double DRIVE_F = (1023.0 / ((RPM_MAX / 60.0 / 10.0)
                 * 4096.0)); //Feedforwrd Term for Drivetrain using MAX Motor Units / Max Speed in Native Units Per 100ms
-
-        //Used for turn in place (Degrees) - Is converted to inches after a trajectory is generated
-        public static final double MAX_ANG_VEL = 2.5 * 360;
-        public static final double MAX_ANG_ACC = 1.5 * 360;
-        public static final double MAX_ANG_JERK = 0.75 * 360;
-    }
-
-    public static class LOGGING {
-
-        //public static final String DRIVE_LOG_PATH = "/u/DRIVE-LOGS.csv";
-        //public static final String ARM_LOG_PATH = "/u/ARM-LOGS.csv";
-        public static final String SUPERSTRUCTURE_LOG_PATH = "/u/SUPERSTRUCTURE-LOGS.csv";
     }
 
     public static class ARM {

@@ -32,9 +32,9 @@ public class Xbox360 extends Joystick {
     /**
      * Constructor creates an object to interface with an Xbox 360 controller
      *
+     * @param port The port on the drivers station that the controller is
+     *             connected to
      * @return
-     * @param    port    The port on the drivers station that the controller is
-     * connected to
      */
     public Xbox360(int port) {
         super(port);
@@ -211,8 +211,8 @@ public class Xbox360 extends Joystick {
     /**
      * Get the angle of the left joystick. It is counter-clockwise, 0 is down.
      *
+     * @param reflectCircle Choose whether to reflect over the Y axis.
      * @return The angle of the left joystick.
-     * @param    reflectCircle    Choose whether to reflect over the Y axis.
      */
     public double GetLeftAngle(boolean reflectCircle) {
         float yAxis = (float) (-1 * GetLeftY());

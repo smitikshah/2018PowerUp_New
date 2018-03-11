@@ -21,7 +21,7 @@ public class CubeLift extends Subsystem {
     }
 
     public void initDefaultCommand() {
-      
+
     }
 }
 

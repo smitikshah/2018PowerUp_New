@@ -11,7 +11,6 @@ import org.usfirst.frc.team2869.robot.auto.trajectory.Path;
 import org.usfirst.frc.team2869.robot.auto.trajectory.PathFollower;
 import org.usfirst.frc.team2869.robot.auto.trajectory.TrajectoryStatus;
 import org.usfirst.frc.team2869.robot.util.drivers.MkGyro;
-import org.usfirst.frc.team2869.robot.util.drivers.MkMath;
 import org.usfirst.frc.team2869.robot.util.drivers.MkTalon;
 import org.usfirst.frc.team2869.robot.util.drivers.MkTalon.TalonPosition;
 import org.usfirst.frc.team2869.robot.util.other.DriveSignal;
@@ -106,7 +105,7 @@ public class DriveTrain extends Subsystem {
         RobotState.mDriveControlState = RobotState.DriveControlState.PATH_FOLLOWING;
     }
 
-    public boolean isPathFinished() {
+    public synchronized boolean isPathFinished() {
         if (pathFollower.getFinished()) {
             setVelocitySetpoint(DriveSignal.NEUTRAL);
             RobotState.mDriveControlState = DriveControlState.VELOCITY_SETPOINT;
@@ -116,24 +115,13 @@ public class DriveTrain extends Subsystem {
         return false;
     }
 
-    private synchronized void updateTurnInPlace() {
-        TrajectoryStatus leftUpdate = pathFollower
-                .getLeftVelocity(navX.getYaw(), navX.getRawGyroZ(), 0);
-        TrajectoryStatus rightUpdate = pathFollower
-                .getRightVelocity(navX.getYaw(), navX.getRawGyroZ(), 0);
-        setVelocitySetpoint(new DriveSignal(MkMath.AngleToVel(leftUpdate.getOutput()),
-                MkMath.AngleToVel(rightUpdate.getOutput())));
-        leftStatus = leftUpdate;
-        rightStatus = rightUpdate;
-    }
-
     /**
      * Called from Looper during Path Following
      * Gets a TrajectoryStatus containing output velocity and Desired Trajectory Information for logging
      * Inputs Position, Speed and Angle to Trajectory Follower
      * Creates a new Drive Signal that is then set as a velocity setpoint
      */
-    private void updatePathFollower() {
+    private synchronized void updatePathFollower() {
         TrajectoryStatus leftUpdate = pathFollower
                 .getLeftVelocity(leftDrive.getPosition(), leftDrive.getSpeed(),
                         navX.getFullYaw());
@@ -267,33 +255,6 @@ public class DriveTrain extends Subsystem {
         right = power - turn;
         leftDrive.set(ControlMode.PercentOutput, left);
         rightDrive.set(ControlMode.PercentOutput, right);
-    }
-
-    public static class DriveDebugOutput {
-
-        double timestamp;
-        String controlMode;
-        double leftOutput;
-        double rightOutput;
-        double leftSetpoint;
-        double rightSetpoint;
-        double leftPosition;
-        double rightPosition;
-        double leftVelocity;
-        double rightVelocity;
-        double heading;
-        double desiredHeading;
-        double headingError;
-        double leftDesiredVel;
-        double leftDesiredPos;
-        double leftPosError;
-        double leftVelError;
-        double rightDesiredVel;
-        double rightDesiredPos;
-        double rightPosError;
-        double rightVelError;
-        double desiredX;
-        double desiredY;
     }
 
     private static class InstanceHolder {
