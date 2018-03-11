@@ -11,16 +11,6 @@ import edu.wpi.first.wpilibj.SpeedController;
  * floating around.
  */
 public class RobotMap {
-
-    public static SpeedController speedController;
-    // For example to map the left and right motors, you could define the
-    // following variables to use with your drivetrain subsystem.
-    // public static int leftMotor = 1;
-    // public static int rightMotor = 2;
-    public static AnalogOutput driveTrainAnalog;
-
-    /*
-     */
     public static int leftMotor1 = 5; //FrontLeft
     public static int leftMotor2 = 1; //RearLeft
     public static int rightMotor1 = 2; //FrontRight

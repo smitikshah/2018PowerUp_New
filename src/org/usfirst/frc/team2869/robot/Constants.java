@@ -72,18 +72,16 @@ public final class Constants {
         public static final double ARM_D = ARM_P * 15;
         public static final double ARM_F = (1023.0 / MAX_RAW_VEL);
 
-        public static final double ARM_FORWARD_LIMIT = 250;
-        public static final double ARM_REVERSE_LIMIT = 0;
         public static final double MOTION_MAGIC_CRUISE_VEL = MAX_RAW_VEL * 0.975;
         public static final double MOTION_MAGIC_ACCEL = MAX_RAW_VEL * 1.2;
 
         public static final double CURRENT_HARDSTOP_LIMIT = 4;
         public static final double ZEROING_POWER = -0.25;
 
-        public static final double SAFE_CURRENT_OUTPUT = 30;
-        //public static final double MAX_SAFE_SPEED = (RPM_MAX / 60.0) * 360.0 * 1.5;
-
-
+       public static final double INTAKE_SPEED = -0.5;
+       public static final double OUTTAKE_SPEED = 0.4;
+       public static final boolean LEFT_INTAKE_ROLLER_INVERT = false;
+       public static final boolean RIGHT_INTAKE_ROLLER_INVERT = true;
     }
 
     public static class INPUT {

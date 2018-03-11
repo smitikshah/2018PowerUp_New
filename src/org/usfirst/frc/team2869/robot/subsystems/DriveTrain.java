@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2869.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,7 +11,6 @@ import org.usfirst.frc.team2869.robot.RobotState.DriveControlState;
 import org.usfirst.frc.team2869.robot.auto.trajectory.Path;
 import org.usfirst.frc.team2869.robot.auto.trajectory.PathFollower;
 import org.usfirst.frc.team2869.robot.auto.trajectory.TrajectoryStatus;
-import org.usfirst.frc.team2869.robot.util.drivers.MkGyro;
 import org.usfirst.frc.team2869.robot.util.drivers.MkTalon;
 import org.usfirst.frc.team2869.robot.util.drivers.MkTalon.TalonPosition;
 import org.usfirst.frc.team2869.robot.util.other.DriveSignal;
@@ -19,7 +19,7 @@ import org.usfirst.frc.team2869.robot.util.other.Looper;
 
 public class DriveTrain extends Subsystem {
     public MkTalon leftDrive, rightDrive;
-    public MkGyro navX;
+    public AHRS navX;
     private PathFollower pathFollower = null;
     private TrajectoryStatus leftStatus;
     private TrajectoryStatus rightStatus;
@@ -33,7 +33,7 @@ public class DriveTrain extends Subsystem {
         rightDrive.setPIDF();
         //leftDrive.setBrakeMode();
         //rightDrive.setBrakeMode();
-        navX = new MkGyro(Port.kMXP);
+        navX = new AHRS(Port.kMXP);
         zeroGyro();
 
         leftDrive.invertMaster(DRIVE.LEFT_MASTER_INVERT);
@@ -124,10 +124,10 @@ public class DriveTrain extends Subsystem {
     private synchronized void updatePathFollower() {
         TrajectoryStatus leftUpdate = pathFollower
                 .getLeftVelocity(leftDrive.getPosition(), leftDrive.getSpeed(),
-                        navX.getFullYaw());
+                        navX.getYaw());
         TrajectoryStatus rightUpdate = pathFollower
                 .getRightVelocity(rightDrive.getPosition(), rightDrive.getSpeed(),
-                        navX.getFullYaw());
+                        navX.getYaw());
 
         leftStatus = leftUpdate;
         rightStatus = rightUpdate;
@@ -146,7 +146,7 @@ public class DriveTrain extends Subsystem {
         if (RobotState.mDriveControlState == DriveControlState.PATH_FOLLOWING) {
             SmartDashboard.putNumber("Left Desired Velocity", currentSetpoint.getLeft());
             SmartDashboard.putNumber("Right Desired Velocity", currentSetpoint.getRight());
-            SmartDashboard.putNumber("NavX Full Yaw", navX.getFullYaw());
+            SmartDashboard.putNumber("NavX Full Yaw", navX.getYaw());
             SmartDashboard.putNumber("Desired Heading", leftStatus.getSeg().heading);
             SmartDashboard.putNumber("Heading Error", leftStatus.getAngError());
             SmartDashboard.putNumber("Left Desired Position", leftStatus.getSeg().pos);

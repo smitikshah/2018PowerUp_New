@@ -20,8 +20,7 @@ import org.usfirst.frc.team2869.robot.util.other.Subsystem;
 public class Arm extends Subsystem {
 
     public final TalonSRX armTalon;
-    public final VictorSPX leftIntakeRollerTalon;
-    public final VictorSPX rightIntakeRollerTalon;
+
     private double setpoint = 0;
     private double maxVel = 0;
     private double gearRatio = 0;
@@ -52,12 +51,7 @@ public class Arm extends Subsystem {
         armTalon.setNeutralMode(NeutralMode.Brake);
 
 
-        leftIntakeRollerTalon = new VictorSPX(Constants.ARM.ARM_LEFT_INTAKE_ROLLER_ID);
-        rightIntakeRollerTalon = new VictorSPX(Constants.ARM.ARM_Right_INTAKE_ROLLER_ID);
-        //rightIntakeRollerTalon.set(ControlMode.Follower, Constants.ARM.ARM_LEFT_INTAKE_ROLLER_ID);
-        //leftIntakeRollerTalon.setInverted(true);
-        leftIntakeRollerTalon.setNeutralMode(NeutralMode.Brake);
-        rightIntakeRollerTalon.setNeutralMode(NeutralMode.Brake);
+
     }
 
     public static Arm getInstance() {
@@ -172,9 +166,6 @@ public class Arm extends Subsystem {
         setpoint = output;
     }
 
-    public void setIntakeRollers(double output) {
-        leftIntakeRollerTalon.set(ControlMode.PercentOutput, output);
-    }
 
     private static class InstanceHolder {
 
