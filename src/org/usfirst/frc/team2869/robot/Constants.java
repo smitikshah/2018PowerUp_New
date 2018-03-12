@@ -62,8 +62,7 @@ public final class Constants {
         public static final int ARM_LEFT_INTAKE_ROLLER_ID = 10;
         public static final int ARM_Right_INTAKE_ROLLER_ID = 11;
         public static final double RPM_MAX = 19.5; //RPM Max of Arm
-        public static final double GEAR_RATIO = 22.0
-                / 336.0; //Gear Ratio between encoder and arm - Used to calulate arm position in degrees
+        public static final double GEAR_RATIO = 1.0 / 11.0;
         public static final double MAX_RAW_VEL =
                 ((RPM_MAX / 60.0 / 10.0) * 4096.0) / GEAR_RATIO; // Degrees per second
         public static final double ARM_P = 15 * ((0.1 * 1023.0) / (1400)); //7.5 deg or 1390 units

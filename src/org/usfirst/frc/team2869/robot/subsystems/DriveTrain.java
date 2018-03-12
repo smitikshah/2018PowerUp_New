@@ -9,13 +9,9 @@ import org.usfirst.frc.team2869.robot.RobotState;
 import org.usfirst.frc.team2869.robot.RobotState.DriveControlState;
 import org.usfirst.frc.team2869.robot.auto.trajectory.Path;
 import org.usfirst.frc.team2869.robot.auto.trajectory.PathFollower;
-import org.usfirst.frc.team2869.robot.auto.trajectory.TrajectoryStatus;
 import org.usfirst.frc.team2869.robot.util.drivers.MkTalon;
 import org.usfirst.frc.team2869.robot.util.drivers.MkTalon.TalonPosition;
-import org.usfirst.frc.team2869.robot.util.other.DriveSignal;
-import org.usfirst.frc.team2869.robot.util.other.Loop;
-import org.usfirst.frc.team2869.robot.util.other.Looper;
-import org.usfirst.frc.team2869.robot.util.other.Subsystem;
+import org.usfirst.frc.team2869.robot.util.other.*;
 
 public class DriveTrain extends Subsystem {
     private MkTalon leftDrive, rightDrive;
@@ -122,10 +118,6 @@ public class DriveTrain extends Subsystem {
         setVelocitySetpoint(new DriveSignal(leftUpdate.getOutput(), rightUpdate.getOutput()));
     }
 
-    public void writeToLog() {
-        //mCSVWriter.write();
-    }
-
     public void outputToSmartDashboard() {
         leftDrive.updateSmartDash();
         rightDrive.updateSmartDash();
@@ -137,13 +129,13 @@ public class DriveTrain extends Subsystem {
             SmartDashboard.putNumber("NavX Full Yaw", navX.getYaw());
             SmartDashboard.putNumber("Desired Heading", leftStatus.getSeg().heading);
             SmartDashboard.putNumber("Heading Error", leftStatus.getAngError());
-            SmartDashboard.putNumber("Left Desired Position", leftStatus.getSeg().pos);
-            SmartDashboard.putNumber("Left Theoretical Vel", leftStatus.getSeg().vel);
+            SmartDashboard.putNumber("Left Desired Position", leftStatus.getSeg().position);
+            SmartDashboard.putNumber("Left Theoretical Vel", leftStatus.getSeg().velocity);
             SmartDashboard.putNumber("Left Position Error", leftStatus.getPosError());
             SmartDashboard.putNumber("Left Desired Velocity Error", leftStatus.getVelError());
-            SmartDashboard.putNumber("Right Desired Position", leftStatus.getSeg().pos);
+            SmartDashboard.putNumber("Right Desired Position", leftStatus.getSeg().position);
             SmartDashboard.putNumber("Right Position Error", leftStatus.getPosError());
-            SmartDashboard.putNumber("Right Theoretical Vel", rightStatus.getSeg().vel);
+            SmartDashboard.putNumber("Right Theoretical Vel", rightStatus.getSeg().velocity);
             SmartDashboard.putNumber("Right Desired Velocity Error", leftStatus.getVelError());
         }
     }

@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.Constants.ARM;
@@ -19,7 +20,8 @@ import org.usfirst.frc.team2869.robot.util.other.Subsystem;
 public class Arm extends Subsystem {
 
     private final TalonSRX armTalon;
-
+    private final VictorSPX leftIntakeRollerTalon;
+    private final VictorSPX rightIntakeRollerTalon;
     private double setpoint = 0;
     private double maxVel = 0;
     private double gearRatio = 0;
@@ -48,6 +50,15 @@ public class Arm extends Subsystem {
         /* zero the sensor */
         armTalon.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
         armTalon.setNeutralMode(NeutralMode.Brake);
+
+
+        leftIntakeRollerTalon = new VictorSPX(Constants.ARM.ARM_LEFT_INTAKE_ROLLER_ID);
+        rightIntakeRollerTalon = new VictorSPX(Constants.ARM.ARM_Right_INTAKE_ROLLER_ID);
+
+        leftIntakeRollerTalon.setInverted(Constants.ARM.LEFT_INTAKE_ROLLER_INVERT);
+        rightIntakeRollerTalon.setInverted(Constants.ARM.RIGHT_INTAKE_ROLLER_INVERT);
+        leftIntakeRollerTalon.setNeutralMode(NeutralMode.Brake);
+        rightIntakeRollerTalon.setNeutralMode(NeutralMode.Brake);
     }
 
     public static Arm getInstance() {
@@ -70,6 +81,11 @@ public class Arm extends Subsystem {
     @Override
     public void checkSystem() {
 
+    }
+
+    public void setIntakeRollers(double output) {
+        leftIntakeRollerTalon.set(ControlMode.PercentOutput, output);
+        rightIntakeRollerTalon.set(ControlMode.PercentOutput, output);
     }
 
     @Override
