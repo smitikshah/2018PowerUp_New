@@ -88,13 +88,20 @@ public final class Constants {
         public static final double INTAKE_OUT_ROLLER_SPEED = 0.4;
         public static final boolean LEFT_INTAKE_ROLLER_INVERT = false;
         public static final boolean RIGHT_INTAKE_ROLLER_INVERT = true;
+
+
+        public static final int ARM_ENCODER_PORT_A = 0;
+        public static final int ARM_ENCODER_PORT_B = 1;
+        public static final double DEGREES_PER_PULSE = 1.0;//Maps pulses to degrees
+        public static final double ARM_EBSILON = 5;//Acceptable degrees of error
+        public static final double MAX_OUTPUT = .7;//Max allowable power
+        public static final double COM_DIST = 15.0;//distance of the center of mass of the arm from the pivot point, inches
+        public static final double ARM_WEIGHT = 15.0;//Weight of arm in pounds
     }
 
     public static class AUTO {
         public static final String pathPath = "/home/lvuser/paths/";
-        public static final String[] autoNames = {"CSL-1", "CSL-2", "CSL-3",
-                "CSL-4", "CSL-5", "CSR-1", "CSR-2", "CSR-3",
-                "CSR-4", "CSR-5", "DriveStraight"};
+        public static final String[] autoNames = {"DriveStraight"};
     }
 
     public static class INPUT {

@@ -11,8 +11,9 @@ public class Input extends Subsystem {
     private final MkXboxController operatorJoystick = new MkXboxController(1);
     private final MkXboxControllerButton driveModeChangeButton = driverJoystick.getButton(1, "Change Drive Mode");
 
-    private final MkXboxControllerButton armUpButton = driverJoystick.getButton(1, "Arm Up");
-    private final MkXboxControllerButton armDownButton = driverJoystick.getButton(2, "Arm Down");
+    private final MkXboxControllerButton armUpButton = operatorJoystick.getButton(1, "Arm Up");
+    private final MkXboxControllerButton armDownButton = operatorJoystick.getButton(2, "Arm Down");
+    private final MkXboxControllerButton armChangeModeButton = operatorJoystick.getButton(2, "Arm Change Mode");
 
     private final MkXboxControllerButton intakeOut = operatorJoystick.getButton(MkXboxController.YBUTTON, "Intake Roller Out");
     private final MkXboxControllerButton intakeIn = operatorJoystick.getButton(MkXboxController.ABUTTON, "Intake Roller In");
@@ -79,6 +80,32 @@ public class Input extends Subsystem {
     }
 
     public synchronized void updateArmInput() {
+        switch (RobotState.mArmControlState) {
+            case MOTION_MAGIC:
+                if (armUpButton.isPressed()) {
+                    RobotState.mArmState = RobotState.ArmState.SWITCH_PLACE;
+                }
+                if (armChangeModeButton.isPressed()) {
+                    RobotState.mArmControlState = RobotState.ArmControlState.OPEN_LOOP;
+                }
+                break;
+            case OPEN_LOOP:
+                Arm.getInstance()
+                        .setOpenLoop(MkMath
+                                .handleDeadband(operatorJoystick.getRawAxis(MkXboxController.LEFT_YAXIS),
+                                        Constants.INPUT.OPERATOR_DEADBAND));
+                if (armChangeModeButton.isPressed()) {
+                    Arm.getInstance().setEnable();
+                    RobotState.mArmControlState = RobotState.ArmControlState.MOTION_MAGIC;
+                }
+                break;
+            default:
+                System.out
+                        .println("Unexpected arm control state: " + RobotState.mArmControlState);
+                break;
+        }
+
+
         if (intakeOut.isHeld()) {
             Arm.getInstance().setIntakeRollers(Constants.ARM.INTAKE_OUT_ROLLER_SPEED);
         } else if (intakeIn.isHeld()) {

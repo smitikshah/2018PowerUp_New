@@ -31,13 +31,13 @@ public class RobotState {
         ZEROING,
         MOTION_MAGIC,
         OPEN_LOOP,
+        PIDF
     }
 
     public enum ArmState {
         ENABLE(0),
         ZEROED(0),
-        SWITCH_PLACE(40),
-        OPPOSITE_SWITCH(220);
+        SWITCH_PLACE(40);
 
         public final double state;
 

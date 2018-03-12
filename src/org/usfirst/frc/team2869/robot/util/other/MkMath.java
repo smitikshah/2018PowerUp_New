@@ -38,5 +38,12 @@ public class MkMath {
         return ((ang / 360.0) / ARM.GEAR_RATIO) * 4096.0;
     }
 
+    public static double cos(double a) {
+        return Math.cos(Math.toRadians(a));//Takes degrees as an input
+    }
+
+    public static double nativeUnitsToAngle(double raw) {
+        return ((raw / 4096.0) * ARM.GEAR_RATIO) * 360.0;
+    }
 
 }

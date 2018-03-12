@@ -5,16 +5,14 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.Constants.ARM;
 import org.usfirst.frc.team2869.robot.RobotState;
 import org.usfirst.frc.team2869.robot.RobotState.ArmControlState;
 import org.usfirst.frc.team2869.robot.RobotState.ArmState;
-import org.usfirst.frc.team2869.robot.util.other.MkMath;
-import org.usfirst.frc.team2869.robot.util.other.Loop;
-import org.usfirst.frc.team2869.robot.util.other.Looper;
-import org.usfirst.frc.team2869.robot.util.other.Subsystem;
+import org.usfirst.frc.team2869.robot.util.other.*;
 
 
 public class Arm extends Subsystem {
@@ -26,31 +24,32 @@ public class Arm extends Subsystem {
     private double maxVel = 0;
     private double gearRatio = 0;
     private double testMaxVel = 0;
+    private double armPosEnable = 0;
+    public final Encoder armEncoder;
+    private SimPID armPID;
 
     private Arm() {
         armTalon = new TalonSRX(ARM.ARM_MASTER_TALON_ID);
         armTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
         armTalon.setSensorPhase(true);
         armTalon.setInverted(false);
-        /* set the peak and nominal outputs */
+
         armTalon.configNominalOutputForward(0, Constants.kTimeoutMs);
         armTalon.configNominalOutputReverse(0, Constants.kTimeoutMs);
-        armTalon.configPeakOutputForward(1, Constants.kTimeoutMs);
-        armTalon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+        armTalon.configPeakOutputForward(0.15, Constants.kTimeoutMs);
+        armTalon.configPeakOutputReverse(-0.15, Constants.kTimeoutMs);
 
-        /* set closed loop gains in slot0 - see documentation */
         armTalon.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
-        armTalon.config_kF(0, 0.2, Constants.kTimeoutMs);
-        armTalon.config_kP(0, 0.2, Constants.kTimeoutMs);
-        armTalon.config_kI(0, 0, Constants.kTimeoutMs);
-        armTalon.config_kD(0, 0, Constants.kTimeoutMs);
-        /* set acceleration and vcruise velocity - see documentation */
-        armTalon.configMotionCruiseVelocity(15000, Constants.kTimeoutMs);
-        armTalon.configMotionAcceleration(6000, Constants.kTimeoutMs);
-        /* zero the sensor */
+        armTalon.config_kF(Constants.kSlotIdx, ARM.ARM_F, Constants.kTimeoutMs);
+        armTalon.config_kP(Constants.kSlotIdx, ARM.ARM_P, Constants.kTimeoutMs);
+        armTalon.config_kI(Constants.kSlotIdx, ARM.ARM_I, Constants.kTimeoutMs);
+        armTalon.config_kD(Constants.kSlotIdx, ARM.ARM_D, Constants.kTimeoutMs);
+
+        armTalon.configMotionCruiseVelocity((int) ARM.MOTION_MAGIC_CRUISE_VEL, Constants.kTimeoutMs);
+        armTalon.configMotionAcceleration((int) ARM.MOTION_MAGIC_ACCEL, Constants.kTimeoutMs);
+
         armTalon.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
         armTalon.setNeutralMode(NeutralMode.Brake);
-
 
         leftIntakeRollerTalon = new VictorSPX(Constants.ARM.ARM_LEFT_INTAKE_ROLLER_ID);
         rightIntakeRollerTalon = new VictorSPX(Constants.ARM.ARM_Right_INTAKE_ROLLER_ID);
@@ -59,6 +58,13 @@ public class Arm extends Subsystem {
         rightIntakeRollerTalon.setInverted(Constants.ARM.RIGHT_INTAKE_ROLLER_INVERT);
         leftIntakeRollerTalon.setNeutralMode(NeutralMode.Brake);
         rightIntakeRollerTalon.setNeutralMode(NeutralMode.Brake);
+
+
+        armEncoder = new Encoder(Constants.ARM.ARM_ENCODER_PORT_A, Constants.ARM.ARM_ENCODER_PORT_B);
+        armEncoder.setDistancePerPulse(Constants.ARM.DEGREES_PER_PULSE);
+
+        armPID = new SimPID(Constants.ARM.ARM_P, Constants.ARM.ARM_I, Constants.ARM.ARM_D, Constants.ARM.ARM_EBSILON);
+        armPID.setMaxOutput(Constants.ARM.MAX_OUTPUT);
     }
 
     public static Arm getInstance() {
@@ -76,6 +82,7 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm Error", armTalon.getClosedLoopError(Constants.kPIDLoopIdx));
         SmartDashboard.putNumber("Arm Max Vel", testMaxVel);
         SmartDashboard.putString("Arm Control Mode", RobotState.mArmControlState.toString());
+        SmartDashboard.putNumber("Arm Angle", getPosition());
     }
 
     @Override
@@ -95,7 +102,8 @@ public class Arm extends Subsystem {
             @Override
             public void onStart(double timestamp) {
                 synchronized (Arm.this) {
-
+                    armPosEnable = getPosition();
+                    RobotState.mArmState = ArmState.ENABLE;
                 }
             }
 
@@ -115,6 +123,9 @@ public class Arm extends Subsystem {
                             zeroArm();
                             return;
                         case OPEN_LOOP:
+                            return;
+                        case PIDF:
+                            setArmAngle(0);
                             return;
                         default:
                             System.out
@@ -150,6 +161,30 @@ public class Arm extends Subsystem {
             setOpenLoop(ARM.ZEROING_POWER);
         }
 
+    }
+
+    private double getPosition() {
+        return MkMath.nativeUnitsToAngle(armTalon.getSelectedSensorPosition(Constants.kPIDLoopIdx));
+    }
+
+    private double calcHoldPosPower(double armAngle) {
+        double gravityMoment = Constants.ARM.COM_DIST * MkMath.cos(armAngle) * Constants.ARM.ARM_WEIGHT;
+        double requiredMotorPower = gravityMoment / (3.8 * 550.0);
+        return requiredMotorPower;
+    }
+
+    public void setArmAngle(double angle) {
+        armPID.setDesiredValue(angle);
+        //armPID.setDesiredValue(RobotState.mArmState.state);
+        double currentArmAngle = armEncoder.get();
+        double output = armPID.calcPID(currentArmAngle) + calcHoldPosPower(currentArmAngle);
+        armTalon.set(ControlMode.PercentOutput, output);
+        System.out.println(currentArmAngle);
+    }
+
+    public void setEnable() {
+        armPosEnable = getPosition();
+        RobotState.mArmState = ArmState.ENABLE;
     }
 
     private void armSafetyCheck() {
