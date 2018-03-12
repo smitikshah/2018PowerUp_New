@@ -1,13 +1,9 @@
 package org.usfirst.frc.team2869.robot;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Spark;
-import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team2869.robot.RobotState.ArmControlState;
 import org.usfirst.frc.team2869.robot.RobotState.MatchState;
 import org.usfirst.frc.team2869.robot.subsystems.Arm;
-import org.usfirst.frc.team2869.robot.subsystems.Claw;
 import org.usfirst.frc.team2869.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2869.robot.subsystems.Input;
 import org.usfirst.frc.team2869.robot.util.logging.CrashTracker;
@@ -19,34 +15,15 @@ import java.util.Arrays;
 public class Robot extends IterativeRobot {
 
     private final SubsystemManager mSubsystemManager = new SubsystemManager(
-            Arrays.asList(DriveTrain.getInstance(), Arm.getInstance(), Claw.getInstance(), Input.getInstance()));
+            Arrays.asList(DriveTrain.getInstance(), Arm.getInstance(), Input.getInstance()));
     private Looper mEnabledLooper = new Looper();
 
-    DigitalInput lightSwitch;
-    Spark floor;
-    Input input;
-    boolean ArmState;
-    boolean armStateTest;
-    Command autonomousCommand;
-    boolean buttonToggle = false;
-    //public static DoubleSolenoid armCylinder = new DoubleSolenoid(6,7);
-    //public static Do5ubleSolenoid cubeGrabber = new DoubleSolenoid(4,5);
-
-
-    //private static CameraServer camera;
-
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
     @Override
     public void robotInit() {
-        lightSwitch = new DigitalInput(1);
-        input = new Input();
         try {
             CrashTracker.logRobotInit();
             mSubsystemManager.registerEnabledLoops(mEnabledLooper);
-            AutoChooser.loadChooser();
+            AutoChooser.loadAutos();
         } catch (Throwable t) {
             CrashTracker.logThrowableCrash(t);
             throw t;

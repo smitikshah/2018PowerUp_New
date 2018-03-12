@@ -18,18 +18,6 @@ public class SubsystemManager {
         mAllSubsystems.forEach((s) -> s.outputToSmartDashboard());
     }
 
-    public void writeToLog() {
-        mAllSubsystems.forEach((s) -> s.writeToLog());
-    }
-
-    public void stop() {
-        mAllSubsystems.forEach((s) -> s.stop());
-    }
-
-    public void zeroSensors() {
-        mAllSubsystems.forEach((s) -> s.zeroSensors());
-    }
-
     public void checkSystem() {
         mAllSubsystems.forEach((s) -> s.checkSystem());
     }
