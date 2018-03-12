@@ -4,8 +4,6 @@ import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.Constants.ARM;
 import org.usfirst.frc.team2869.robot.Constants.DRIVE;
 
-//import org.usfirst.frc.team2869.robot.Constants.ARM;
-
 public class MkMath {
 
     public static double nativeUnitsPer100MstoInchesPerSec(double vel) {
@@ -32,9 +30,13 @@ public class MkMath {
         return (Math.abs(val) > Math.abs(deadband)) ? val : 0.0;
     }
 
+    public static double RPMToInchesPerSec(double vel) {
+        return (vel / 60.0) * DRIVE.CIRCUMFERENCE;
+    }
+
     public static double angleToNativeUnits(double ang) {
         return ((ang / 360.0) / ARM.GEAR_RATIO) * 4096.0;
-
     }
+
 
 }

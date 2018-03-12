@@ -1,13 +1,15 @@
 package org.usfirst.frc.team2869.robot.auto.modes;
 
-import org.usfirst.frc.team2869.robot.AutoChooser;
-import org.usfirst.frc.team2869.robot.AutoChooser.GameObjectPosition;
-import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
-import org.usfirst.frc.team2869.robot.util.auto.AutoModeEndedException;
-import org.usfirst.frc.team2869.robot.auto.actions.DeserializePath;
-import org.usfirst.frc.team2869.robot.auto.actions.DrivePathAction;
-
-import java.io.IOException;
+import frc.team1836.robot.AutoChooser;
+import frc.team1836.robot.AutoChooser.GameObjectPosition;
+import frc.team1836.robot.Constants;
+import frc.team1836.robot.RobotState;
+import frc.team1836.robot.RobotState.ArmState;
+import frc.team1836.robot.auto.actions.DrivePathAction;
+import frc.team1836.robot.auto.actions.RollerAction;
+import frc.team1836.robot.util.auto.AutoModeBase;
+import frc.team1836.robot.util.auto.AutoModeEndedException;
+import frc.team1836.robot.util.logging.CrashTracker;
 
 public class RightSwitchMode extends AutoModeBase {
 
@@ -30,21 +32,15 @@ public class RightSwitchMode extends AutoModeBase {
     }
 
     private void leftRoutine() throws AutoModeEndedException {
-        try {
-            runAction(new DrivePathAction(DeserializePath.getPathFromFile("CenterRightScale")));
-
-        } catch (IOException e) {
-            System.err.println("Caught IOException: " + e.getMessage());
-        }
+        CrashTracker.logMarker("Starting Right Switch Mode (Left Side)");
+        runAction(new DrivePathAction(AutoChooser.autoPaths.get("DriveStraight"), false, false, false));
     }
 
     private void rightRoutine() throws AutoModeEndedException {
-        try {
-            runAction(new DrivePathAction(DeserializePath.getPathFromFile("CenterLeftScale")));
-
-        } catch (IOException e) {
-            System.err.println("Caught IOException: " + e.getMessage());
-        }
+        CrashTracker.logMarker("Starting Right Switch Mode (Right Side)");
+        RobotState.mArmState = ArmState.OPPOSITE_SWITCH_PLACE;
+        runAction(new DrivePathAction(AutoChooser.autoPaths.get("DriveStraight"), false, false, false));
+        runAction(new RollerAction(0.5, Constants.ARM.INTAKE_OUT_ROLLER_SPEED));
     }
 
 

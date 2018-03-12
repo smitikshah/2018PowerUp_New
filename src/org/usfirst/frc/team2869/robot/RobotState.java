@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2869.robot;
 
+import org.usfirst.frc.team2869.robot.util.other.MatchData;
+
 public class RobotState {
 
     public static SystemState mSystemState = SystemState.IDLE;
@@ -7,6 +9,8 @@ public class RobotState {
     public static DriveControlState mDriveControlState = DriveControlState.VELOCITY_SETPOINT;
     public static ArmControlState mArmControlState = ArmControlState.MOTION_MAGIC;
     public static ArmState mArmState = ArmState.ZEROED;
+    public static MatchData matchData = MatchData.defaultMatch;
+
 
     // Intenal state of the system
     public enum SystemState {

@@ -1,5 +1,4 @@
 package org.usfirst.frc.team2869.robot.util.other;
-
 import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.util.drivers.MkMath;
 
@@ -8,14 +7,13 @@ import org.usfirst.frc.team2869.robot.util.drivers.MkMath;
  */
 public class DriveSignal {
 
-    public static DriveSignal NEUTRAL = new DriveSignal(0, 0);
     public static DriveSignal BRAKE = new DriveSignal(0, 0, true);
     protected double mLeftMotor;
     protected double mRightMotor;
     protected boolean mBrakeMode;
 
     public DriveSignal(double left, double right) {
-        this(left, right, false);
+        this(left, right, true);
     }
 
     public DriveSignal(double left, double right, boolean brakeMode) {

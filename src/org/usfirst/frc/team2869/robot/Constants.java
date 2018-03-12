@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2869.robot;
 
+import static org.usfirst.frc.team2869.robot.Constants.ARM.RPM_MAX;
+
 /**
  * UNLESS OTHERWISE NOTED BY RAW/NATIVE/RPM,
  * ALL POSITION UNITS ARE IN INCHES and DEGREES
@@ -46,14 +48,20 @@ public final class Constants {
         public static final double DRIVE_FOLLOWER_A = 0;
         public static final double DRIVE_FOLLOWER_ANG = 0;
 
-        public static final double RPM_MAX = 473.0; //Observed Max Speed for Drivetrain in RPM
+        public static final double LEFT_RPM_MAX = 488.0; //Observed Max Speed for Drivetrain in RPM
+        public static final double RIGHT_RPM_MAX = 502.0; //Observed Max Speed for Drivetrain in RPM
+
         public static final double MAX_VEL =
                 (RPM_MAX / 60) * (CIRCUMFERENCE); // Max Speed in Inches per second
         public static final double DRIVE_P = (0.1 * 1023.0) / (300.00);
         public static final double DRIVE_I = DRIVE_P / 100.0;
         public static final double DRIVE_D = 15 * DRIVE_P;
-        public static final double DRIVE_F = (1023.0 / ((RPM_MAX / 60.0 / 10.0)
+        public static final double LEFT_DRIVE_F = (1023.0 / ((LEFT_RPM_MAX / 60.0 / 10.0)
                 * 4096.0)); //Feedforwrd Term for Drivetrain using MAX Motor Units / Max Speed in Native Units Per 100ms
+        public static final double RIGHT_DRIVE_F = (1023.0 / ((RIGHT_RPM_MAX / 60.0 / 10.0)
+                * 4096.0)); //Feedforwrd Term for Drivetrain using MAX Motor Units / Max Speed in Native Units Per 100ms
+        public static final double PATH_WHEELBASE = 33.75;
+        public static final double OpenLoopFollower = -0.075;
     }
 
     public static class ARM {
@@ -80,6 +88,13 @@ public final class Constants {
         public static final double OUTTAKE_SPEED = 0.4;
         public static final boolean LEFT_INTAKE_ROLLER_INVERT = false;
         public static final boolean RIGHT_INTAKE_ROLLER_INVERT = true;
+    }
+
+    public static class AUTO {
+        public static final String pathPath = "/home/lvuser/paths/";
+        public static final String[] autoNames = {"CSL-1", "CSL-2", "CSL-3",
+                "CSL-4", "CSL-5", "CSR-1", "CSR-2", "CSR-3",
+                "CSR-4", "CSR-5", "DriveStraight"};
     }
 
     public static class INPUT {
