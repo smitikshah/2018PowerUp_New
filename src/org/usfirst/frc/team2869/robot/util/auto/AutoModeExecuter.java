@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2869.robot.auto.actions;
+package org.usfirst.frc.team2869.robot.util.auto;
 
 import org.usfirst.frc.team2869.robot.util.logging.CrashTrackingRunnable;
 

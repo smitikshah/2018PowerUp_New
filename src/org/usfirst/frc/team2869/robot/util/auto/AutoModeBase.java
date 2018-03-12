@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2869.robot.auto.actions;
+package org.usfirst.frc.team2869.robot.util.auto;
 
 /**
  * An abstract class that is the basis of the robot's autonomous routines. This is implemented in auto modes (which are

@@ -3,8 +3,8 @@ package org.usfirst.frc.team2869.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team2869.robot.auto.actions.AutoModeBase;
-import org.usfirst.frc.team2869.robot.auto.actions.AutoModeExecuter;
+import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
+import org.usfirst.frc.team2869.robot.util.auto.AutoModeExecuter;
 import org.usfirst.frc.team2869.robot.auto.modes.*;
 
 public class AutoChooser {

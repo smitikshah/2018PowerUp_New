@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2869.robot.auto.modes;
 
-import org.usfirst.frc.team2869.robot.auto.actions.AutoModeBase;
-import org.usfirst.frc.team2869.robot.auto.actions.AutoModeEndedException;
+import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
+import org.usfirst.frc.team2869.robot.util.auto.AutoModeEndedException;
 
 /**
  * Fallback for when all autonomous modes do not work, resulting in a robot standstill
