@@ -131,7 +131,7 @@ public class Arm extends Subsystem {
                             updateArmSetpoint();
                             return;
                         case PIDF:
-                        	setArmAngle();
+                        	setArmAngle(0);
                         	return;
                         case ZEROING:
                             zeroArm();
@@ -160,8 +160,9 @@ public class Arm extends Subsystem {
     	return requiredMotorPower;
     }
     
-    public void setArmAngle(){
-		armPID.setDesiredValue(RobotState.mArmState.state);
+    public void setArmAngle(double angle){
+    	armPID.setDesiredValue(angle);
+    	//armPID.setDesiredValue(RobotState.mArmState.state);
 		double currentArmAngle = armEncoder.get();
 		double output = armPID.calcPID(currentArmAngle) + calcHoldPosPower(currentArmAngle);
 		armTalon.set(ControlMode.PercentOutput, output);

@@ -248,14 +248,16 @@ public class Robot extends IterativeRobot {
 
 		//driveTrain.setOpenLoop(new DriveSignal(OI.driverJoystick.GetAllTriggers(),OI.driverJoystick.GetLeftX()));
 		//OI.driverJoystick.GetBButton().toggleWhenPressed(new Rotate(180));		
-		if(ArmState != armStateTest){
+		/*if(ArmState != armStateTest){
 			if(armStateTest = true) {
 				System.out.println("Arm Up");
 				armStateTest = false;
 			}
 		} else {                                                    
 			
-		}
+		}*/
+		
+		Arm.getInstance().setArmAngle(20.0);
 //		driveTrain.drive.arcadeDrive(OI.driverJoystick.GetAllTriggers(),-OI.driverJoystick.GetLeftX());
 //		
 //		
