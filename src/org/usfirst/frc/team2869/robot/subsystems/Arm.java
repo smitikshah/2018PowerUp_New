@@ -166,6 +166,7 @@ public class Arm extends Subsystem {
 		double currentArmAngle = armEncoder.get();
 		double output = armPID.calcPID(currentArmAngle) + calcHoldPosPower(currentArmAngle);
 		armTalon.set(ControlMode.PercentOutput, output);
+		System.out.println(currentArmAngle);
     }
 
     public void updateArmSetpoint() {

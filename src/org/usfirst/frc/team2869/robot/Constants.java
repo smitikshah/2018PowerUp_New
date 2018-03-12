@@ -85,9 +85,12 @@ public final class Constants {
 				/ 336.0; //Gear Ratio between encoder and arm - Used to calulate arm position in degrees
 		public static final double MAX_RAW_VEL =
 				((RPM_MAX / 60.0 / 10.0) * 4096.0) / GEAR_RATIO; // Degrees per second
-		public static final double ARM_P = 15 * ((0.1 * 1023.0) / (1400)); //7.5 deg or 1390 units
+		/*public static final double ARM_P = 15 * ((0.1 * 1023.0) / (1400)); //7.5 deg or 1390 units
 		public static final double ARM_I = 0;//ARM_P / 100.0;
-		public static final double ARM_D = ARM_P * 15;
+		public static final double ARM_D = ARM_P * 15;*/
+		public static final double ARM_P = 0;
+		public static final double ARM_I = 0;//ARM_P / 100.0;
+		public static final double ARM_D = 0;
 		public static final double ARM_F = (1023.0 / MAX_RAW_VEL);
 		public static final double ARM_EBSILON = 5;//Acceptable degrees of error
 		public static final double MAX_OUTPUT = .7;//Max allowable power
