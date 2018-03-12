@@ -102,6 +102,9 @@ public final class Constants {
 
 		public static final double SAFE_CURRENT_OUTPUT = 30;
 		//public static final double MAX_SAFE_SPEED = (RPM_MAX / 60.0) * 360.0 * 1.5;
+		
+		public static final double COM_DIST = 15.0;//distance of the center of mass of the arm from the pivot point, inches
+		public static final double ARM_WEIGHT = 15.0;//Weight of arm in pounds
 
 
 

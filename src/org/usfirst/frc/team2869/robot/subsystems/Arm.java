@@ -9,7 +9,6 @@ import org.usfirst.frc.team2869.robot.Subsystem;
 import org.usfirst.frc.team2869.robot.commands.SimPID;
 import org.usfirst.frc.team2869.robot.subsystems.RobotState.ArmControlState;
 import org.usfirst.frc.team2869.robot.subsystems.RobotState.ArmState;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -155,14 +154,16 @@ public class Arm extends Subsystem {
         enabledLooper.register(mLoop);
     }
     
-    private double calcHoldPosTorque(double armAngle){
-    	return 0;
+    private double calcHoldPosPower(double armAngle){
+    	double gravityMoment = Constants.ARM.COM_DIST * MkMath.cos(armAngle) * Constants.ARM.ARM_WEIGHT;
+    	double requiredMotorPower = gravityMoment/(3.8 * 550.0);
+    	return requiredMotorPower;
     }
     
     public void setArmAngle(){
 		armPID.setDesiredValue(RobotState.mArmState.state);
 		double currentArmAngle = armEncoder.get();
-		double output = armPID.calcPID(currentArmAngle) + calcHoldPosTorque(currentArmAngle);
+		double output = armPID.calcPID(currentArmAngle) + calcHoldPosPower(currentArmAngle);
 		armTalon.set(ControlMode.PercentOutput, output);
     }
 

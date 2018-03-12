@@ -36,4 +36,7 @@ public class MkMath {
 	
 	}
 
+	public static double cos(double a){
+		return Math.cos(Math.toRadians(a));//Takes degrees as an input
+	}
 }
