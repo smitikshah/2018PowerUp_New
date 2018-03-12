@@ -1,7 +1,7 @@
 package org.usfirst.frc.team2869.robot.auto.actions;
 
 import edu.wpi.first.wpilibj.Timer;
-import frc.team1836.robot.util.auto.Action;
+import org.usfirst.frc.team2869.robot.util.auto.Action;
 
 public class DelayAction implements Action {
     private final Action mAction;

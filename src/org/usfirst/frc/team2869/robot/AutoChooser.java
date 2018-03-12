@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.auto.trajectory.Path;
+import org.usfirst.frc.team2869.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeExecuter;
 import org.usfirst.frc.team2869.robot.auto.modes.*;
@@ -59,7 +60,7 @@ public class AutoChooser {
 
 
     private static AutoModeBase getStraightMode() {
-        if (Drive.getInstance().isEncodersConnected()) {
+        if (DriveTrain.getInstance().isEncodersConnected()) {
             return new DriveStraightMode();
         } else {
             return new DriveStraightOpenLoopMode();
@@ -67,7 +68,7 @@ public class AutoChooser {
     }
 
     private static AutoModeBase getSwitchMode() {
-        if (Drive.getInstance().isEncodersConnected()) {
+        if (DriveTrain.getInstance().isEncodersConnected()) {
             if (positionChooser.getSelected() == AutoPosition.LEFT) {
                 return new LeftSwitchMode(RobotState.matchData.switchPosition);
             }

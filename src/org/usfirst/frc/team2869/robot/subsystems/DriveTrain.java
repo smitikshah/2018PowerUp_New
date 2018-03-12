@@ -11,7 +11,7 @@ import org.usfirst.frc.team2869.robot.RobotState;
 import org.usfirst.frc.team2869.robot.RobotState.DriveControlState;
 import org.usfirst.frc.team2869.robot.auto.trajectory.Path;
 import org.usfirst.frc.team2869.robot.auto.trajectory.PathFollower;
-import org.usfirst.frc.team2869.robot.util.drivers.MkMath;
+import org.usfirst.frc.team2869.robot.util.other.MkMath;
 import org.usfirst.frc.team2869.robot.util.drivers.MkTalon;
 import org.usfirst.frc.team2869.robot.util.drivers.MkTalon.TalonPosition;
 import org.usfirst.frc.team2869.robot.util.logging.CrashTracker;

@@ -2,16 +2,23 @@ package org.usfirst.frc.team2869.robot.subsystems;
 
 import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.RobotState;
-import org.usfirst.frc.team2869.robot.util.drivers.Xbox360;
+import org.usfirst.frc.team2869.robot.util.drivers.MkXboxController;
+import org.usfirst.frc.team2869.robot.util.drivers.MkXboxControllerButton;
 import org.usfirst.frc.team2869.robot.util.other.*;
 
 public class Input extends Subsystem {
-    private final Xbox360 driverJoystick;
-    private final Xbox360 operatorJoystick;
+    private final MkXboxController driverJoystick = new MkXboxController(0);
+    private final MkXboxController operatorJoystick = new MkXboxController(1);
+    private final MkXboxControllerButton driveModeChangeButton = driverJoystick.getButton(1, "Change Drive Mode");
+
+    private final MkXboxControllerButton armUpButton = driverJoystick.getButton(1, "Arm Up");
+    private final MkXboxControllerButton armDownButton = driverJoystick.getButton(2, "Arm Down");
+
+    private final MkXboxControllerButton intakeOut = operatorJoystick.getButton(MkXboxController.YBUTTON, "Intake Roller Out");
+    private final MkXboxControllerButton intakeIn = operatorJoystick.getButton(MkXboxController.ABUTTON, "Intake Roller In");
 
     public Input() {
-        driverJoystick = new Xbox360(0);
-        operatorJoystick = new Xbox360(1);
+
     }
 
     public static Input getInstance() {
@@ -58,17 +65,26 @@ public class Input extends Subsystem {
     }
 
     public synchronized void updateDriveInput() {
-        DriveSignal sig = DriveHelper.SmitiDrive(driverJoystick.GetRightTrigger(), -driverJoystick.GetLeftTrigger(), driverJoystick.GetLeftX(), true);
-        DriveTrain.getInstance().setOpenLoop(sig);
+        DriveSignal sig = DriveHelper.SmitiDrive(driverJoystick.getRawAxis(MkXboxController.RIGHT_TRIGGER), -driverJoystick.getRawAxis(MkXboxController.LEFT_TRIGGER), driverJoystick.getRawAxis(MkXboxController.LEFT_XAXIS), true);
+        if (driveModeChangeButton.isPressed()) {
+            RobotState.mDriveControlState =
+                    RobotState.mDriveControlState.equals(RobotState.DriveControlState.OPEN_LOOP)
+                            ? RobotState.DriveControlState.VELOCITY_SETPOINT : RobotState.DriveControlState.OPEN_LOOP;
+        }
+        if (RobotState.mDriveControlState == RobotState.DriveControlState.VELOCITY_SETPOINT) {
+            DriveTrain.getInstance().setVelocitySetpoint(sig, 0, 0);
+        } else {
+            DriveTrain.getInstance().setOpenLoop(sig);
+        }
     }
 
     public synchronized void updateArmInput() {
-        if (operatorJoystick.GetYButton().get()) {
-            Claw.getInstance().setIntakeRollers(Constants.ARM.INTAKE_SPEED);
-        } else if (operatorJoystick.GetAButton().get()) {
-            Claw.getInstance().setIntakeRollers(Constants.ARM.OUTTAKE_SPEED);
+        if (intakeOut.isHeld()) {
+            Arm.getInstance().setIntakeRollers(Constants.ARM.INTAKE_OUT_ROLLER_SPEED);
+        } else if (intakeIn.isHeld()) {
+            Arm.getInstance().setIntakeRollers(Constants.ARM.INTAKE_IN_ROLLER_SPEED);
         } else {
-            Claw.getInstance().setIntakeRollers(0);
+            Arm.getInstance().setIntakeRollers(0);
         }
     }
 

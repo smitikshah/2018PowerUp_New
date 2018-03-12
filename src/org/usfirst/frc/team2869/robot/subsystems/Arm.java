@@ -11,7 +11,7 @@ import org.usfirst.frc.team2869.robot.Constants.ARM;
 import org.usfirst.frc.team2869.robot.RobotState;
 import org.usfirst.frc.team2869.robot.RobotState.ArmControlState;
 import org.usfirst.frc.team2869.robot.RobotState.ArmState;
-import org.usfirst.frc.team2869.robot.util.drivers.MkMath;
+import org.usfirst.frc.team2869.robot.util.other.MkMath;
 import org.usfirst.frc.team2869.robot.util.other.Loop;
 import org.usfirst.frc.team2869.robot.util.other.Looper;
 import org.usfirst.frc.team2869.robot.util.other.Subsystem;

@@ -84,8 +84,8 @@ public final class Constants {
         public static final double CURRENT_HARDSTOP_LIMIT = 4;
         public static final double ZEROING_POWER = -0.25;
 
-        public static final double INTAKE_SPEED = -0.5;
-        public static final double OUTTAKE_SPEED = 0.4;
+        public static final double INTAKE_IN_ROLLER_SPEED = -0.5;
+        public static final double INTAKE_OUT_ROLLER_SPEED = 0.4;
         public static final boolean LEFT_INTAKE_ROLLER_INVERT = false;
         public static final boolean RIGHT_INTAKE_ROLLER_INVERT = true;
     }

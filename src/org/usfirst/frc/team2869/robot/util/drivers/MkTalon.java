@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.Constants.ARM;
 import org.usfirst.frc.team2869.robot.Constants.DRIVE;
+import org.usfirst.frc.team2869.robot.util.other.MkMath;
 
 public class MkTalon {
 
@@ -84,16 +85,16 @@ public class MkTalon {
         }
         masterTalon.configNominalOutputForward(0, Constants.kTimeoutMs);
         masterTalon.configNominalOutputReverse(0, Constants.kTimeoutMs);
-        masterTalon.configPeakOutputForward(1, Constants.kTimeoutMs);
-        masterTalon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+        masterTalon.configPeakOutputForward(0.15, Constants.kTimeoutMs);
+        masterTalon.configPeakOutputReverse(-0.15, Constants.kTimeoutMs);
         masterTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx,
                 Constants.kTimeoutMs);
         masterTalon.setNeutralMode(NeutralMode.Brake);
 
         slaveTalon.configNominalOutputForward(0, Constants.kTimeoutMs);
         slaveTalon.configNominalOutputReverse(0, Constants.kTimeoutMs);
-        slaveTalon.configPeakOutputForward(1, Constants.kTimeoutMs);
-        slaveTalon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+        slaveTalon.configPeakOutputForward(0.15, Constants.kTimeoutMs);
+        slaveTalon.configPeakOutputReverse(-0.15, Constants.kTimeoutMs);
         slaveTalon.setNeutralMode(NeutralMode.Brake);
         slaveTalon.follow(masterTalon);
 
