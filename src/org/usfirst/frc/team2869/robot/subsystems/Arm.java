@@ -25,7 +25,6 @@ public class Arm extends Subsystem {
     private double gearRatio = 0;
     private double testMaxVel = 0;
     private double armPosEnable = 0;
-    public final Encoder armEncoder;
     private SimPID armPID;
 
     private Arm() {
@@ -58,10 +57,6 @@ public class Arm extends Subsystem {
         rightIntakeRollerTalon.setInverted(Constants.ARM.RIGHT_INTAKE_ROLLER_INVERT);
         leftIntakeRollerTalon.setNeutralMode(NeutralMode.Brake);
         rightIntakeRollerTalon.setNeutralMode(NeutralMode.Brake);
-
-
-        armEncoder = new Encoder(Constants.ARM.ARM_ENCODER_PORT_A, Constants.ARM.ARM_ENCODER_PORT_B);
-        armEncoder.setDistancePerPulse(Constants.ARM.DEGREES_PER_PULSE);
 
         armPID = new SimPID(Constants.ARM.ARM_P, Constants.ARM.ARM_I, Constants.ARM.ARM_D, Constants.ARM.ARM_EBSILON);
         armPID.setMaxOutput(Constants.ARM.MAX_OUTPUT);
@@ -176,7 +171,7 @@ public class Arm extends Subsystem {
     public void setArmAngle(double angle) {
         armPID.setDesiredValue(angle);
         //armPID.setDesiredValue(RobotState.mArmState.state);
-        double currentArmAngle = armEncoder.get();
+        double currentArmAngle = getPosition();
         double output = armPID.calcPID(currentArmAngle) + calcHoldPosPower(currentArmAngle);
         armTalon.set(ControlMode.PercentOutput, output);
         System.out.println(currentArmAngle);
