@@ -74,7 +74,7 @@ public class Robot extends IterativeRobot {
             CrashTracker.logTeleopInit();
             RobotState.mMatchState = MatchState.TELEOP;
             RobotState.mDriveControlState = RobotState.DriveControlState.OPEN_LOOP;
-            RobotState.mArmControlState = ArmControlState.OPEN_LOOP;
+            RobotState.mArmControlState = ArmControlState.MOTION_MAGIC;
             mEnabledLooper.start();
         } catch (Throwable t) {
             CrashTracker.logThrowableCrash(t);

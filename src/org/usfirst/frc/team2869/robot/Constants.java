@@ -69,17 +69,17 @@ public final class Constants {
         public static final int ARM_MASTER_TALON_ID = 6;
         public static final int ARM_LEFT_INTAKE_ROLLER_ID = 10;
         public static final int ARM_Right_INTAKE_ROLLER_ID = 11;
-        public static final double RPM_MAX = 10; //RPM Max of Arm
+        public static final double RPM_MAX = 20.75; //RPM Max of Arm
         public static final double GEAR_RATIO = 1.0;
         public static final double MAX_RAW_VEL =
                 ((RPM_MAX / 60.0 / 10.0) * 4096.0) / GEAR_RATIO; // Degrees per second
-        public static final double ARM_P = 20 * ((0.1 * 1023.0) / (318)); //7.5 deg or 1390 units
+        public static final double ARM_P = 25 * ((0.1 * 1023.0) / (318)); //7.5 deg or 1390 units
         public static final double ARM_I = 0;//ARM_P / 100.0;
-        public static final double ARM_D = ARM_P * 0;
+        public static final double ARM_D = ARM_P * 75;
         public static final double ARM_F = (1023.0 / MAX_RAW_VEL);
 
         public static final double MOTION_MAGIC_CRUISE_VEL = MAX_RAW_VEL * 0.975;
-        public static final double MOTION_MAGIC_ACCEL = MAX_RAW_VEL * 0.5;
+        public static final double MOTION_MAGIC_ACCEL = MAX_RAW_VEL * 10;
 
         public static final double CURRENT_HARDSTOP_LIMIT = 4;
         public static final double ZEROING_POWER = -0.25;

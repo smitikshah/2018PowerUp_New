@@ -68,23 +68,22 @@ public class Arm extends Subsystem {
 
     @Override
     public void outputToSmartDashboard() {
-        if (Math.abs(armTalon.getSelectedSensorVelocity(Constants.kPIDLoopIdx)) > testMaxVel) {
-            testMaxVel = Math.abs(armTalon.getSelectedSensorVelocity(Constants.kPIDLoopIdx));
+    	
+        if (Math.abs(getRPM()) > maxRPM) {
+            maxRPM = Math.abs(getRPM());
         }
         SmartDashboard.putNumber("Arm Position", MkMath.nativeUnitsToAngle(armTalon.getSelectedSensorPosition(Constants.kPIDLoopIdx)));
         SmartDashboard.putNumber("Arm Velocity", MkMath.nativeUnitsToAngle(armTalon.getSelectedSensorVelocity(Constants.kPIDLoopIdx)));
         SmartDashboard.putNumber("Arm Setpoint", setpoint);
         SmartDashboard.putNumber("Arm Error", MkMath.nativeUnitsToAngle(armTalon.getClosedLoopError(Constants.kPIDLoopIdx)));
-        SmartDashboard.putNumber("Arm Max Vel", testMaxVel);
+        SmartDashboard.putNumber("Arm Max Vel", maxRPM);
         SmartDashboard.putString("Arm Control Mode", RobotState.mArmControlState.toString());
         SmartDashboard.putNumber("Arm Angle", getPosition());
         SmartDashboard.putNumber("Arm Absolute", armTalon.getSensorCollection().getPulseWidthPosition());
         SmartDashboard.putNumber("Arm Output", armTalon.getMotorOutputPercent());
         
-        if (Math.abs(getRPM()) > maxRPM) {
-            maxRPM = Math.abs(getRPM());
-        }
-        System.out.println(maxRPM);
+ 
+       
     }
     
     private double getRPM(){
