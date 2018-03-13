@@ -32,6 +32,7 @@ public class RobotState {
         ENABLE(0),
         INTAKE(10.8),
         SECOND_INTAKE(30),
+        PORTAL(195),
         SWITCH_PLACE(57);
 
         public final double state;

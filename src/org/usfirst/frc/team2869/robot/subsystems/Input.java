@@ -15,6 +15,8 @@ public class Input extends Subsystem {
     private final MkXboxControllerButton armSecondIntakeButton = operatorJoystick.getButton(MkXboxController.XBUTTON, "Arm Second Intake");
     private final MkXboxControllerButton armPlaceButton = operatorJoystick.getButton(MkXboxController.YBUTTON, "Arm Place");
     private final MkXboxControllerButton armChangeModeButton = operatorJoystick.getButton(MkXboxController.BACK_BUTTON, "Arm Change Mode");
+    //    private final MkXboxControllerButton armPortalButton = operatorJoystick.getButton(MkXboxController.BBUTTON, "Arm Portal Mode");
+
 
     private final MkXboxControllerButton intakeOut = operatorJoystick.getButton(MkXboxController.LEFT_BUMPER, "Intake Roller Out");
     private final MkXboxControllerButton intakeIn = operatorJoystick.getButton(MkXboxController.RIGHT_BUMPER, "Intake Roller In");
