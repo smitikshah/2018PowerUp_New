@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2869.robot;
 
+import static org.usfirst.frc.team2869.robot.Constants.ARM.RPM_MAX;
+
 /**
  * UNLESS OTHERWISE NOTED BY RAW/NATIVE/RPM,
  * ALL POSITION UNITS ARE IN INCHES and DEGREES
@@ -17,11 +19,10 @@ public final class Constants {
     public static final double PI = 3.14159265359;
 
     public static class DRIVE {
-
-        public static final int LEFT_MASTER_ID = RobotMap.leftMotor1;
-        public static final int LEFT_SLAVE_ID = RobotMap.leftMotor2;
-        public static final int RIGHT_MASTER_ID = RobotMap.rightMotor1;
-        public static final int RIGHT_SLAVE_ID = RobotMap.rightMotor2;
+        public static final int LEFT_MASTER_ID = 5;
+        public static final int LEFT_SLAVE_ID = 1;
+        public static final int RIGHT_MASTER_ID = 2;
+        public static final int RIGHT_SLAVE_ID = 3;
 
 
         public static final boolean LEFT_MASTER_INVERT = false;
@@ -47,14 +48,20 @@ public final class Constants {
         public static final double DRIVE_FOLLOWER_A = 0;
         public static final double DRIVE_FOLLOWER_ANG = 0;
 
-        public static final double RPM_MAX = 473.0; //Observed Max Speed for Drivetrain in RPM
+        public static final double LEFT_RPM_MAX = 488.0; //Observed Max Speed for Drivetrain in RPM
+        public static final double RIGHT_RPM_MAX = 502.0; //Observed Max Speed for Drivetrain in RPM
+
         public static final double MAX_VEL =
                 (RPM_MAX / 60) * (CIRCUMFERENCE); // Max Speed in Inches per second
         public static final double DRIVE_P = (0.1 * 1023.0) / (300.00);
         public static final double DRIVE_I = DRIVE_P / 100.0;
         public static final double DRIVE_D = 15 * DRIVE_P;
-        public static final double DRIVE_F = (1023.0 / ((RPM_MAX / 60.0 / 10.0)
+        public static final double LEFT_DRIVE_F = (1023.0 / ((LEFT_RPM_MAX / 60.0 / 10.0)
                 * 4096.0)); //Feedforwrd Term for Drivetrain using MAX Motor Units / Max Speed in Native Units Per 100ms
+        public static final double RIGHT_DRIVE_F = (1023.0 / ((RIGHT_RPM_MAX / 60.0 / 10.0)
+                * 4096.0)); //Feedforwrd Term for Drivetrain using MAX Motor Units / Max Speed in Native Units Per 100ms
+        public static final double PATH_WHEELBASE = 33.75;
+        public static final double OpenLoopFollower = -0.075;
     }
 
     public static class ARM {
@@ -62,28 +69,40 @@ public final class Constants {
         public static final int ARM_MASTER_TALON_ID = 6;
         public static final int ARM_LEFT_INTAKE_ROLLER_ID = 10;
         public static final int ARM_Right_INTAKE_ROLLER_ID = 11;
-        public static final double RPM_MAX = 19.5; //RPM Max of Arm
-        public static final double GEAR_RATIO = 22.0
-                / 336.0; //Gear Ratio between encoder and arm - Used to calulate arm position in degrees
+        public static final double RPM_MAX = 20.75; //RPM Max of Arm
+        public static final double GEAR_RATIO = 1.0;
         public static final double MAX_RAW_VEL =
                 ((RPM_MAX / 60.0 / 10.0) * 4096.0) / GEAR_RATIO; // Degrees per second
-        public static final double ARM_P = 15 * ((0.1 * 1023.0) / (1400)); //7.5 deg or 1390 units
+        public static final double ARM_P = 25 * ((0.1 * 1023.0) / (318)); //7.5 deg or 1390 units
         public static final double ARM_I = 0;//ARM_P / 100.0;
-        public static final double ARM_D = ARM_P * 15;
+        public static final double ARM_D = ARM_P * 75;
         public static final double ARM_F = (1023.0 / MAX_RAW_VEL);
 
-        public static final double ARM_FORWARD_LIMIT = 250;
-        public static final double ARM_REVERSE_LIMIT = 0;
         public static final double MOTION_MAGIC_CRUISE_VEL = MAX_RAW_VEL * 0.975;
-        public static final double MOTION_MAGIC_ACCEL = MAX_RAW_VEL * 1.2;
+        public static final double MOTION_MAGIC_ACCEL = MAX_RAW_VEL * 10;
 
         public static final double CURRENT_HARDSTOP_LIMIT = 4;
         public static final double ZEROING_POWER = -0.25;
 
-        public static final double SAFE_CURRENT_OUTPUT = 30;
-        //public static final double MAX_SAFE_SPEED = (RPM_MAX / 60.0) * 360.0 * 1.5;
+        public static final double INTAKE_IN_ROLLER_SPEED = -0.5;
+        public static final double INTAKE_OUT_ROLLER_SPEED = 0.4;
+        public static final boolean LEFT_INTAKE_ROLLER_INVERT = false;
+        public static final boolean RIGHT_INTAKE_ROLLER_INVERT = true;
 
 
+        public static final int ARM_ENCODER_PORT_A = 0;
+        public static final int ARM_ENCODER_PORT_B = 1;
+        public static final double DEGREES_PER_PULSE = 1.0;//Maps pulses to degrees
+        public static final double ARM_EBSILON = 5;//Acceptable degrees of error
+        public static final double MAX_OUTPUT = .7;//Max allowable power
+        public static final double COM_DIST = 15.0;//distance of the center of mass of the arm from the pivot point, inches
+        public static final double ARM_WEIGHT = 15.0;//Weight of arm in pounds
+        public static final int ARM_ZERO_POS = 538;
+    }
+
+    public static class AUTO {
+        public static final String pathPath = "/home/lvuser/paths/";
+        public static final String[] autoNames = {"DriveStraight"};
     }
 
     public static class INPUT {

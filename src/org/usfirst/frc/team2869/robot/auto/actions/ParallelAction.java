@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2869.robot.auto.actions;
 
+import org.usfirst.frc.team2869.robot.util.auto.Action;
+
 import java.util.ArrayList;
 import java.util.List;
 

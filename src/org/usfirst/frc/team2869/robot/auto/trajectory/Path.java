@@ -1,18 +1,22 @@
 package org.usfirst.frc.team2869.robot.auto.trajectory;
 
+import jaci.pathfinder.Trajectory;
+
 /**
  * Base class for an autonomous path.
+ *
+ * @author Jared341
  */
 public class Path {
 
-    protected Trajectory.Pair go_left_pair_;
+    protected Pair pair_;
     protected String name_;
-    protected boolean go_left_;
+    private boolean invert;
 
-    public Path(String name, Trajectory.Pair go_left_pair) {
+    public Path(String name, Pair pair_) {
         name_ = name;
-        go_left_pair_ = go_left_pair;
-        go_left_ = true;
+        this.pair_ = pair_;
+        invert = false;
     }
 
     public Path() {
@@ -23,33 +27,62 @@ public class Path {
         return name_;
     }
 
-    public void goLeft() {
-        go_left_ = true;
-        go_left_pair_.left.setInvertedY(false);
-        go_left_pair_.right.setInvertedY(false);
+    public void invert() {
+        invert = true;
+        for (Trajectory.Segment segment : pair_.left.segments) {
+            segment.position = -segment.position;
+            segment.velocity = -segment.velocity;
+            segment.acceleration = -segment.acceleration;
+            segment.jerk = -segment.jerk;
+        }
+
+        for (Trajectory.Segment segment : pair_.right.segments) {
+            segment.position = -segment.position;
+            segment.velocity = -segment.velocity;
+            segment.acceleration = -segment.acceleration;
+            segment.jerk = -segment.jerk;
+        }
     }
 
-    public void goRight() {
-        go_left_ = false;
-        go_left_pair_.left.setInvertedY(true);
-        go_left_pair_.right.setInvertedY(true);
+    public void flipSides() {
+        this.pair_ = new Pair(pair_.right, pair_.left);
     }
 
     public Trajectory getLeftWheelTrajectory() {
-        return (go_left_ ? go_left_pair_.left : go_left_pair_.right);
+        return invert ? pair_.right : pair_.left;
     }
 
     public Trajectory getRightWheelTrajectory() {
-        return (go_left_ ? go_left_pair_.right : go_left_pair_.left);
+        return invert ? pair_.left : pair_.right;
     }
 
-    public Trajectory.Pair getPair() {
-        return go_left_pair_;
+    public Pair getPair() {
+        return pair_;
     }
 
     public double getEndHeading() {
-        int numSegments = getLeftWheelTrajectory().getNumSegments();
-        Trajectory.Segment lastSegment = getLeftWheelTrajectory().getSegment(numSegments - 1);
+        int numSegments = getLeftWheelTrajectory().length();
+        Trajectory.Segment lastSegment = getLeftWheelTrajectory().get(numSegments - 1);
         return lastSegment.heading;
+    }
+
+    public double getTime() {
+        return pair_.left.length() * pair_.left.get(0).dt;
+    }
+
+    public Path copyPath() {
+        return new Path(name_,
+                new Pair(getLeftWheelTrajectory().copy(), getRightWheelTrajectory().copy()));
+    }
+
+    public static class Pair {
+
+        public Trajectory left;
+        public Trajectory right;
+
+        public Pair(Trajectory left, Trajectory right) {
+            this.left = left;
+            this.right = right;
+        }
     }
 }

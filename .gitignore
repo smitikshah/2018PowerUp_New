@@ -115,3 +115,4 @@ fabric.properties
 .idea/sonarlint
 .idea/
 *.iml
+*.class

@@ -45,6 +45,27 @@ public class DriveHelper {
     }
 
 
+    public static DriveSignal SmitiDrive(double forward, double reverse, double turn, boolean cubeInputs) {
+        double deadband = .08;
+        double power = 0.0;
+
+        if (turn < deadband && turn > -deadband) turn = 0.0;
+        if (forward < deadband && reverse > -deadband) forward = 0.0;
+        if (reverse < deadband && reverse > -deadband) reverse = 0.0;
+
+        if (forward > 0.0) power = forward;
+        else power = reverse;
+
+        double left;
+        double right;
+
+        left = power + turn;
+        right = power - turn;
+
+        return new DriveSignal(left, right);
+    }
+
+
     protected static double limit(double num) {
         if (num > 1.0) {
             return 1.0;

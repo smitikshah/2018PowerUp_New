@@ -1,25 +1,17 @@
 package org.usfirst.frc.team2869.robot.auto.modes;
 
-import org.usfirst.frc.team2869.robot.auto.actions.AutoModeBase;
-import org.usfirst.frc.team2869.robot.auto.actions.AutoModeEndedException;
-import org.usfirst.frc.team2869.robot.auto.actions.DeserializePath;
-import org.usfirst.frc.team2869.robot.auto.actions.DrivePathAction;
 
-import java.io.IOException;
+import org.usfirst.frc.team2869.robot.AutoChooser;
+import org.usfirst.frc.team2869.robot.auto.actions.DrivePathAction;
+import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
+import org.usfirst.frc.team2869.robot.util.auto.AutoModeEndedException;
 
 public class DriveStraightMode extends AutoModeBase {
 
+    @Override
     protected void routine() throws AutoModeEndedException {
-        try {
-            runAction(new DrivePathAction(DeserializePath.getPathFromFile("StraightPath")));
-            //new ParallelAction(Arrays.asList(
-            //,
-            //		new MoveArmAction(ArmState.SWITCH_PLACE))
-            //	));
 
-            //runAction(new RollerAction(0.50, 1));
-        } catch (IOException e) {
-            System.err.println("Caught IOException: " + e.getMessage());
-        }
+        runAction(new DrivePathAction(AutoChooser.autoPaths.get("DriveStraight"), false, false, false));
+
     }
 }

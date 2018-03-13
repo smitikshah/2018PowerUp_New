@@ -1,33 +1,23 @@
 package org.usfirst.frc.team2869.robot.subsystems;
 
-import org.usfirst.frc.team2869.robot.OI;
+import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.RobotState;
-import org.usfirst.frc.team2869.robot.RobotState.DriveControlState;
-import org.usfirst.frc.team2869.robot.util.drivers.Xbox360;
+import org.usfirst.frc.team2869.robot.util.drivers.MkXboxController;
+import org.usfirst.frc.team2869.robot.util.drivers.MkXboxControllerButton;
 import org.usfirst.frc.team2869.robot.util.other.*;
 
 public class Input extends Subsystem {
+    private final MkXboxController driverJoystick = new MkXboxController(0);
+    private final MkXboxController operatorJoystick = new MkXboxController(1);
+    private final MkXboxControllerButton driveModeChangeButton = driverJoystick.getButton(1, "Change Drive Mode");
 
+    private final MkXboxControllerButton armIntakeButton = operatorJoystick.getButton(MkXboxController.ABUTTON, "Arm Intake");
+    private final MkXboxControllerButton armSecondIntakeButton = operatorJoystick.getButton(MkXboxController.XBUTTON, "Arm Second Intake");
+    private final MkXboxControllerButton armPlaceButton = operatorJoystick.getButton(MkXboxController.YBUTTON, "Arm Place");
+    private final MkXboxControllerButton armChangeModeButton = operatorJoystick.getButton(MkXboxController.BACK_BUTTON, "Arm Change Mode");
 
-    //private final Joystick operatorJoystick = new Joystick(1);
-
-
-    private final Xbox360 driverJoystick = OI.driverJoystick;
-    //private final Xbox360 JoystickButton clawButton = OI.driverJoystick.GetXButton();
-    //private final JoystickButton armBumperButton = operatorJoystick.getButton(4, "Arm Bumper");
-    //private final JoystickButton armSwitchButton = operatorJoystick.getButton(6, "Arm Switch");
-    //private final JoystickButton armSwitchReverseButton = operatorJoystick
-    //.getButton(1, "Arm Switch Reverse");
-    //private final MkJoystickButton armChangeModeButton = operatorJoystick
-    //.getButton(8, "Arm Change Mode");
-    //private final MkJoystickButton armZeroButton = operatorJoystick.getButton(9, "Arm Zero");
-    //private final MkJoystickButton intakeRollerIn = operatorJoystick
-    //.getButton(3,
-    //"Intake Roller In");
-    //private final MkJoystickButton intakeRollerOut = operatorJoystick
-    //.getButton(5,
-    //"Intake Roller Out");
-
+    private final MkXboxControllerButton intakeOut = operatorJoystick.getButton(MkXboxController.LEFT_BUMPER, "Intake Roller Out");
+    private final MkXboxControllerButton intakeIn = operatorJoystick.getButton(MkXboxController.RIGHT_BUMPER, "Intake Roller In");
 
     public Input() {
 
@@ -40,15 +30,6 @@ public class Input extends Subsystem {
 
     @Override
     public void outputToSmartDashboard() {
-
-    }
-
-    @Override
-    public void stop() {
-
-    }
-
-    public void zeroSensors() {
 
     }
 
@@ -72,8 +53,8 @@ public class Input extends Subsystem {
             public void onLoop(double timestamp) {
                 synchronized (Input.this) {
                     if (RobotState.mMatchState.equals(RobotState.MatchState.TELEOP)) {
-                        updateDriveInput(); // Could be an issue 2-20-18
-                        //updateArmInput();
+                        updateDriveInput();
+                        updateArmInput();
                     }
                 }
             }
@@ -85,22 +66,58 @@ public class Input extends Subsystem {
         enabledLooper.register(mLoop);
     }
 
-    public void updateDriveInput() {
-        double a = DriveHelper
-                .cheesyDrive((driverJoystick.GetAllTriggers()),
-                        (driverJoystick.GetLeftX()), true).getLeft();
-        double b = DriveHelper
-                .cheesyDrive((driverJoystick.GetAllTriggers()),
-                        (driverJoystick.GetLeftX()), true).getRight();
-        DriveSignal sig = new DriveSignal(a * .5, b * .5);
-        if (RobotState.mDriveControlState == DriveControlState.VELOCITY_SETPOINT) {
-            DriveTrain.getInstance().setVelocitySetpoint(sig);
-            //	System.out.println("Rotate: " + -driverJoystick.getRawAxis(0) + "Throttle: " + -driverJoystick.getRawAxis(2) + driverJoystick.getRawAxis(3));
-        } else if (RobotState.mDriveControlState == DriveControlState.OPEN_LOOP) {
+    public synchronized void updateDriveInput() {
+        DriveSignal sig = DriveHelper.SmitiDrive(driverJoystick.getRawAxis(MkXboxController.RIGHT_TRIGGER), -driverJoystick.getRawAxis(MkXboxController.LEFT_TRIGGER), driverJoystick.getRawAxis(MkXboxController.LEFT_XAXIS), true);
+        if (driveModeChangeButton.isPressed()) {
+            RobotState.mDriveControlState =
+                    RobotState.mDriveControlState.equals(RobotState.DriveControlState.OPEN_LOOP)
+                            ? RobotState.DriveControlState.VELOCITY_SETPOINT : RobotState.DriveControlState.OPEN_LOOP;
+        }
+        if (RobotState.mDriveControlState == RobotState.DriveControlState.VELOCITY_SETPOINT) {
+            DriveTrain.getInstance().setVelocitySetpoint(sig, 0, 0);
+        } else {
             DriveTrain.getInstance().setOpenLoop(sig);
+        }
+    }
+
+    public synchronized void updateArmInput() {
+        switch (RobotState.mArmControlState) {
+            case MOTION_MAGIC:
+                if (armIntakeButton.isPressed()) {
+                    RobotState.mArmState = RobotState.ArmState.INTAKE;
+                } else if (armSecondIntakeButton.isPressed()) {
+                    RobotState.mArmState = RobotState.ArmState.SECOND_INTAKE;
+                } else if (armPlaceButton.isPressed()) {
+                    RobotState.mArmState = RobotState.ArmState.SWITCH_PLACE;
+                }
+                if (armChangeModeButton.isPressed()) {
+                    RobotState.mArmControlState = RobotState.ArmControlState.OPEN_LOOP;
+                }
+                break;
+            case OPEN_LOOP:
+                Arm.getInstance()
+                        .setOpenLoop(MkMath
+                                .handleDeadband(operatorJoystick.getRawAxis(MkXboxController.LEFT_YAXIS),
+                                        Constants.INPUT.OPERATOR_DEADBAND));
+                if (armChangeModeButton.isPressed()) {
+                    Arm.getInstance().setEnable();
+                    RobotState.mArmControlState = RobotState.ArmControlState.MOTION_MAGIC;
+                }
+                break;
+            default:
+                System.out
+                        .println("Unexpected arm control state: " + RobotState.mArmControlState);
+                break;
         }
 
 
+        if (intakeOut.isHeld()) {
+            Arm.getInstance().setIntakeRollers(Constants.ARM.INTAKE_OUT_ROLLER_SPEED);
+        } else if (intakeIn.isHeld()) {
+            Arm.getInstance().setIntakeRollers(Constants.ARM.INTAKE_IN_ROLLER_SPEED);
+        } else {
+            Arm.getInstance().setIntakeRollers(0);
+        }
     }
 
     public static class InstanceHolder {
