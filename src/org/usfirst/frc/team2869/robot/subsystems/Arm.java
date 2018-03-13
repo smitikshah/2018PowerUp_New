@@ -149,9 +149,12 @@ public class Arm extends Subsystem {
         enabledLooper.register(mLoop);
     }
 
-    public void updateArmSetpoint() {
-        armTalon.set(ControlMode.MotionMagic, MkMath.angleToNativeUnits(60));
-        setpoint = RobotState.mArmState.state;
+    private void updateArmSetpoint() {
+        if (RobotState.mArmState.equals(ArmState.ENABLE)) {
+            armTalon.set(ControlMode.MotionMagic, MkMath.angleToNativeUnits(armPosEnable));
+        } else {
+            armTalon.set(ControlMode.MotionMagic, MkMath.angleToNativeUnits(RobotState.mArmState.state));
+        }
     }
 
     private double getPosition() {

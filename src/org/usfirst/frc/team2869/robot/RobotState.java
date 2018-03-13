@@ -8,7 +8,7 @@ public class RobotState {
     public static MatchState mMatchState = MatchState.DISABLED;
     public static DriveControlState mDriveControlState = DriveControlState.VELOCITY_SETPOINT;
     public static ArmControlState mArmControlState = ArmControlState.MOTION_MAGIC;
-    public static ArmState mArmState = ArmState.ZEROED;
+    public static ArmState mArmState = ArmState.ENABLE;
     public static MatchData matchData = MatchData.defaultMatch;
 
     public enum MatchState {

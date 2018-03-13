@@ -11,9 +11,10 @@ public class Input extends Subsystem {
     private final MkXboxController operatorJoystick = new MkXboxController(1);
     private final MkXboxControllerButton driveModeChangeButton = driverJoystick.getButton(1, "Change Drive Mode");
 
-    private final MkXboxControllerButton armUpButton = operatorJoystick.getButton(MkXboxController.BBUTTON, "Arm Up");
-    //private final MkXboxControllerButton armDownButton = operatorJoystick.getButton(2, "Arm Down");
-    private final MkXboxControllerButton armChangeModeButton = operatorJoystick.getButton(MkXboxController.XBUTTON, "Arm Change Mode");
+    private final MkXboxControllerButton armIntakeButton = operatorJoystick.getButton(MkXboxController.ABUTTON, "Arm Intake");
+    private final MkXboxControllerButton armSecondIntakeButton = operatorJoystick.getButton(MkXboxController.XBUTTON, "Arm Second Intake");
+    private final MkXboxControllerButton armPlaceButton = operatorJoystick.getButton(MkXboxController.YBUTTON, "Arm Place");
+    private final MkXboxControllerButton armChangeModeButton = operatorJoystick.getButton(MkXboxController.BACK_BUTTON, "Arm Change Mode");
 
     private final MkXboxControllerButton intakeOut = operatorJoystick.getButton(MkXboxController.YBUTTON, "Intake Roller Out");
     private final MkXboxControllerButton intakeIn = operatorJoystick.getButton(MkXboxController.ABUTTON, "Intake Roller In");
@@ -82,7 +83,11 @@ public class Input extends Subsystem {
     public synchronized void updateArmInput() {
         switch (RobotState.mArmControlState) {
             case MOTION_MAGIC:
-                if (armUpButton.isPressed()) {
+                if (armIntakeButton.isPressed()) {
+                    RobotState.mArmState = RobotState.ArmState.INTAKE;
+                } else if (armSecondIntakeButton.isPressed()) {
+                    RobotState.mArmState = RobotState.ArmState.SECOND_INTAKE;
+                } else if (armPlaceButton.isPressed()) {
                     RobotState.mArmState = RobotState.ArmState.SWITCH_PLACE;
                 }
                 if (armChangeModeButton.isPressed()) {
