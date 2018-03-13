@@ -85,24 +85,24 @@ public class MkTalon {
         }
         masterTalon.configNominalOutputForward(0, Constants.kTimeoutMs);
         masterTalon.configNominalOutputReverse(0, Constants.kTimeoutMs);
-        masterTalon.configPeakOutputForward(0.15, Constants.kTimeoutMs);
-        masterTalon.configPeakOutputReverse(-0.15, Constants.kTimeoutMs);
+        masterTalon.configPeakOutputForward(1, Constants.kTimeoutMs);
+        masterTalon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
         masterTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx,
                 Constants.kTimeoutMs);
         masterTalon.setNeutralMode(NeutralMode.Brake);
 
         slaveTalon.configNominalOutputForward(0, Constants.kTimeoutMs);
         slaveTalon.configNominalOutputReverse(0, Constants.kTimeoutMs);
-        slaveTalon.configPeakOutputForward(0.15, Constants.kTimeoutMs);
-        slaveTalon.configPeakOutputReverse(-0.15, Constants.kTimeoutMs);
+        slaveTalon.configPeakOutputForward(1, Constants.kTimeoutMs);
+        slaveTalon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
         slaveTalon.setNeutralMode(NeutralMode.Brake);
         slaveTalon.follow(masterTalon);
 
-        masterTalon.configVoltageCompSaturation(12.9, Constants.kTimeoutMs);
+        masterTalon.configVoltageCompSaturation(12.7, Constants.kTimeoutMs);
         masterTalon.enableVoltageCompensation(true);
         masterTalon.configVoltageMeasurementFilter(32, Constants.kTimeoutMs);
 
-        slaveTalon.configVoltageCompSaturation(12.9, Constants.kTimeoutMs);
+        slaveTalon.configVoltageCompSaturation(12.7, Constants.kTimeoutMs);
         slaveTalon.enableVoltageCompensation(true);
         slaveTalon.configVoltageMeasurementFilter(32, Constants.kTimeoutMs);
 

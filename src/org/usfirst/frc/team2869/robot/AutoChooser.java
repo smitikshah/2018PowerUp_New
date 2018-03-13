@@ -32,9 +32,9 @@ public class AutoChooser {
         actionChooser.addObject("Drive Straight", AutoAction.DRIVE_STRAIGHT);
         SmartDashboard.putData("Auto Action Chooser", actionChooser);
         SmartDashboard.putNumber("Auto Delay", 0.0);
-        for (String pathName : Constants.AUTO.autoNames) {
+     /*   for (String pathName : Constants.AUTO.autoNames) {
             autoPaths.put(pathName, DeserializePath.getPathFromFile(pathName));
-        }
+        } */
     }
 
     public static AutoModeBase getAutoMode() {
@@ -68,7 +68,8 @@ public class AutoChooser {
     }
 
     private static AutoModeBase getSwitchMode() {
-        if (DriveTrain.getInstance().isEncodersConnected()) {
+        return new CenterSwitchOpenLoopGyro(RobotState.matchData.switchPosition);
+      /*  if (DriveTrain.getInstance().isEncodersConnected()) {
             if (positionChooser.getSelected() == AutoPosition.LEFT) {
                 return new LeftSwitchMode(RobotState.matchData.switchPosition);
             }
@@ -92,7 +93,7 @@ public class AutoChooser {
             }
         }
         CrashTracker.logMarker("Couldn't Get Switch Mode");
-        return null;
+        return null; */
     }
 
 
