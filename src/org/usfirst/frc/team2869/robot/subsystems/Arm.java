@@ -26,17 +26,18 @@ public class Arm extends Subsystem {
     private double testMaxVel = 0;
     private double armPosEnable = 0;
     private SimPID armPID;
+    private double maxRPM = 0;
 
     private Arm() {
         armTalon = new TalonSRX(ARM.ARM_MASTER_TALON_ID);
         armTalon.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
         armTalon.setSensorPhase(true);
-        armTalon.setInverted(false);
+        armTalon.setInverted(true);
 
         armTalon.configNominalOutputForward(0, Constants.kTimeoutMs);
         armTalon.configNominalOutputReverse(0, Constants.kTimeoutMs);
-        armTalon.configPeakOutputForward(0.15, Constants.kTimeoutMs);
-        armTalon.configPeakOutputReverse(-0.15, Constants.kTimeoutMs);
+        armTalon.configPeakOutputForward(1, Constants.kTimeoutMs);
+        armTalon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
 
         armTalon.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
         armTalon.config_kF(Constants.kSlotIdx, ARM.ARM_F, Constants.kTimeoutMs);
@@ -46,8 +47,6 @@ public class Arm extends Subsystem {
 
         armTalon.configMotionCruiseVelocity((int) ARM.MOTION_MAGIC_CRUISE_VEL, Constants.kTimeoutMs);
         armTalon.configMotionAcceleration((int) ARM.MOTION_MAGIC_ACCEL, Constants.kTimeoutMs);
-
-        armTalon.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
         armTalon.setNeutralMode(NeutralMode.Brake);
 
         leftIntakeRollerTalon = new VictorSPX(Constants.ARM.ARM_LEFT_INTAKE_ROLLER_ID);
@@ -60,6 +59,7 @@ public class Arm extends Subsystem {
 
         armPID = new SimPID(Constants.ARM.ARM_P, Constants.ARM.ARM_I, Constants.ARM.ARM_D, Constants.ARM.ARM_EBSILON);
         armPID.setMaxOutput(Constants.ARM.MAX_OUTPUT);
+        armTalon.setSelectedSensorPosition((int) armTalon.getSensorCollection().getPulseWidthPosition() + -Constants.ARM.ARM_ZERO_POS, Constants.kPIDLoopIdx, Constants.kTimeoutMs);;
     }
 
     public static Arm getInstance() {
@@ -71,13 +71,25 @@ public class Arm extends Subsystem {
         if (Math.abs(armTalon.getSelectedSensorVelocity(Constants.kPIDLoopIdx)) > testMaxVel) {
             testMaxVel = Math.abs(armTalon.getSelectedSensorVelocity(Constants.kPIDLoopIdx));
         }
-        SmartDashboard.putNumber("Arm Position", armTalon.getSelectedSensorPosition(Constants.kPIDLoopIdx));
-        SmartDashboard.putNumber("Arm Velocity", armTalon.getSelectedSensorVelocity(Constants.kPIDLoopIdx));
-        SmartDashboard.putNumber("Arm Setpoint", armTalon.getClosedLoopError(Constants.kPIDLoopIdx));
-        SmartDashboard.putNumber("Arm Error", armTalon.getClosedLoopError(Constants.kPIDLoopIdx));
+        SmartDashboard.putNumber("Arm Position", MkMath.nativeUnitsToAngle(armTalon.getSelectedSensorPosition(Constants.kPIDLoopIdx)));
+        SmartDashboard.putNumber("Arm Velocity", MkMath.nativeUnitsToAngle(armTalon.getSelectedSensorVelocity(Constants.kPIDLoopIdx)));
+        SmartDashboard.putNumber("Arm Setpoint", setpoint);
+        SmartDashboard.putNumber("Arm Error", MkMath.nativeUnitsToAngle(armTalon.getClosedLoopError(Constants.kPIDLoopIdx)));
         SmartDashboard.putNumber("Arm Max Vel", testMaxVel);
         SmartDashboard.putString("Arm Control Mode", RobotState.mArmControlState.toString());
         SmartDashboard.putNumber("Arm Angle", getPosition());
+        SmartDashboard.putNumber("Arm Absolute", armTalon.getSensorCollection().getPulseWidthPosition());
+        SmartDashboard.putNumber("Arm Output", armTalon.getMotorOutputPercent());
+        
+        if (Math.abs(getRPM()) > maxRPM) {
+            maxRPM = Math.abs(getRPM());
+        }
+        System.out.println(maxRPM);
+    }
+    
+    private double getRPM(){
+    	return ((armTalon.getSelectedSensorVelocity(0) * 60.0 * 10.0) / Constants.DRIVE.CODES_PER_REV)
+         * ARM.GEAR_RATIO;
     }
 
     @Override
@@ -115,7 +127,6 @@ public class Arm extends Subsystem {
                             updateArmSetpoint();
                             return;
                         case ZEROING:
-                            zeroArm();
                             return;
                         case OPEN_LOOP:
                             return;
@@ -139,23 +150,8 @@ public class Arm extends Subsystem {
     }
 
     public void updateArmSetpoint() {
-        armTalon.set(ControlMode.MotionMagic, MkMath.angleToNativeUnits(RobotState.mArmState.state));
+        armTalon.set(ControlMode.MotionMagic, MkMath.angleToNativeUnits(60));
         setpoint = RobotState.mArmState.state;
-    }
-
-    private void zeroArm() {
-        if (armTalon.getOutputCurrent() > ARM.CURRENT_HARDSTOP_LIMIT) {
-            RobotState.mArmControlState = ArmControlState.OPEN_LOOP;
-            setOpenLoop(0);
-            edu.wpi.first.wpilibj.Timer.delay(0.25);
-            armTalon.setSelectedSensorPosition(0, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-            RobotState.mArmState = ArmState.ZEROED;
-            RobotState.mArmControlState = ArmControlState.MOTION_MAGIC;
-            System.out.println(armTalon.getOutputCurrent());
-        } else {
-            setOpenLoop(ARM.ZEROING_POWER);
-        }
-
     }
 
     private double getPosition() {

@@ -65,6 +65,8 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         allPeriodic();
     }
+    
+
 
     @Override
     public void teleopInit() {
@@ -72,7 +74,7 @@ public class Robot extends IterativeRobot {
             CrashTracker.logTeleopInit();
             RobotState.mMatchState = MatchState.TELEOP;
             RobotState.mDriveControlState = RobotState.DriveControlState.OPEN_LOOP;
-            RobotState.mArmControlState = ArmControlState.MOTION_MAGIC;
+            RobotState.mArmControlState = ArmControlState.OPEN_LOOP;
             mEnabledLooper.start();
         } catch (Throwable t) {
             CrashTracker.logThrowableCrash(t);
@@ -107,6 +109,7 @@ public class Robot extends IterativeRobot {
     private void allPeriodic() {
         try {
             mEnabledLooper.outputToSmartDashboard();
+            mSubsystemManager.outputToSmartDashboard();
         } catch (Throwable t) {
             CrashTracker.logThrowableCrash(t);
             throw t;

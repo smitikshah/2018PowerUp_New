@@ -12,7 +12,7 @@ import org.usfirst.frc.team2869.robot.util.other.MkMath;
 public class MkTalon {
 
     private final TalonSRX masterTalon;
-    private final VictorSPX slaveTalon;
+    private final TalonSRX slaveTalon;
     private int masterID, slaveID;
     private TalonPosition side;
     private double maxRPM = 0;
@@ -23,7 +23,7 @@ public class MkTalon {
      */
     public MkTalon(int master, int slave, TalonPosition side) {
         masterTalon = new TalonSRX(master);
-        slaveTalon = new VictorSPX(slave);
+        slaveTalon = new TalonSRX(slave);
 
         this.side = side;
 

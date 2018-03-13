@@ -4,18 +4,12 @@ import org.usfirst.frc.team2869.robot.util.other.MatchData;
 
 public class RobotState {
 
-    public static SystemState mSystemState = SystemState.IDLE;
+ 
     public static MatchState mMatchState = MatchState.DISABLED;
     public static DriveControlState mDriveControlState = DriveControlState.VELOCITY_SETPOINT;
     public static ArmControlState mArmControlState = ArmControlState.MOTION_MAGIC;
     public static ArmState mArmState = ArmState.ZEROED;
     public static MatchData matchData = MatchData.defaultMatch;
-
-
-    // Intenal state of the system
-    public enum SystemState {
-        IDLE
-    }
 
     public enum MatchState {
         AUTO, TELEOP, DISABLED
@@ -36,8 +30,9 @@ public class RobotState {
 
     public enum ArmState {
         ENABLE(0),
-        ZEROED(0),
-        SWITCH_PLACE(40);
+        INTAKE(10.8),
+        SECOND_INTAKE(30),
+        SWITCH_PLACE(57);
 
         public final double state;
 
