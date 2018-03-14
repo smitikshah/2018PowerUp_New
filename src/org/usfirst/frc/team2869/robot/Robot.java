@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot {
         try {
             CrashTracker.logRobotInit();
             mSubsystemManager.registerEnabledLoops(mEnabledLooper);
-            //AutoChooser.loadAutos();
+            AutoChooser.loadAutos();
         } catch (Throwable t) {
             CrashTracker.logThrowableCrash(t);
             throw t;
