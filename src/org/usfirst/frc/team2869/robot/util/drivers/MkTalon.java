@@ -209,10 +209,10 @@ public class MkTalon {
     public void updateSmartDash() {
         SmartDashboard.putNumber(side.toString() + " Velocity", getSpeed());
         SmartDashboard.putNumber(side.toString() + " Error", getError());
-    /*    SmartDashboard.putNumber(side.toString() + " Master Output", masterTalon.getMotorOutputPercent());
-        SmartDashboard.putNumber(side.toString() + " Slave Output", slaveTalon.getMotorOutputPercent());
+       SmartDashboard.putNumber(side.toString() + " Master Output", masterTalon.getMotorOutputPercent());
+      /*  SmartDashboard.putNumber(side.toString() + " Slave Output", slaveTalon.getMotorOutputPercent());
 
-        SmartDashboard.putNumber(side.toString() + " Current", masterTalon.getOutputCurrent()); */
+        SmartDashboard.putNumber(side.toString() + " Current", masterTalon.getOutputCurrent());  */
         SmartDashboard.putNumber(side.toString() + " Encoder Pos (Native)", masterTalon.getSelectedSensorPosition(Constants.kSlotIdx));
         SmartDashboard.putNumber(side.toString() + " Position", getPosition());
         if (Math.abs(getRPM()) > maxRPM) {
