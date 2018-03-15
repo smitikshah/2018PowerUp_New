@@ -271,6 +271,10 @@ public class DriveTrain extends Subsystem {
         enabledLooper.register(mLoop);
     }
 
+    public boolean isGyroConnected() {
+        return navX.isConnected();
+    }
+
     public boolean isEncodersConnected() {
         return leftDrive.isEncoderConnected() && rightDrive.isEncoderConnected();
     }
