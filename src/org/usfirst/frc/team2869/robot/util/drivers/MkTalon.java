@@ -2,7 +2,6 @@ package org.usfirst.frc.team2869.robot.util.drivers;
 
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.Constants.ARM;
@@ -210,10 +209,11 @@ public class MkTalon {
     public void updateSmartDash() {
         SmartDashboard.putNumber(side.toString() + " Velocity", getSpeed());
         SmartDashboard.putNumber(side.toString() + " Error", getError());
-        SmartDashboard.putNumber(side.toString() + " Master Output", masterTalon.getMotorOutputPercent());
+    /*    SmartDashboard.putNumber(side.toString() + " Master Output", masterTalon.getMotorOutputPercent());
         SmartDashboard.putNumber(side.toString() + " Slave Output", slaveTalon.getMotorOutputPercent());
 
-        SmartDashboard.putNumber(side.toString() + " Current", masterTalon.getOutputCurrent());
+        SmartDashboard.putNumber(side.toString() + " Current", masterTalon.getOutputCurrent()); */
+        SmartDashboard.putNumber(side.toString() + " Encoder Pos (Native)", masterTalon.getSelectedSensorPosition(Constants.kSlotIdx));
         SmartDashboard.putNumber(side.toString() + " Position", getPosition());
         if (Math.abs(getRPM()) > maxRPM) {
             maxRPM = Math.abs(getRPM());
