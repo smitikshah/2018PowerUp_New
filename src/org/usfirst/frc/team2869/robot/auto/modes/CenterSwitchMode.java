@@ -26,6 +26,8 @@ public class CenterSwitchMode extends AutoModeBase {
             case RIGHT:
                 rightRoutine();
                 break;
+            default:
+                CrashTracker.logMarker("Invalid Auto Position");
         }
     }
 

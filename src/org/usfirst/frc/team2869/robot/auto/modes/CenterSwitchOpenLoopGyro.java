@@ -7,6 +7,8 @@ import org.usfirst.frc.team2869.robot.auto.actions.OpenLoopFollowHeading;
 import org.usfirst.frc.team2869.robot.auto.actions.RollerAction;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeEndedException;
+import org.usfirst.frc.team2869.robot.util.logging.CrashTracker;
+
 public class CenterSwitchOpenLoopGyro extends AutoModeBase {
 
     private AutoChooser.GameObjectPosition position;
@@ -24,6 +26,8 @@ public class CenterSwitchOpenLoopGyro extends AutoModeBase {
             case RIGHT:
                 rightRoutine();
                 break;
+            default:
+                CrashTracker.logMarker("Invalid Auto Position");
         }
     }
 

@@ -53,7 +53,6 @@ public class Robot extends IterativeRobot {
         try {
             AutoChooser.updateGameData();
             CrashTracker.logAutoInit();
-            System.out.println("NavX " + DriveTrain.getInstance().isGyroConnected());
             RobotState.mMatchState = MatchState.AUTO;
             mEnabledLooper.start();
             AutoChooser.startAuto();

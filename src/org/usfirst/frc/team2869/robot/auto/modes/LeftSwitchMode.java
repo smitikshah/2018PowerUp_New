@@ -27,6 +27,8 @@ public class LeftSwitchMode extends AutoModeBase {
             case RIGHT:
                 rightRoutine();
                 break;
+            default:
+                CrashTracker.logMarker("Invalid Auto Position");
         }
     }
 
