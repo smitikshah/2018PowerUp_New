@@ -38,6 +38,9 @@ public class AutoChooser {
     }
 
     public static AutoModeBase getAutoMode() {
+        return new CenterSwitchOpenLoopGyro(RobotState.matchData.switchPosition);
+        /*
+
         double delay = SmartDashboard.getNumber("Auto Delay", 0.0);
         if (delay > 0) {
             Timer.delay(delay);
@@ -55,7 +58,7 @@ public class AutoChooser {
                                 + positionChooser.getSelected().toString());
                 break;
         }
-        return null;
+        return null; */
     }
 
 
