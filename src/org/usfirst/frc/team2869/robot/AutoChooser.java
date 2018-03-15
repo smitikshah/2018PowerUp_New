@@ -1,17 +1,19 @@
 package org.usfirst.frc.team2869.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import org.usfirst.frc.team2869.robot.auto.modes.CenterSwitchOpenLoopGyro;
+import org.usfirst.frc.team2869.robot.auto.modes.DriveStraightMode;
+import org.usfirst.frc.team2869.robot.auto.modes.DriveStraightOpenLoopMode;
+import org.usfirst.frc.team2869.robot.auto.modes.StandStillMode;
 import org.usfirst.frc.team2869.robot.auto.trajectory.Path;
 import org.usfirst.frc.team2869.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeExecuter;
-import org.usfirst.frc.team2869.robot.auto.modes.*;
-
-import edu.wpi.first.wpilibj.Timer;
-import org.usfirst.frc.team2869.robot.util.auto.DeserializePath;
 import org.usfirst.frc.team2869.robot.util.logging.CrashTracker;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,9 +40,6 @@ public class AutoChooser {
     }
 
     public static AutoModeBase getAutoMode() {
-        return new CenterSwitchOpenLoopGyro(RobotState.matchData.switchPosition);
-        /*
-
         double delay = SmartDashboard.getNumber("Auto Delay", 0.0);
         if (delay > 0) {
             Timer.delay(delay);
@@ -58,7 +57,7 @@ public class AutoChooser {
                                 + positionChooser.getSelected().toString());
                 break;
         }
-        return null; */
+        return null;
     }
 
 
