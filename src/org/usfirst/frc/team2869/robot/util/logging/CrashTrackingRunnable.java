@@ -2,7 +2,8 @@ package org.usfirst.frc.team2869.robot.util.logging;
 
 /**
  * Runnable class with reports all uncaught throws to CrashTracker
- */
+ */ 
+
 public abstract class CrashTrackingRunnable implements Runnable {
 
     @Override
