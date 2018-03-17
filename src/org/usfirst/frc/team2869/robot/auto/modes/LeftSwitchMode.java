@@ -3,7 +3,6 @@ package org.usfirst.frc.team2869.robot.auto.modes;
 
 import org.usfirst.frc.team2869.robot.AutoChooser;
 import org.usfirst.frc.team2869.robot.Constants;
-import org.usfirst.frc.team2869.robot.RobotState;
 import org.usfirst.frc.team2869.robot.auto.actions.DrivePathAction;
 import org.usfirst.frc.team2869.robot.auto.actions.RollerAction;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;

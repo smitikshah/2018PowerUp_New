@@ -102,7 +102,7 @@ public final class Constants {
 
     public static class AUTO {
         public static final String pathPath = "/home/lvuser/paths/";
-        public static final String[] autoNames = {"DriveStraight"};
+        public static final String[] autoNames = {"DriveStraight", "CS-1L", "CS-1R"};
     }
 
     public static class INPUT {

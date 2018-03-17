@@ -4,14 +4,12 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import org.usfirst.frc.team2869.robot.auto.modes.CenterSwitchOpenLoopGyro;
-import org.usfirst.frc.team2869.robot.auto.modes.DriveStraightMode;
-import org.usfirst.frc.team2869.robot.auto.modes.DriveStraightOpenLoopMode;
-import org.usfirst.frc.team2869.robot.auto.modes.StandStillMode;
+import org.usfirst.frc.team2869.robot.auto.modes.*;
 import org.usfirst.frc.team2869.robot.auto.trajectory.Path;
 import org.usfirst.frc.team2869.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeExecuter;
+import org.usfirst.frc.team2869.robot.util.auto.DeserializePath;
 import org.usfirst.frc.team2869.robot.util.logging.CrashTracker;
 
 import java.util.HashMap;
@@ -34,9 +32,9 @@ public class AutoChooser {
         actionChooser.addObject("Drive Straight", AutoAction.DRIVE_STRAIGHT);
         SmartDashboard.putData("Auto Action Chooser", actionChooser);
         SmartDashboard.putNumber("Auto Delay", 0.0);
-     /*   for (String pathName : Constants.AUTO.autoNames) {
+        for (String pathName : Constants.AUTO.autoNames) {
             autoPaths.put(pathName, DeserializePath.getPathFromFile(pathName));
-        } */
+        }
     }
 
     public static AutoModeBase getAutoMode() {
@@ -70,8 +68,7 @@ public class AutoChooser {
     }
 
     private static AutoModeBase getSwitchMode() {
-        return new CenterSwitchOpenLoopGyro(RobotState.matchData.switchPosition);
-      /*  if (DriveTrain.getInstance().isEncodersConnected()) {
+        if (DriveTrain.getInstance().isEncodersConnected()) {
             if (positionChooser.getSelected() == AutoPosition.LEFT) {
                 return new LeftSwitchMode(RobotState.matchData.switchPosition);
             }
@@ -85,17 +82,17 @@ public class AutoChooser {
             if (positionChooser.getSelected() == AutoPosition.LEFT
                     && RobotState.matchData.switchPosition == GameObjectPosition.LEFT) {
                 return new SwitchOpenLoop();
-            }
-            if (positionChooser.getSelected() == AutoPosition.RIGHT
+            } else if (positionChooser.getSelected() == AutoPosition.RIGHT
                     && RobotState.matchData.switchPosition == GameObjectPosition.RIGHT) {
                 return new SwitchOpenLoop();
-            }
-            if (positionChooser.getSelected() == AutoPosition.CENTER) {
+            } else if (positionChooser.getSelected() == AutoPosition.CENTER && DriveTrain.getInstance().isGyroConnected()) {
                 return new CenterSwitchOpenLoopGyro(RobotState.matchData.switchPosition);
+            } else {
+                return new DriveStraightOpenLoopMode();
             }
         }
         CrashTracker.logMarker("Couldn't Get Switch Mode");
-        return null; */
+        return null;
     }
 
 

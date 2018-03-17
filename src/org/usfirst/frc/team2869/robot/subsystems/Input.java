@@ -90,8 +90,7 @@ public class Input extends Subsystem {
                     RobotState.mArmState = RobotState.ArmState.SECOND_INTAKE;
                 } else if (armPlaceButton.isPressed()) {
                     RobotState.mArmState = RobotState.ArmState.SWITCH_PLACE;
-                }
-                else if (backSwitch.isPressed()) {
+                } else if (backSwitch.isPressed()) {
                     RobotState.mArmState = RobotState.ArmState.BACK_SWITCH_PLACE;
                 }
                 if (armChangeModeButton.isPressed()) {

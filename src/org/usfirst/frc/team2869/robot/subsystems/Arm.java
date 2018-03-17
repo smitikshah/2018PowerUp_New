@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.Constants.ARM;
@@ -59,7 +58,8 @@ public class Arm extends Subsystem {
 
         armPID = new SimPID(Constants.ARM.ARM_P, Constants.ARM.ARM_I, Constants.ARM.ARM_D, Constants.ARM.ARM_EBSILON);
         armPID.setMaxOutput(Constants.ARM.MAX_OUTPUT);
-        armTalon.setSelectedSensorPosition((int) armTalon.getSensorCollection().getPulseWidthPosition() + -Constants.ARM.ARM_ZERO_POS, Constants.kPIDLoopIdx, Constants.kTimeoutMs);;
+        armTalon.setSelectedSensorPosition((int) armTalon.getSensorCollection().getPulseWidthPosition() + -Constants.ARM.ARM_ZERO_POS, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+        ;
     }
 
     public static Arm getInstance() {
@@ -68,7 +68,7 @@ public class Arm extends Subsystem {
 
     @Override
     public void outputToSmartDashboard() {
-    	
+
         if (Math.abs(getRPM()) > maxRPM) {
             maxRPM = Math.abs(getRPM());
         }
@@ -81,14 +81,13 @@ public class Arm extends Subsystem {
         SmartDashboard.putNumber("Arm Angle", getPosition());
         SmartDashboard.putNumber("Arm Absolute", armTalon.getSensorCollection().getPulseWidthPosition());
         SmartDashboard.putNumber("Arm Output", armTalon.getMotorOutputPercent());
-        
- 
-       
+
+
     }
-    
-    private double getRPM(){
-    	return ((armTalon.getSelectedSensorVelocity(0) * 60.0 * 10.0) / Constants.DRIVE.CODES_PER_REV)
-         * ARM.GEAR_RATIO;
+
+    private double getRPM() {
+        return ((armTalon.getSelectedSensorVelocity(0) * 60.0 * 10.0) / Constants.DRIVE.CODES_PER_REV)
+                * ARM.GEAR_RATIO;
     }
 
     @Override

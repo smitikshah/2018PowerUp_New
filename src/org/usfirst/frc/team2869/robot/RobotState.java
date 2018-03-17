@@ -4,7 +4,7 @@ import org.usfirst.frc.team2869.robot.util.other.MatchData;
 
 public class RobotState {
 
- 
+
     public static MatchState mMatchState = MatchState.DISABLED;
     public static DriveControlState mDriveControlState = DriveControlState.VELOCITY_SETPOINT;
     public static ArmControlState mArmControlState = ArmControlState.MOTION_MAGIC;
@@ -33,7 +33,7 @@ public class RobotState {
         INTAKE(16),
         SECOND_INTAKE(45),
         SWITCH_PLACE(84),
-    	BACK_SWITCH_PLACE(180);
+        BACK_SWITCH_PLACE(180);
 
         public final double state;
 

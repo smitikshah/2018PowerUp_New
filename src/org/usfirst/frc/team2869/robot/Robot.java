@@ -22,7 +22,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void robotInit() {
         CameraServer.getInstance().startAutomaticCapture();
-    	try {
+        try {
             CrashTracker.logRobotInit();
             mSubsystemManager.registerEnabledLoops(mEnabledLooper);
             AutoChooser.loadAutos();
@@ -68,7 +68,6 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
         allPeriodic();
     }
-    
 
 
     @Override

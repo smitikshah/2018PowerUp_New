@@ -10,12 +10,17 @@ public class PathGenerator {
 
 
     public static final HashMap<String, Path> robotPaths = new HashMap<>();
+    public static final Trajectory.Config fastConfig = new Trajectory.Config(
+            Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.005, 145, 125, 600);
     public static final Trajectory.Config defaultConfig = new Trajectory.Config(
-            Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.005, 145, 95, 500);
-    public static final Trajectory.Config slowConfig = new Trajectory.Config(
-            Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.005, 100, 65, 120);
+            Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.005, 140, 100, 400);
+
     public static final Trajectory.Config slowerConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.005, 100, 60, 100);
+
+    public static final Trajectory.Config slowConfig = new Trajectory.Config(
+            Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, 0.005, 120, 80, 250);
+
     public static final double SWITCH_X_OFFSET = 0;
     public static final double SWITCH_Y_OFFSET = 0;
 
@@ -23,20 +28,45 @@ public class PathGenerator {
         robotPaths.put("CS-1R",
                 new Path(new Waypoint[]{
                         new Waypoint(22, -7, Pathfinder.d2r(0)),
-                        new Waypoint(121, -58, Pathfinder.d2r(0))
-                }, defaultConfig, false));
+                        new Waypoint(121, -59, Pathfinder.d2r(0))
+                }, fastConfig, false));
 
         robotPaths.put("CS-1L",
                 new Path(new Waypoint[]{
                         new Waypoint(22, -7, Pathfinder.d2r(0)),
-                        new Waypoint(121, 58, Pathfinder.d2r(0)),
-                }, defaultConfig, false));
+                        new Waypoint(121, 59, Pathfinder.d2r(0)),
+                }, fastConfig, false));
+
+
+        robotPaths.put("CS-21", new Path(new Waypoint[]{
+                new Waypoint(121, -59, Pathfinder.d2r(0)),
+                new Waypoint(62, 7, Pathfinder.d2r(-30)),
+        }, slowConfig, true));
+
+        robotPaths.put("CS-22", new Path(new Waypoint[]{
+                new Waypoint(62, 7, Pathfinder.d2r(-30)),
+                new Waypoint(92, 0, Pathfinder.d2r(0)),
+        }, slowConfig, true));
+
+
+        robotPaths.put("CS-31", new Path(new Waypoint[]{
+                new Waypoint(92, 0, Pathfinder.d2r(0)),
+                new Waypoint(62, 7, Pathfinder.d2r(-30)),
+        }, slowConfig, true));
+
+        robotPaths.put("CS-32", new Path(new Waypoint[]{
+                new Waypoint(62, 7, Pathfinder.d2r(-30)),
+                new Waypoint(121, -59, Pathfinder.d2r(0)),
+        }, slowConfig, true));
+
 
         robotPaths.put("DriveStraight",
                 new Path(new Waypoint[]{
                         new Waypoint(23, 156, 0),
                         new Waypoint(127, 156, 0)
                 }, defaultConfig, false));
+
+
     }
 
     public static void main(String[] args) {
@@ -45,16 +75,21 @@ public class PathGenerator {
             if (container.getValue().bothSides) {
                 File leftPathFile = new File("paths/" + container.getKey() + "L.csv").getAbsoluteFile();
                 File rightPathFile = new File("paths/" + container.getKey() + "R.csv").getAbsoluteFile();
-                Trajectory leftTraj = Pathfinder.generate(container.getValue().getPoints(), container.getValue().getConfig());
-                Trajectory rightTraj = Pathfinder.generate(container.getValue().getRightPoints(), container.getValue().getConfig());
+                Trajectory leftTraj = Pathfinder
+                        .generate(container.getValue().getLeftPoints(), container.getValue().getConfig());
+                Trajectory rightTraj = Pathfinder
+                        .generate(container.getValue().getPoints(), container.getValue().getConfig());
                 Pathfinder.writeToCSV(leftPathFile, leftTraj);
                 Pathfinder.writeToCSV(rightPathFile, rightTraj);
-                System.out.println("Path: " + container.getKey() + " Time: " + leftTraj.length() * 0.005 + " Sec");
+                System.out.println(
+                        "Path: " + container.getKey() + " Time: " + leftTraj.length() * 0.005 + " Sec");
             } else {
                 File pathFile = new File("paths/" + container.getKey() + ".csv").getAbsoluteFile();
-                Trajectory trajectory = Pathfinder.generate(container.getValue().getPoints(), container.getValue().getConfig());
+                Trajectory trajectory = Pathfinder
+                        .generate(container.getValue().getPoints(), container.getValue().getConfig());
                 Pathfinder.writeToCSV(pathFile, trajectory);
-                System.out.println("Path: " + container.getKey() + " Time: " + trajectory.length() * 0.005 + " Sec");
+                System.out.println(
+                        "Path: " + container.getKey() + " Time: " + trajectory.length() * 0.005 + " Sec");
             }
         }
     }
@@ -89,7 +124,7 @@ public class PathGenerator {
 
         }
 
-        public Waypoint[] getRightPoints() {
+        public Waypoint[] getLeftPoints() {
             Waypoint[] waypoints = points.clone();
             for (Waypoint waypoint : waypoints) {
                 waypoint.y = -waypoint.y;
@@ -109,3 +144,4 @@ public class PathGenerator {
     }
 
 }
+
