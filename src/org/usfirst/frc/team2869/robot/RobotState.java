@@ -30,9 +30,10 @@ public class RobotState {
 
     public enum ArmState {
         ENABLE(0),
-        INTAKE(10.8),
-        SECOND_INTAKE(30),
-        SWITCH_PLACE(57);
+        INTAKE(16),
+        SECOND_INTAKE(45),
+        SWITCH_PLACE(84),
+    	BACK_SWITCH_PLACE(180);
 
         public final double state;
 
