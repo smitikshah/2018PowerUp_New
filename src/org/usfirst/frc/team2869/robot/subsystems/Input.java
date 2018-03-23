@@ -19,6 +19,8 @@ public class Input extends Subsystem {
 
     private final MkXboxControllerButton intakeOut = operatorJoystick.getButton(MkXboxController.LEFT_BUMPER, "Intake Roller Out");
     private final MkXboxControllerButton intakeIn = operatorJoystick.getButton(MkXboxController.RIGHT_BUMPER, "Intake Roller In");
+    private final MkXboxControllerButton intakeOutSlow = operatorJoystick.getButton(MkXboxController.LEFT_TRIGGER, "Intake Roller Out Slow");
+    private final MkXboxControllerButton intakeInSlow = operatorJoystick.getButton(MkXboxController.RIGHT_TRIGGER, "Intake Roller Out Slow");
 
     public Input() {
 
@@ -118,7 +120,9 @@ public class Input extends Subsystem {
             Arm.getInstance().setIntakeRollers(Constants.ARM.INTAKE_OUT_ROLLER_SPEED);
         } else if (intakeIn.isHeld()) {
             Arm.getInstance().setIntakeRollers(Constants.ARM.INTAKE_IN_ROLLER_SPEED);
-        } else {
+        } 
+
+        else {
             Arm.getInstance().setIntakeRollers(0);
         }
     }

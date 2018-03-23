@@ -2,6 +2,8 @@ package org.usfirst.frc.team2869.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team2869.robot.RobotState.ArmControlState;
 import org.usfirst.frc.team2869.robot.RobotState.MatchState;
 import org.usfirst.frc.team2869.robot.subsystems.Arm;
@@ -21,7 +23,10 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotInit() {
-        CameraServer.getInstance().startAutomaticCapture();
+        CameraServer.getInstance().startAutomaticCapture(0);
+        CameraServer.getInstance().startAutomaticCapture(1);
+  
+       
         try {
             CrashTracker.logRobotInit();
             mSubsystemManager.registerEnabledLoops(mEnabledLooper);

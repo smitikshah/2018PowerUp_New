@@ -19,10 +19,10 @@ public final class Constants {
     public static final double PI = 3.14159265359;
 
     public static class DRIVE {
-        public static final int LEFT_MASTER_ID = 5;
-        public static final int LEFT_SLAVE_ID = 1;
-        public static final int RIGHT_MASTER_ID = 2;
-        public static final int RIGHT_SLAVE_ID = 3;
+        public static final int LEFT_MASTER_ID = 1;
+        public static final int LEFT_SLAVE_ID = 5;
+        public static final int RIGHT_MASTER_ID = 3;
+        public static final int RIGHT_SLAVE_ID = 2;
 
 
         public static final boolean LEFT_MASTER_INVERT = false;
@@ -30,7 +30,7 @@ public final class Constants {
         public static final boolean RIGHT_MASTER_INVERT = true;
         public static final boolean RIGHT_SLAVE_INVERT = true;
 
-        public static final boolean LEFT_INVERT_SENSOR = true;
+        public static final boolean LEFT_INVERT_SENSOR = false;
         public static final boolean RIGHT_INVERT_SENSOR = true;
 
         public static final double CODES_PER_REV = 4096.0;
@@ -84,8 +84,10 @@ public final class Constants {
         public static final double CURRENT_HARDSTOP_LIMIT = 4;
         public static final double ZEROING_POWER = -0.25;
 
-        public static final double INTAKE_IN_ROLLER_SPEED = .9;
-        public static final double INTAKE_OUT_ROLLER_SPEED = -.9;
+        public static final double INTAKE_IN_ROLLER_SPEED = 1;
+        public static final double INTAKE_IN_ROLLER_SLOW = .6;
+        public static final double INTAKE_OUT_ROLLER_SPEED = -.7;
+        public static final double INTAKE_OUT_ROLLER_SLOW = -.1;
         public static final boolean LEFT_INTAKE_ROLLER_INVERT = false;
         public static final boolean RIGHT_INTAKE_ROLLER_INVERT = true;
 
@@ -109,7 +111,7 @@ public final class Constants {
 
         public static final double OPERATOR_DEADBAND = 0.1;
         public static final double kThrottleDeadband = 0.0;
-        public static final double kWheelDeadband = 0.0045;
+        public static final double kWheelDeadband = 0.0045; // .0045
     }
 
 
