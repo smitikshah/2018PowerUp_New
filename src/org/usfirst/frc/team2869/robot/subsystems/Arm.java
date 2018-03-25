@@ -58,8 +58,8 @@ public class Arm extends Subsystem {
 
         armPID = new SimPID(Constants.ARM.ARM_P, Constants.ARM.ARM_I, Constants.ARM.ARM_D, Constants.ARM.ARM_EBSILON);
         armPID.setMaxOutput(Constants.ARM.MAX_OUTPUT);
-        armTalon.setSelectedSensorPosition((int) armTalon.getSensorCollection().getPulseWidthPosition() + -Constants.ARM.ARM_ZERO_POS, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
-        ;
+        //armTalon.setSelectedSensorPosition((int) armTalon.getSensorCollection().getPulseWidthPosition() + -Constants.ARM.ARM_ZERO_POS, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
+        zeroAbsolute();
     }
 
     public static Arm getInstance() {
@@ -107,6 +107,7 @@ public class Arm extends Subsystem {
             @Override
             public void onStart(double timestamp) {
                 synchronized (Arm.this) {
+                    zeroAbsolute();
                     armPosEnable = getPosition();
                     RobotState.mArmState = ArmState.ENABLE;
                 }
@@ -153,6 +154,18 @@ public class Arm extends Subsystem {
         } else {
             armTalon.set(ControlMode.MotionMagic, MkMath.angleToNativeUnits(RobotState.mArmState.state));
         }
+    }
+
+    public void zeroAbsolute() {
+        int pulseWidth = armTalon.getSensorCollection().getPulseWidthPosition();
+        if (pulseWidth > 0) {
+            pulseWidth = pulseWidth & 0xFFF;
+        } else {
+            pulseWidth += (-Math.round(((double) pulseWidth / 4096) - 0.50)) * 4096;
+        }
+        armTalon.setSelectedSensorPosition(pulseWidth + (-ARM.ARM_ZERO_POS), Constants.kPIDLoopIdx,
+            Constants.kTimeoutMs);
+        //System.out.println(pulseWidth + -(ARM.kBookEnd_0));
     }
 
     private double getPosition() {
