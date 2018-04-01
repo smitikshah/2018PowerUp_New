@@ -15,7 +15,7 @@ public class MkTalon {
     private int masterID, slaveID;
     private TalonPosition side;
     private double maxRPM = 0;
-
+    private NeutralMode talonMode;
     /**
      * @param master Talon with Encoder CAN ID
      * @param slave  Follower Talon CAN ID
@@ -33,6 +33,7 @@ public class MkTalon {
         if (side.equals(TalonPosition.Arm)) {
             configMotionMagic();
         }
+        talonMode = NeutralMode.Brake;
     }
 
     public void setPIDF() {
@@ -182,15 +183,21 @@ public class MkTalon {
     }
 
     public void set(ControlMode mode, double value, boolean nMode) {
+        if (talonMode != (nMode ? NeutralMode.Brake : NeutralMode.Coast)) {
+            masterTalon.setNeutralMode(nMode ? NeutralMode.Brake : NeutralMode.Coast);
+            slaveTalon.setNeutralMode(nMode ? NeutralMode.Brake : NeutralMode.Coast);
+        }
         masterTalon.set(mode, value);
-        masterTalon.setNeutralMode(nMode ? NeutralMode.Brake : NeutralMode.Coast);
-        slaveTalon.setNeutralMode(nMode ? NeutralMode.Brake : NeutralMode.Coast);
+        talonMode = nMode ? NeutralMode.Brake : NeutralMode.Coast;
     }
 
     public void set(ControlMode mode, double value, boolean nMode, double arbFeed) {
-        masterTalon.set(mode, value, arbFeed);
-        masterTalon.setNeutralMode(nMode ? NeutralMode.Brake : NeutralMode.Coast);
-        slaveTalon.setNeutralMode(nMode ? NeutralMode.Brake : NeutralMode.Coast);
+        if (talonMode != (nMode ? NeutralMode.Brake : NeutralMode.Coast)) {
+            masterTalon.setNeutralMode(nMode ? NeutralMode.Brake : NeutralMode.Coast);
+            slaveTalon.setNeutralMode(nMode ? NeutralMode.Brake : NeutralMode.Coast);
+        }
+        masterTalon.set(mode, value, DemandType.ArbitraryFeedForward, arbFeed);
+        talonMode = nMode ? NeutralMode.Brake : NeutralMode.Coast;
     }
 
     public void resetEncoder() {

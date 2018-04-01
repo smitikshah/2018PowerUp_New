@@ -24,7 +24,6 @@ public final class Constants {
         public static final int RIGHT_MASTER_ID = 3;
         public static final int RIGHT_SLAVE_ID = 2;
 
-
         public static final boolean LEFT_MASTER_INVERT = false;
         public static final boolean LEFT_SLAVE_INVERT = false;
         public static final boolean RIGHT_MASTER_INVERT = true;
@@ -44,7 +43,7 @@ public final class Constants {
         public static final double PATH_DIST_TOL = 0.25;
         public static final double PATH_ANGLE_TOL = 0.25;
 
-        public static final double DRIVE_FOLLOWER_P = 5;
+        public static final double DRIVE_FOLLOWER_P = 0;
         public static final double DRIVE_FOLLOWER_A = 0;
         public static final double DRIVE_FOLLOWER_ANG = 0;
 
@@ -103,7 +102,7 @@ public final class Constants {
 
         public static final double OPERATOR_DEADBAND = 0.1;
         public static final double kThrottleDeadband = 0.0;
-        public static final double kWheelDeadband = 0.0045; // .0045
+        public static final double kWheelDeadband = 0.0045;
     }
 
 
