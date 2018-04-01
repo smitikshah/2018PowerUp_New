@@ -21,14 +21,9 @@ public class Robot extends IterativeRobot {
             Arrays.asList(DriveTrain.getInstance(), Arm.getInstance(), Input.getInstance()));
     private Looper mEnabledLooper = new Looper();
 
-    @Override
     public void robotInit() {
-        CameraServer.getInstance().startAutomaticCapture(0);
-        CameraServer.getInstance().startAutomaticCapture(1);
-  
-       
-        try {
-            CrashTracker.logRobotInit();
+      
+    	try{ CrashTracker.logRobotInit();
             mSubsystemManager.registerEnabledLoops(mEnabledLooper);
             AutoChooser.loadAutos();
         } catch (Throwable t) {

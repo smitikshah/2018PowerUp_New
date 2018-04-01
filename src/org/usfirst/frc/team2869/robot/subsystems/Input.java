@@ -14,8 +14,8 @@ public class Input extends Subsystem {
     private final MkXboxControllerButton armIntakeButton = operatorJoystick.getButton(MkXboxController.ABUTTON, "Arm Intake");
     private final MkXboxControllerButton armSecondIntakeButton = operatorJoystick.getButton(MkXboxController.XBUTTON, "Arm Second Intake");
     private final MkXboxControllerButton armPlaceButton = operatorJoystick.getButton(MkXboxController.YBUTTON, "Arm Place");
-    private final MkXboxControllerButton backSwitch = operatorJoystick.getButton(MkXboxController.BBUTTON, "Arm Place");
     private final MkXboxControllerButton armChangeModeButton = operatorJoystick.getButton(MkXboxController.BACK_BUTTON, "Arm Change Mode");
+    private final MkXboxControllerButton backSwitch = operatorJoystick.getButton(MkXboxController.BBUTTON, "Arm Change Mode");
 
     private final MkXboxControllerButton intakeOut = operatorJoystick.getButton(MkXboxController.LEFT_BUMPER, "Intake Roller Out");
     private final MkXboxControllerButton intakeIn = operatorJoystick.getButton(MkXboxController.RIGHT_BUMPER, "Intake Roller In");
@@ -94,6 +94,7 @@ public class Input extends Subsystem {
                     RobotState.mArmState = RobotState.ArmState.SWITCH_PLACE;
                 } else if (backSwitch.isPressed()) {
                     RobotState.mArmState = RobotState.ArmState.BACK_SWITCH_PLACE;
+
                 }
                 if (armChangeModeButton.isPressed()) {
                     RobotState.mArmControlState = RobotState.ArmControlState.OPEN_LOOP;

@@ -86,10 +86,10 @@ public final class Constants {
 
         public static final double INTAKE_IN_ROLLER_SPEED = 1;
         public static final double INTAKE_IN_ROLLER_SLOW = .6;
-        public static final double INTAKE_OUT_ROLLER_SPEED = -.7;
+        public static final double INTAKE_OUT_ROLLER_SPEED = -.5;
         public static final double INTAKE_OUT_ROLLER_SLOW = -.1;
-        public static final boolean LEFT_INTAKE_ROLLER_INVERT = false;
-        public static final boolean RIGHT_INTAKE_ROLLER_INVERT = true;
+        public static final boolean LEFT_INTAKE_ROLLER_INVERT = true;
+        public static final boolean RIGHT_INTAKE_ROLLER_INVERT = false;
 
 
         public static final int ARM_ENCODER_PORT_A = 0;

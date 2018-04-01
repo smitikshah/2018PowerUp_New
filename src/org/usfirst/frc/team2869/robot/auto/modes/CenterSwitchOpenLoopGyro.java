@@ -35,7 +35,7 @@ public class CenterSwitchOpenLoopGyro extends AutoModeBase {
     protected void leftRoutine() throws AutoModeEndedException {
         System.out.println("Ran Left Open Loop Switch Auto");
         RobotState.mArmState = RobotState.ArmState.SWITCH_PLACE;
-        runAction(new OpenLoopFollowHeading(0.5, 1.75, 0.75, 1, -70, 0));
+        runAction(new OpenLoopFollowHeading(0.5, 1.90, 0.75, 1.25, -85, 15));
         runAction(new RollerAction(0.45, Constants.ARM.INTAKE_OUT_ROLLER_SPEED));
     }
 

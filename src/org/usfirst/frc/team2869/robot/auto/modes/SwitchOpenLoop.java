@@ -15,8 +15,8 @@ public class SwitchOpenLoop extends AutoModeBase {
     @Override
     protected void routine() throws AutoModeEndedException {
 
-        runAction(new CurveOpenLoopAction(0.95, -1, false));
-        runAction(new OpenLoopAction(0.6, -0.35, true));
+        runAction(new CurveOpenLoopAction(0.95, 1, false));
+        runAction(new OpenLoopAction(0.6, 0.35, true));
         //runAction(new WaitAction(0.1));
         //runAction(new MoveArmAction(ArmState.INTAKE));
         //runAction(new RollerAction(2, 1));
