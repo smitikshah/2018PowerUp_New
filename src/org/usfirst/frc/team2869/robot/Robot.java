@@ -22,8 +22,8 @@ public class Robot extends IterativeRobot {
     private Looper mEnabledLooper = new Looper();
 
     public void robotInit() {
-      
-    	try{ CrashTracker.logRobotInit();
+        try {
+            CrashTracker.logRobotInit();
             mSubsystemManager.registerEnabledLoops(mEnabledLooper);
             AutoChooser.loadAutos();
         } catch (Throwable t) {
@@ -46,16 +46,11 @@ public class Robot extends IterativeRobot {
         }
     }
 
-    @Override
-    public void disabledPeriodic() {
-        allPeriodic();
-    }
-
     public void autonomousInit() {
         try {
-            AutoChooser.updateGameData();
             CrashTracker.logAutoInit();
             RobotState.mMatchState = MatchState.AUTO;
+            AutoChooser.updateGameData();
             mEnabledLooper.start();
             AutoChooser.startAuto();
         } catch (Throwable t) {
@@ -63,12 +58,6 @@ public class Robot extends IterativeRobot {
             throw t;
         }
     }
-
-    @Override
-    public void autonomousPeriodic() {
-        allPeriodic();
-    }
-
 
     @Override
     public void teleopInit() {
@@ -84,13 +73,6 @@ public class Robot extends IterativeRobot {
         }
     }
 
-    /**
-     * This function is called periodically during operator control
-     */
-    @Override
-    public void teleopPeriodic() {
-        allPeriodic();
-    }
 
     @Override
     public void testInit() {
@@ -103,12 +85,8 @@ public class Robot extends IterativeRobot {
         }
     }
 
-    @Override
-    public void testPeriodic() {
 
-    }
-
-    private void allPeriodic() {
+    public void robotPeriodic() {
         try {
             mEnabledLooper.outputToSmartDashboard();
             mSubsystemManager.outputToSmartDashboard();
