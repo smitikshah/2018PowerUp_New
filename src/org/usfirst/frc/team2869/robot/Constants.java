@@ -53,9 +53,9 @@ public final class Constants {
 
         public static final double MAX_VEL =
                 (RPM_MAX / 60) * (CIRCUMFERENCE); // Max Speed in Inches per second
-        public static final double DRIVE_P = (0.1 * 1023.0) / (300.00);
+        public static final double DRIVE_P = 2 * (0.1 * 1023.0) / (700);
         public static final double DRIVE_I = DRIVE_P / 100.0;
-        public static final double DRIVE_D = 15 * DRIVE_P;
+        public static final double DRIVE_D = 5 * DRIVE_P;
         public static final double LEFT_DRIVE_F = (1023.0 / ((LEFT_RPM_MAX / 60.0 / 10.0)
                 * 4096.0)); //Feedforwrd Term for Drivetrain using MAX Motor Units / Max Speed in Native Units Per 100ms
         public static final double RIGHT_DRIVE_F = (1023.0 / ((RIGHT_RPM_MAX / 60.0 / 10.0)
@@ -81,20 +81,12 @@ public final class Constants {
         public static final double MOTION_MAGIC_CRUISE_VEL = MAX_RAW_VEL * 0.975;
         public static final double MOTION_MAGIC_ACCEL = MAX_RAW_VEL * 10;
 
-        public static final double CURRENT_HARDSTOP_LIMIT = 4;
-        public static final double ZEROING_POWER = -0.25;
-
         public static final double INTAKE_IN_ROLLER_SPEED = 1;
-        public static final double INTAKE_IN_ROLLER_SLOW = .6;
         public static final double INTAKE_OUT_ROLLER_SPEED = -.5;
-        public static final double INTAKE_OUT_ROLLER_SLOW = -.1;
         public static final boolean LEFT_INTAKE_ROLLER_INVERT = true;
         public static final boolean RIGHT_INTAKE_ROLLER_INVERT = false;
 
 
-        public static final int ARM_ENCODER_PORT_A = 0;
-        public static final int ARM_ENCODER_PORT_B = 1;
-        public static final double DEGREES_PER_PULSE = 1.0;//Maps pulses to degrees
         public static final double ARM_EBSILON = 5;//Acceptable degrees of error
         public static final double MAX_OUTPUT = .7;//Max allowable power
         public static final double COM_DIST = 15.0;//distance of the center of mass of the arm from the pivot point, inches
