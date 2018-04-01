@@ -31,7 +31,7 @@ public final class Constants {
         public static final boolean RIGHT_SLAVE_INVERT = true;
 
         public static final boolean LEFT_INVERT_SENSOR = false;
-        public static final boolean RIGHT_INVERT_SENSOR = true;
+        public static final boolean RIGHT_INVERT_SENSOR = false;
 
         public static final double CODES_PER_REV = 4096.0;
         public static final double WHEEL_DIAMETER = 5.98;
