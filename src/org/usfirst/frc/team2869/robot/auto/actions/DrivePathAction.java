@@ -19,9 +19,6 @@ public class DrivePathAction implements Action {
         if (dir) {
             this.path.invert();
         }
-        if (flip) {
-            this.path.flipSides();
-        }
         done = false;
     }
 

@@ -8,7 +8,6 @@ import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeEndedException;
 import org.usfirst.frc.team2869.robot.util.logging.CrashTracker;
 
-
 import java.util.Arrays;
 
 public class CenterSwitchMode extends AutoModeBase {
@@ -40,20 +39,20 @@ public class CenterSwitchMode extends AutoModeBase {
                         new DrivePathAction(AutoChooser.autoPaths.get("CS-1L"), false, false, false),
                         new MoveArmAction(RobotState.ArmState.SWITCH_PLACE),
                         new DelayAction(AutoChooser.autoPaths.get("CS-1L").getTime() - 0.25, new RollerAction(0.3, Constants.ARM.AUTO_INTAKE_OUT_ROLLER_SPEED))
-                       
-                		)));
+
+                )));
     }
 
     private void rightRoutine() throws AutoModeEndedException {
         CrashTracker.logMarker("Starting Center Switch Mode (Right Side)");
         runAction(new ParallelAction(Arrays
                 .asList(
-                		
+
                         new DrivePathAction(AutoChooser.autoPaths.get("CS-1R"), false, false, false),
                         new MoveArmAction(RobotState.ArmState.SWITCH_PLACE),
                         new DelayAction(AutoChooser.autoPaths.get("CS-1R").getTime() - 0.25, new RollerAction(0.3, Constants.ARM.AUTO_INTAKE_OUT_ROLLER_SPEED))
-         
-                		)));
+
+                )));
     }
 
 

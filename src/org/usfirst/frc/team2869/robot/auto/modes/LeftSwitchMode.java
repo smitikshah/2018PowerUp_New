@@ -6,7 +6,6 @@ import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.auto.actions.DelayAction;
 import org.usfirst.frc.team2869.robot.auto.actions.DrivePathAction;
 import org.usfirst.frc.team2869.robot.auto.actions.RollerAction;
-import org.usfirst.frc.team2869.robot.auto.actions.WaitAction;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeEndedException;
 import org.usfirst.frc.team2869.robot.util.logging.CrashTracker;

@@ -1,12 +1,8 @@
 package org.usfirst.frc.team2869.robot.auto.modes;
 
 
-import org.usfirst.frc.team2869.robot.RobotState.ArmState;
 import org.usfirst.frc.team2869.robot.auto.actions.CurveOpenLoopAction;
-import org.usfirst.frc.team2869.robot.auto.actions.MoveArmAction;
 import org.usfirst.frc.team2869.robot.auto.actions.OpenLoopAction;
-import org.usfirst.frc.team2869.robot.auto.actions.RollerAction;
-import org.usfirst.frc.team2869.robot.auto.actions.WaitAction;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeEndedException;
 

@@ -71,7 +71,7 @@ public class Input extends Subsystem {
 
     public synchronized void updateDriveInput() {
         DriveSignal sig = DriveHelper.SmitiDrive(driverJoystick.getRawAxis(MkXboxController.RIGHT_TRIGGER), -driverJoystick.getRawAxis(MkXboxController.LEFT_TRIGGER), driverJoystick.getRawAxis(MkXboxController.LEFT_XAXIS), true);
-       if (driveModeChangeButton.isPressed()) {
+        if (driveModeChangeButton.isPressed()) {
             RobotState.mDriveControlState =
                     RobotState.mDriveControlState.equals(RobotState.DriveControlState.OPEN_LOOP)
                             ? RobotState.DriveControlState.VELOCITY_SETPOINT : RobotState.DriveControlState.OPEN_LOOP;
@@ -121,9 +121,7 @@ public class Input extends Subsystem {
             Arm.getInstance().setIntakeRollers(Constants.ARM.INTAKE_OUT_ROLLER_SPEED);
         } else if (intakeIn.isHeld()) {
             Arm.getInstance().setIntakeRollers(Constants.ARM.INTAKE_IN_ROLLER_SPEED);
-        } 
-
-        else {
+        } else {
             Arm.getInstance().setIntakeRollers(0);
         }
     }

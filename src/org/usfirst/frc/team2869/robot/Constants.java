@@ -1,7 +1,5 @@
 package org.usfirst.frc.team2869.robot;
 
-import static org.usfirst.frc.team2869.robot.Constants.ARM.RPM_MAX;
-
 /**
  * UNLESS OTHERWISE NOTED BY RAW/NATIVE/RPM,
  * ALL POSITION UNITS ARE IN INCHES and DEGREES
@@ -20,9 +18,9 @@ public final class Constants {
 
     public static class DRIVE {
         public static final int LEFT_MASTER_ID = 1;
-        public static final int LEFT_SLAVE_ID = 5; //5
+        public static final int LEFT_SLAVE_ID = 5;
         public static final int RIGHT_MASTER_ID = 3;
-        public static final int RIGHT_SLAVE_ID = 2;//2
+        public static final int RIGHT_SLAVE_ID = 2;
 
         public static final boolean LEFT_MASTER_INVERT = false;
         public static final boolean LEFT_SLAVE_INVERT = false;
@@ -47,8 +45,8 @@ public final class Constants {
         public static final double DRIVE_FOLLOWER_A = 0;
         public static final double DRIVE_FOLLOWER_ANG = 0;
 
-        public static final double LEFT_RPM_MAX = 488.0; //Observed Max Speed for Drivetrain in RPM
-        public static final double RIGHT_RPM_MAX = 502.0; //Observed Max Speed for Drivetrain in RPM
+        public static final double LEFT_RPM_MAX = 500.0; //Observed Max Speed for Drivetrain in RPM
+        public static final double RIGHT_RPM_MAX = 500.0; //Observed Max Speed for Drivetrain in RPM
 
         public static final double MAX_VEL =
                 (LEFT_RPM_MAX / 60) * (CIRCUMFERENCE); // Max Speed in Inches per second
@@ -86,17 +84,12 @@ public final class Constants {
         public static final boolean LEFT_INTAKE_ROLLER_INVERT = true;
         public static final boolean RIGHT_INTAKE_ROLLER_INVERT = false;
 
-
-        public static final double ARM_EBSILON = 5;//Acceptable degrees of error
-        public static final double MAX_OUTPUT = .7;//Max allowable power
-        public static final double COM_DIST = 15.0;//distance of the center of mass of the arm from the pivot point, inches
-        public static final double ARM_WEIGHT = 15.0;//Weight of arm in pounds
         public static final int ARM_ZERO_POS = 538;
     }
 
     public static class AUTO {
         public static final String pathPath = "/home/lvuser/paths/";
-        public static final String[] autoNames = {"DriveStraight", "CS-1L", "CS-1R"};
+        public static final String[] autoNames = {"DriveStraightL", "CS-1L", "CS-1R", "CS-2L", "CS-2R", "CS-3L", "CS-3R", "CS-4L", "CS-4R", "CS-5L", "CS-5R"};
     }
 
     public static class INPUT {

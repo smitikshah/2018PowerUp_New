@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.Constants;
@@ -13,7 +12,10 @@ import org.usfirst.frc.team2869.robot.Constants.ARM;
 import org.usfirst.frc.team2869.robot.RobotState;
 import org.usfirst.frc.team2869.robot.RobotState.ArmControlState;
 import org.usfirst.frc.team2869.robot.RobotState.ArmState;
-import org.usfirst.frc.team2869.robot.util.other.*;
+import org.usfirst.frc.team2869.robot.util.other.Loop;
+import org.usfirst.frc.team2869.robot.util.other.Looper;
+import org.usfirst.frc.team2869.robot.util.other.MkMath;
+import org.usfirst.frc.team2869.robot.util.other.Subsystem;
 
 
 public class Arm extends Subsystem {
@@ -22,12 +24,7 @@ public class Arm extends Subsystem {
     private final VictorSPX leftIntakeRollerTalon;
     private final VictorSPX rightIntakeRollerTalon;
     private double setpoint = 0;
-    private double maxVel = 0;
-    private double gearRatio = 0;
-    private double testMaxVel = 0;
     private double armPosEnable = 0;
-    private SimPID armPID;
-    private double maxRPM = 0;
     private boolean disCon = false;
     private double startDis = 0;
 
@@ -59,10 +56,6 @@ public class Arm extends Subsystem {
         rightIntakeRollerTalon.setInverted(Constants.ARM.RIGHT_INTAKE_ROLLER_INVERT);
         leftIntakeRollerTalon.setNeutralMode(NeutralMode.Brake);
         rightIntakeRollerTalon.setNeutralMode(NeutralMode.Brake);
-
-        armPID = new SimPID(Constants.ARM.ARM_P, Constants.ARM.ARM_I, Constants.ARM.ARM_D, Constants.ARM.ARM_EBSILON);
-        armPID.setMaxOutput(Constants.ARM.MAX_OUTPUT);
-        //armTalon.setSelectedSensorPosition((int) armTalon.getSensorCollection().getPulseWidthPosition() + -Constants.ARM.ARM_ZERO_POS, Constants.kPIDLoopIdx, Constants.kTimeoutMs);
         zeroAbsolute();
     }
 
@@ -72,21 +65,14 @@ public class Arm extends Subsystem {
 
     @Override
     public void outputToSmartDashboard() {
-
-        if (Math.abs(getRPM()) > maxRPM) {
-            maxRPM = Math.abs(getRPM());
-        }
         SmartDashboard.putNumber("Arm Position", MkMath.nativeUnitsToAngle(armTalon.getSelectedSensorPosition(Constants.kPIDLoopIdx)));
         SmartDashboard.putNumber("Arm Velocity", MkMath.nativeUnitsToAngle(armTalon.getSelectedSensorVelocity(Constants.kPIDLoopIdx)));
         SmartDashboard.putNumber("Arm Setpoint", setpoint);
         SmartDashboard.putNumber("Arm Error", MkMath.nativeUnitsToAngle(armTalon.getClosedLoopError(Constants.kPIDLoopIdx)));
-        SmartDashboard.putNumber("Arm Max Vel", maxRPM);
         SmartDashboard.putString("Arm Control Mode", RobotState.mArmControlState.toString());
         SmartDashboard.putNumber("Arm Angle", getPosition());
         SmartDashboard.putNumber("Arm Absolute", armTalon.getSensorCollection().getPulseWidthPosition());
         SmartDashboard.putNumber("Arm Output", armTalon.getMotorOutputPercent());
-
-
     }
 
     private double getRPM() {
@@ -133,9 +119,6 @@ public class Arm extends Subsystem {
                             return;
                         case OPEN_LOOP:
                             return;
-                        case PIDF:
-                            setArmAngle(0);
-                            return;
                         default:
                             System.out
                                     .println("Unexpected arm control state: " + RobotState.mArmControlState);
@@ -168,31 +151,15 @@ public class Arm extends Subsystem {
             pulseWidth += (-Math.round(((double) pulseWidth / 4096) - 0.50)) * 4096;
         }
         armTalon.setSelectedSensorPosition(pulseWidth + (-ARM.ARM_ZERO_POS), Constants.kPIDLoopIdx,
-            Constants.kTimeoutMs);
-        //System.out.println(pulseWidth + -(ARM.kBookEnd_0));
+                Constants.kTimeoutMs);
     }
 
     private double getPosition() {
         return MkMath.nativeUnitsToAngle(armTalon.getSelectedSensorPosition(Constants.kPIDLoopIdx));
     }
-    
+
     public boolean isEncoderConnected() {
         return armTalon.getSensorCollection().getPulseWidthRiseToRiseUs() > 100;
-    }
-
-    private double calcHoldPosPower(double armAngle) {
-        double gravityMoment = Constants.ARM.COM_DIST * MkMath.cos(armAngle) * Constants.ARM.ARM_WEIGHT;
-        double requiredMotorPower = gravityMoment / (3.8 * 550.0);
-        return requiredMotorPower;
-    }
-
-    public void setArmAngle(double angle) {
-        armPID.setDesiredValue(angle);
-        //armPID.setDesiredValue(RobotState.mArmState.state);
-        double currentArmAngle = getPosition();
-        double output = armPID.calcPID(currentArmAngle) + calcHoldPosPower(currentArmAngle);
-        armTalon.set(ControlMode.PercentOutput, output);
-        System.out.println(currentArmAngle);
     }
 
     public void setEnable() {

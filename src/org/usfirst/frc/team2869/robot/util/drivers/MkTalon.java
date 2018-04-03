@@ -16,6 +16,7 @@ public class MkTalon {
     private TalonPosition side;
     private double maxRPM = 0;
     private NeutralMode talonMode;
+
     /**
      * @param master Talon with Encoder CAN ID
      * @param slave  Follower Talon CAN ID

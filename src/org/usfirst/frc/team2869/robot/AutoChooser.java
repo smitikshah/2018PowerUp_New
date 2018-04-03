@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.auto.modes.*;
-
 import org.usfirst.frc.team2869.robot.auto.trajectory.Path;
 import org.usfirst.frc.team2869.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
@@ -69,9 +68,9 @@ public class AutoChooser {
     }
 
     private static AutoModeBase getSwitchMode() {
-    	System.out.println("Getting Switch mode");
-    	System.out.println(DriveTrain.getInstance().isEncodersConnected());
-    	System.out.println(DriveTrain.getInstance().isGyroConnected());
+        System.out.println("Getting Switch mode");
+        System.out.println(DriveTrain.getInstance().isEncodersConnected());
+        System.out.println(DriveTrain.getInstance().isGyroConnected());
         if (DriveTrain.getInstance().isEncodersConnected() && DriveTrain.getInstance().isEncodersConnected()) {
             if (positionChooser.getSelected() == AutoPosition.LEFT) {
                 return new LeftSwitchMode(RobotState.matchData.switchPosition);
@@ -80,7 +79,7 @@ public class AutoChooser {
                 return new RightSwitchMode(RobotState.matchData.switchPosition);
             }
             if (positionChooser.getSelected() == AutoPosition.CENTER) {
-            	 System.out.println("Getting Center Switch mode");
+                System.out.println("Getting Center Switch mode");
                 return new CenterSwitchMode(RobotState.matchData.switchPosition);
             }
         } else {
