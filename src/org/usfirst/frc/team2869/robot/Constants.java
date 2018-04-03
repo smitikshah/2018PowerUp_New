@@ -29,8 +29,8 @@ public final class Constants {
         public static final boolean RIGHT_MASTER_INVERT = true;
         public static final boolean RIGHT_SLAVE_INVERT = true;
 
-        public static final boolean LEFT_INVERT_SENSOR = false;
-        public static final boolean RIGHT_INVERT_SENSOR = false;
+        public static final boolean LEFT_INVERT_SENSOR = true;
+        public static final boolean RIGHT_INVERT_SENSOR = true;
 
         public static final double CODES_PER_REV = 4096.0;
         public static final double WHEEL_DIAMETER = 5.98;
@@ -51,7 +51,7 @@ public final class Constants {
         public static final double RIGHT_RPM_MAX = 502.0; //Observed Max Speed for Drivetrain in RPM
 
         public static final double MAX_VEL =
-                (RPM_MAX / 60) * (CIRCUMFERENCE); // Max Speed in Inches per second
+                (LEFT_RPM_MAX / 60) * (CIRCUMFERENCE); // Max Speed in Inches per second
         public static final double DRIVE_P = 2 * (0.1 * 1023.0) / (700);
         public static final double DRIVE_I = DRIVE_P / 100.0;
         public static final double DRIVE_D = 5 * DRIVE_P;
@@ -82,6 +82,7 @@ public final class Constants {
 
         public static final double INTAKE_IN_ROLLER_SPEED = 1;
         public static final double INTAKE_OUT_ROLLER_SPEED = -.5;
+        public static final double AUTO_INTAKE_OUT_ROLLER_SPEED = -.65;
         public static final boolean LEFT_INTAKE_ROLLER_INVERT = true;
         public static final boolean RIGHT_INTAKE_ROLLER_INVERT = false;
 

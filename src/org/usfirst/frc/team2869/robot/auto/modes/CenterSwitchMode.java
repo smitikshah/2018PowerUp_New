@@ -2,6 +2,7 @@ package org.usfirst.frc.team2869.robot.auto.modes;
 
 import org.usfirst.frc.team2869.robot.AutoChooser;
 import org.usfirst.frc.team2869.robot.Constants;
+import org.usfirst.frc.team2869.robot.RobotState;
 import org.usfirst.frc.team2869.robot.auto.actions.*;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeBase;
 import org.usfirst.frc.team2869.robot.util.auto.AutoModeEndedException;
@@ -37,7 +38,8 @@ public class CenterSwitchMode extends AutoModeBase {
         runAction(new ParallelAction(Arrays
                 .asList(
                         new DrivePathAction(AutoChooser.autoPaths.get("CS-1L"), false, false, false),
-                        new DelayAction(AutoChooser.autoPaths.get("CS-1L").getTime() - 0.25, new RollerAction(0.3, Constants.ARM.INTAKE_OUT_ROLLER_SPEED))
+                        new MoveArmAction(RobotState.ArmState.SWITCH_PLACE),
+                        new DelayAction(AutoChooser.autoPaths.get("CS-1L").getTime() - 0.25, new RollerAction(0.3, Constants.ARM.AUTO_INTAKE_OUT_ROLLER_SPEED))
                        
                 		)));
     }
@@ -46,8 +48,10 @@ public class CenterSwitchMode extends AutoModeBase {
         CrashTracker.logMarker("Starting Center Switch Mode (Right Side)");
         runAction(new ParallelAction(Arrays
                 .asList(
+                		
                         new DrivePathAction(AutoChooser.autoPaths.get("CS-1R"), false, false, false),
-                        new DelayAction(AutoChooser.autoPaths.get("CS-1R").getTime() - 0.25, new RollerAction(0.3, Constants.ARM.INTAKE_OUT_ROLLER_SPEED))
+                        new MoveArmAction(RobotState.ArmState.SWITCH_PLACE),
+                        new DelayAction(AutoChooser.autoPaths.get("CS-1R").getTime() - 0.25, new RollerAction(0.3, Constants.ARM.AUTO_INTAKE_OUT_ROLLER_SPEED))
          
                 		)));
     }

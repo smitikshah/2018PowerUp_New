@@ -135,6 +135,7 @@ public class DriveTrain extends Subsystem {
             setVelocitySetpoint(new DriveSignal(leftUpdate.getOutput(), rightUpdate.getOutput(),
                             brakePath),
                     leftUpdate.getArbFeed(), rightUpdate.getArbFeed());
+            System.out.println(leftUpdate.getSeg().velocity - rightUpdate.getSeg().velocity);
         } else {
             leftDrive.set(ControlMode.PercentOutput,
                     ((1.0 / MkMath.RPMToInchesPerSec(DRIVE.RIGHT_RPM_MAX)) * leftUpdate.getOutput()), false,

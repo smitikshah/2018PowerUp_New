@@ -5,6 +5,8 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.Constants.ARM;
@@ -26,6 +28,8 @@ public class Arm extends Subsystem {
     private double armPosEnable = 0;
     private SimPID armPID;
     private double maxRPM = 0;
+    private boolean disCon = false;
+    private double startDis = 0;
 
     private Arm() {
         armTalon = new TalonSRX(ARM.ARM_MASTER_TALON_ID);
@@ -171,6 +175,10 @@ public class Arm extends Subsystem {
     private double getPosition() {
         return MkMath.nativeUnitsToAngle(armTalon.getSelectedSensorPosition(Constants.kPIDLoopIdx));
     }
+    
+    public boolean isEncoderConnected() {
+        return armTalon.getSensorCollection().getPulseWidthRiseToRiseUs() > 100;
+    }
 
     private double calcHoldPosPower(double armAngle) {
         double gravityMoment = Constants.ARM.COM_DIST * MkMath.cos(armAngle) * Constants.ARM.ARM_WEIGHT;
@@ -193,8 +201,27 @@ public class Arm extends Subsystem {
     }
 
     private void armSafetyCheck() {
-        if (armTalon.getSensorCollection().getPulseWidthRiseToRiseUs() < 100) {
-            RobotState.mArmControlState = ArmControlState.OPEN_LOOP;
+        if (!isEncoderConnected()) {
+            if (disCon) {
+                if (Timer.getFPGATimestamp() - startDis > 0.5) {
+                    RobotState.mArmControlState = ArmControlState.OPEN_LOOP;
+                    disCon = false;
+                    startDis = 0;
+                }
+            } else {
+                disCon = true;
+                startDis = Timer.getFPGATimestamp();
+            }
+            System.out.println("Arm Encoder Not Connected");
+        } else {
+            if (disCon) {
+                disCon = false;
+                startDis = 0;
+                zeroAbsolute();
+                Timer.delay(0.05);
+                setEnable();
+                RobotState.mArmControlState = ArmControlState.MOTION_MAGIC;
+            }
         }
     }
 

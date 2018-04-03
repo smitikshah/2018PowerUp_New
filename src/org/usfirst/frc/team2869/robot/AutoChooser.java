@@ -69,7 +69,10 @@ public class AutoChooser {
     }
 
     private static AutoModeBase getSwitchMode() {
-        if (DriveTrain.getInstance().isEncodersConnected()) {
+    	System.out.println("Getting Switch mode");
+    	System.out.println(DriveTrain.getInstance().isEncodersConnected());
+    	System.out.println(DriveTrain.getInstance().isGyroConnected());
+        if (DriveTrain.getInstance().isEncodersConnected() && DriveTrain.getInstance().isEncodersConnected()) {
             if (positionChooser.getSelected() == AutoPosition.LEFT) {
                 return new LeftSwitchMode(RobotState.matchData.switchPosition);
             }
@@ -77,6 +80,7 @@ public class AutoChooser {
                 return new RightSwitchMode(RobotState.matchData.switchPosition);
             }
             if (positionChooser.getSelected() == AutoPosition.CENTER) {
+            	 System.out.println("Getting Center Switch mode");
                 return new CenterSwitchMode(RobotState.matchData.switchPosition);
             }
         } else {
