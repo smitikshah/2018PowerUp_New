@@ -20,9 +20,9 @@ public final class Constants {
 
     public static class DRIVE {
         public static final int LEFT_MASTER_ID = 1;
-        public static final int LEFT_SLAVE_ID = 5;
+        public static final int LEFT_SLAVE_ID = 5; //5
         public static final int RIGHT_MASTER_ID = 3;
-        public static final int RIGHT_SLAVE_ID = 2;
+        public static final int RIGHT_SLAVE_ID = 2;//2
 
         public static final boolean LEFT_MASTER_INVERT = false;
         public static final boolean LEFT_SLAVE_INVERT = false;
