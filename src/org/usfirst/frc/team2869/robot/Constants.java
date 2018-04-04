@@ -43,16 +43,16 @@ public final class Constants {
 
         public static final double DRIVE_FOLLOWER_P = 0;
         public static final double DRIVE_FOLLOWER_A = 0;
-        public static final double DRIVE_FOLLOWER_ANG = 0;
+        public static final double DRIVE_FOLLOWER_ANG = -1.1;
 
         public static final double LEFT_RPM_MAX = 500.0; //Observed Max Speed for Drivetrain in RPM
         public static final double RIGHT_RPM_MAX = 500.0; //Observed Max Speed for Drivetrain in RPM
 
         public static final double MAX_VEL =
                 (LEFT_RPM_MAX / 60) * (CIRCUMFERENCE); // Max Speed in Inches per second
-        public static final double DRIVE_P = 2 * (0.1 * 1023.0) / (700);
+        public static final double DRIVE_P = 4.75 * (0.1 * 1023.0) / (700);
         public static final double DRIVE_I = DRIVE_P / 100.0;
-        public static final double DRIVE_D = 5 * DRIVE_P;
+        public static final double DRIVE_D = 3 * DRIVE_P;
         public static final double LEFT_DRIVE_F = (1023.0 / ((LEFT_RPM_MAX / 60.0 / 10.0)
                 * 4096.0)); //Feedforwrd Term for Drivetrain using MAX Motor Units / Max Speed in Native Units Per 100ms
         public static final double RIGHT_DRIVE_F = (1023.0 / ((RIGHT_RPM_MAX / 60.0 / 10.0)
