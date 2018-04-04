@@ -9,7 +9,7 @@ import java.util.Map;
 public class PathGenerator {
 
     public static final HashMap<String, Path> robotPaths = new HashMap<>();
-    public static final Trajectory.Config fastConfig = new Trajectory.Config(
+    /*public static final Trajectory.Config fastConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
             0.005, 145, 110, 1000);
     public static final Trajectory.Config defaultConfig = new Trajectory.Config(
@@ -18,7 +18,17 @@ public class PathGenerator {
 
     public static final Trajectory.Config slowConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
-            0.005, 100, 65, 400);
+            0.005, 100, 65, 400);*/
+    public static final Trajectory.Config fastConfig = new Trajectory.Config(
+            Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
+            0.005, 50, 25, 200);
+    public static final Trajectory.Config defaultConfig = new Trajectory.Config(
+            Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
+            0.005, 50, 25, 200);
+
+    public static final Trajectory.Config slowConfig = new Trajectory.Config(
+            Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
+            0.005, 50, 25, 200);
 
     public static final Trajectory.Config testConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
@@ -36,7 +46,7 @@ public class PathGenerator {
         robotPaths.put("CS-1", new Path(new Waypoint[]{
                 new Waypoint(22, -7, Pathfinder.d2r(0)),
                 new Waypoint(121, -59, Pathfinder.d2r(0))
-        }, testConfig, true));
+        }, fastConfig, true));
 
         robotPaths.put("CS-2", new Path(new Waypoint[]{
                 new Waypoint(121, -59, Pathfinder.d2r(0)),
@@ -59,10 +69,8 @@ public class PathGenerator {
         }, defaultConfig));
 
         robotPaths.put("DriveStraight", new Path(new Waypoint[]{
-                /*  new Waypoint(23, 156, 0),als
-                  new Waypoint(127, 156, 0)*/
-                new Waypoint(0, 156, 0),
-                new Waypoint(50, 156, 0)
+                new Waypoint(23, 156, 0),
+                new Waypoint(127, 156, 0),
         }, defaultConfig));
 
     }
