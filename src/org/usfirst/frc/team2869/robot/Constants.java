@@ -59,6 +59,10 @@ public final class Constants {
                 * 4096.0)); //Feedforwrd Term for Drivetrain using MAX Motor Units / Max Speed in Native Units Per 100ms
         public static final double PATH_WHEELBASE = 35.987;
         public static final double OpenLoopFollower = -0.075;
+
+        public static final double TELEOP_DRIVE_P = 2 * (0.1 * 1023.0) / (700);
+        public static final double TELEOP_DRIVE_I = 0;
+        public static final double TELEOP_DRIVE_D = 1 * DRIVE_P;
     }
 
     public static class ARM {

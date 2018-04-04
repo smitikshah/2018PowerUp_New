@@ -254,4 +254,15 @@ public class MkTalon {
         Left, Right, Arm
     }
 
+    public void configTeleopVelocity() {
+        if (side.equals(TalonPosition.Left)) {
+            masterTalon.config_kF(Constants.kPIDLoopIdx, DRIVE.LEFT_DRIVE_F, Constants.kTimeoutMs);
+        } else if (side.equals(TalonPosition.Right)) {
+            masterTalon.config_kF(Constants.kPIDLoopIdx, DRIVE.RIGHT_DRIVE_F, Constants.kTimeoutMs);
+        }
+        masterTalon.config_kP(Constants.kPIDLoopIdx, DRIVE.TELEOP_DRIVE_P, Constants.kTimeoutMs);
+        masterTalon.config_kI(Constants.kPIDLoopIdx, DRIVE.TELEOP_DRIVE_I, Constants.kTimeoutMs);
+        masterTalon.config_kD(Constants.kPIDLoopIdx, DRIVE.TELEOP_DRIVE_D, Constants.kTimeoutMs);
+    }
+
 }

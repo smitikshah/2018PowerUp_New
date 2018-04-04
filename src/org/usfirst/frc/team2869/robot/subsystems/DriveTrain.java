@@ -158,23 +158,30 @@ public class DriveTrain extends Subsystem {
                 && leftStatus != TrajectoryStatus.NEUTRAL) {
             SmartDashboard.putNumber("NavX Yaw", navX.getYaw());
             SmartDashboard.putNumber("Heading Error", leftStatus.getAngError());
-            /*SmartDashboard.putNumber("Left Desired Velocity", currentSetpoint.getLeft());
+           /* SmartDashboard.putNumber("Left Desired Velocity", currentSetpoint.getLeft());
             SmartDashboard.putNumber("Right Desired Velocity", currentSetpoint.getRight());
             SmartDashboard.putNumber("Desired Heading", leftStatus.getSeg().heading);
             SmartDashboard.putNumber("Left Desired Position", leftStatus.getSeg().position);
             SmartDashboard.putNumber("Left Theoretical Vel", leftStatus.getSeg().velocity);
-            SmartDashboard.putNumber("Left Position Error", leftStatus.getPosError());
             SmartDashboard.putNumber("Left Desired Velocity Error", leftStatus.getVelError());
             SmartDashboard.putNumber("Right Desired Position", leftStatus.getSeg().position);
-            SmartDashboard.putNumber("Right Position Error", leftStatus.getPosError());
             SmartDashboard.putNumber("Right Theoretical Vel", rightStatus.getSeg().velocity);
             SmartDashboard.putNumber("Right Desired Velocity Error", leftStatus.getVelError()); */
+
+            SmartDashboard.putNumber("Left Position Error", leftStatus.getPosError());
+            SmartDashboard.putNumber("Right Position Error", rightStatus.getPosError());
         }
     }
 
     public double getYaw() {
         return navX.getYaw();
     }
+
+    public void configVelocityControl() {
+        leftDrive.configTeleopVelocity();
+        rightDrive.configTeleopVelocity();
+    }
+
 
     @Override
     public void checkSystem() {
@@ -231,6 +238,8 @@ public class DriveTrain extends Subsystem {
             @Override
             public void onStart(double timestamp) {
                 synchronized (DriveTrain.this) {
+                    leftDrive.setPIDF();
+                    rightDrive.setPIDF();
                     leftDrive.resetEncoder();
                     rightDrive.resetEncoder();
                     navX.zeroYaw();

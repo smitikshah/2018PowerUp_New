@@ -72,6 +72,7 @@ public class Input extends Subsystem {
     public synchronized void updateDriveInput() {
         DriveSignal sig = DriveHelper.SmitiDrive(driverJoystick.getRawAxis(MkXboxController.RIGHT_TRIGGER), -driverJoystick.getRawAxis(MkXboxController.LEFT_TRIGGER), driverJoystick.getRawAxis(MkXboxController.LEFT_XAXIS), true);
         if (driveModeChangeButton.isPressed()) {
+            DriveTrain.getInstance().configVelocityControl();
             RobotState.mDriveControlState =
                     RobotState.mDriveControlState.equals(RobotState.DriveControlState.OPEN_LOOP)
                             ? RobotState.DriveControlState.VELOCITY_SETPOINT : RobotState.DriveControlState.OPEN_LOOP;
