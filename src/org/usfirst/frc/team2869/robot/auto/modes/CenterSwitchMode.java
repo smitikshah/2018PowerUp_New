@@ -36,7 +36,7 @@ public class CenterSwitchMode extends AutoModeBase {
         CrashTracker.logMarker("Starting Center Switch Mode (Left Side)");
         runAction(new ParallelAction(Arrays
                 .asList(
-                        new DrivePathAction(AutoChooser.autoPaths.get("CS-1L"), false, false, false),
+                        new DrivePathAction(AutoChooser.autoPaths.get("CS-1L"), false, false, true),
                         new MoveArmAction(RobotState.ArmState.SWITCH_PLACE),
                         new DelayAction(AutoChooser.autoPaths.get("CS-1L").getTime() - 0.25, new RollerAction(0.3, Constants.ARM.AUTO_INTAKE_OUT_ROLLER_SPEED))
 
@@ -48,7 +48,7 @@ public class CenterSwitchMode extends AutoModeBase {
         runAction(new ParallelAction(Arrays
                 .asList(
 
-                        new DrivePathAction(AutoChooser.autoPaths.get("CS-1R"), false, false, false),
+                        new DrivePathAction(AutoChooser.autoPaths.get("CS-1R"), false, false, true),
                         new MoveArmAction(RobotState.ArmState.SWITCH_PLACE),
                         new DelayAction(AutoChooser.autoPaths.get("CS-1R").getTime() - 0.25, new RollerAction(0.3, Constants.ARM.AUTO_INTAKE_OUT_ROLLER_SPEED))
 
