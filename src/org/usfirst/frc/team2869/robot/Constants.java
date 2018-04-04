@@ -57,7 +57,7 @@ public final class Constants {
                 * 4096.0)); //Feedforwrd Term for Drivetrain using MAX Motor Units / Max Speed in Native Units Per 100ms
         public static final double RIGHT_DRIVE_F = (1023.0 / ((RIGHT_RPM_MAX / 60.0 / 10.0)
                 * 4096.0)); //Feedforwrd Term for Drivetrain using MAX Motor Units / Max Speed in Native Units Per 100ms
-        public static final double PATH_WHEELBASE = 33.75;
+        public static final double PATH_WHEELBASE = 33.7;
         public static final double OpenLoopFollower = -0.075;
     }
 
