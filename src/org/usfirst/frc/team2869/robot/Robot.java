@@ -1,4 +1,4 @@
-package org.usfirst.frc.team2869.robot;
+package src.org.usfirst.frc.team2869.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import org.usfirst.frc.team2869.robot.RobotState.ArmControlState;
