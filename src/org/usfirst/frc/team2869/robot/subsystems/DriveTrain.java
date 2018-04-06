@@ -163,11 +163,12 @@ public class DriveTrain extends Subsystem {
             SmartDashboard.putNumber("Desired Heading", leftStatus.getSeg().heading);
             SmartDashboard.putNumber("Left Desired Position", leftStatus.getSeg().position);
             SmartDashboard.putNumber("Left Theoretical Vel", leftStatus.getSeg().velocity);
-            SmartDashboard.putNumber("Left Desired Velocity Error", leftStatus.getVelError());
+
             SmartDashboard.putNumber("Right Desired Position", leftStatus.getSeg().position);
             SmartDashboard.putNumber("Right Theoretical Vel", rightStatus.getSeg().velocity);
-            SmartDashboard.putNumber("Right Desired Velocity Error", leftStatus.getVelError()); */
-
+             */
+            SmartDashboard.putNumber("Left Desired Velocity Error", leftStatus.getVelError());
+            SmartDashboard.putNumber("Right Desired Velocity Error", leftStatus.getVelError());
             SmartDashboard.putNumber("Left Position Error", leftStatus.getPosError());
             SmartDashboard.putNumber("Right Position Error", rightStatus.getPosError());
         }
