@@ -27,8 +27,7 @@ public class DrivePathAction implements Action {
     public DrivePathAction(int pathNum, boolean dir, boolean brakeMode) {
         this(AutoChooser.autoPaths.get(
                 "CS-" + Integer.toString(pathNum) + ((RobotState.matchData.switchPosition
-                        == AutoChooser.GameObjectPosition.LEFT) ? "L" : "R") + ((RobotState.matchData.alliance
-                        == DriverStation.Alliance.Blue) ? "B" : "R")), dir, false, brakeMode);
+                        == AutoChooser.GameObjectPosition.LEFT) ? "L" : "R")), dir, false, brakeMode);
     }
 
     @Override
