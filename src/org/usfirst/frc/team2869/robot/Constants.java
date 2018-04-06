@@ -41,9 +41,9 @@ public final class Constants {
         public static final double PATH_DIST_TOL = 0.25;
         public static final double PATH_ANGLE_TOL = 0.25;
 
-        public static final double DRIVE_FOLLOWER_P = .0;
+        public static final double DRIVE_FOLLOWER_P = .0;  //.5 to 1.75
         public static final double DRIVE_FOLLOWER_A = 0.00125;
-        public static final double DRIVE_FOLLOWER_ANG = -1.1;
+        public static final double DRIVE_FOLLOWER_ANG = -1.1; //-1 to 2.5
 
         public static final double LEFT_RPM_MAX = 500.0; //Observed Max Speed for Drivetrain in RPM
         public static final double RIGHT_RPM_MAX = 500.0; //Observed Max Speed for Drivetrain in RPM
