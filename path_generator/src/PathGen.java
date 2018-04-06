@@ -9,12 +9,12 @@ import java.util.Map;
 public class PathGen {
 
     public static final HashMap<String, Path> robotPaths = new HashMap<>();
-    /*public static final Trajectory.Config fastConfig = new Trajectory.Config(
+    public static final Trajectory.Config fastConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
-            0.005, 145, 135, 1500);
+            0.005, 145, 117, 1500);
     public static final Trajectory.Config defaultConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config
-            .SAMPLES_HIGH, 0.005, 140, 95, 850); */
+            .SAMPLES_HIGH, 0.005, 140, 95, 800);
 
     public static final Trajectory.Config slowConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
@@ -28,56 +28,56 @@ public class PathGen {
             (BLUE_RIGHT_SWITCH_TO_SIDE_WALL - BLUE_LEFT_SWITCH_TO_SIDE_WALL) / 2;
 
     static {
-
+//Paths 3 and 7 should be default config
         robotPaths.put("CS-1", new Path(new Waypoint[]{
-                new Waypoint(22, -7, Pathfinder.d2r(0)),
-                new Waypoint(121, -59, Pathfinder.d2r(0))
+                new Waypoint(23, -8, Pathfinder.d2r(0)),
+                new Waypoint(122, -58, Pathfinder.d2r(0)),
         }, fastConfig, true));
 
         robotPaths.put("CS-2", new Path(new Waypoint[]{
-                new Waypoint(121, -59, Pathfinder.d2r(0)),
-                new Waypoint(40, 0, Pathfinder.d2r(0)),
-        }, defaultConfig)); //for 3 cube fastconfig
+                new Waypoint(122, -58, Pathfinder.d2r(0)),
+                new Waypoint(55, 4, Pathfinder.d2r(-20)),
+        }, fastConfig)); //for 3 cube fastconfig
 
         robotPaths.put("CS-3", new Path(new Waypoint[]{
-                new Waypoint(40, 0, Pathfinder.d2r(0)),
+                new Waypoint(55, 4, Pathfinder.d2r(-20)),
                 new Waypoint(85, 0, Pathfinder.d2r(0)),
         }, defaultConfig));
 
         robotPaths.put("CS-4", new Path(new Waypoint[]{
                 new Waypoint(85, 0, Pathfinder.d2r(0)),
-                new Waypoint(40, 0, Pathfinder.d2r(0)),
+                new Waypoint(55, 4, Pathfinder.d2r(-20)),
         }, fastConfig));
 
         robotPaths.put("CS-5", new Path(new Waypoint[]{
-                new Waypoint(40, 0, Pathfinder.d2r(0)),
-                new Waypoint(121, -59, Pathfinder.d2r(0)),
+                new Waypoint(55, 4, Pathfinder.d2r(-20)),
+                new Waypoint(122, -58, Pathfinder.d2r(0)),
         }, fastConfig));
 
         robotPaths.put("CS-6", new Path(new Waypoint[]{
-                new Waypoint(121, -59, Pathfinder.d2r(0)),
-                new Waypoint(40, 0, Pathfinder.d2r(0)),
+                new Waypoint(122, -58, Pathfinder.d2r(0)),
+                new Waypoint(57, 5, Pathfinder.d2r(-20)),
         }, fastConfig));
 
         robotPaths.put("CS-7", new Path(new Waypoint[]{
-                new Waypoint(40, 0, Pathfinder.d2r(0)),
-                new Waypoint(85, 0, Pathfinder.d2r(0)),
+                new Waypoint(57, 5, Pathfinder.d2r(-20)),
+                new Waypoint(98, 0, Pathfinder.d2r(0)),
         }, defaultConfig));
 
         robotPaths.put("CS-8", new Path(new Waypoint[]{
-                new Waypoint(85, 0, Pathfinder.d2r(0)),
-                new Waypoint(40, 0, Pathfinder.d2r(0)),
+                new Waypoint(98, 0, Pathfinder.d2r(0)),
+                new Waypoint(57, 5, Pathfinder.d2r(-20)),
         }, fastConfig));
 
         robotPaths.put("CS-9", new Path(new Waypoint[]{
-                new Waypoint(40, 0, Pathfinder.d2r(0)),
-                new Waypoint(121, -59, Pathfinder.d2r(0)),
+                new Waypoint(57, 5, Pathfinder.d2r(-20)),
+                new Waypoint(122, -58, Pathfinder.d2r(0)),
         }, fastConfig));
 
         robotPaths.put("DriveStraight", new Path(new Waypoint[]{
                 new Waypoint(23, 156, 0),
                 new Waypoint(127, 156, 0),
-        }, defaultConfig));
+        }, fastConfig));
 
     }
 

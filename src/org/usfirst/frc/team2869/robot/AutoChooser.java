@@ -33,7 +33,8 @@ public class AutoChooser {
         SmartDashboard.putData("Auto Action Chooser", actionChooser);
         SmartDashboard.putNumber("Auto Delay", 0.0);
         for (String pathName : Constants.AUTO.autoNames) {
-            autoPaths.put(pathName, DeserializePath.getPathFromFile(pathName));
+            autoPaths.put(pathName + "LB", DeserializePath.getPathFromFile(pathName + "L"));
+            autoPaths.put(pathName + "RB", DeserializePath.getPathFromFile(pathName + "R"));
         }
     }
 
@@ -69,9 +70,8 @@ public class AutoChooser {
 
     private static AutoModeBase getSwitchMode() {
         System.out.println("Getting Switch mode");
-        System.out.println(DriveTrain.getInstance().isEncodersConnected());
-        System.out.println(DriveTrain.getInstance().isGyroConnected());
-        if (DriveTrain.getInstance().isEncodersConnected() && DriveTrain.getInstance().isEncodersConnected()) {
+        System.out.println("Encoders: " + DriveTrain.getInstance().isEncodersConnected() + " Gyro: " + DriveTrain.getInstance().isGyroConnected());
+        if (DriveTrain.getInstance().isEncodersConnected()) {
             if (positionChooser.getSelected() == AutoPosition.LEFT) {
                 return new LeftSwitchMode(RobotState.matchData.switchPosition);
             }

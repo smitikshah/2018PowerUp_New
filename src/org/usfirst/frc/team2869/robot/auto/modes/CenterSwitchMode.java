@@ -1,6 +1,5 @@
 package org.usfirst.frc.team2869.robot.auto.modes;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import org.usfirst.frc.team2869.robot.AutoChooser;
 import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.RobotState;
@@ -11,10 +10,6 @@ import org.usfirst.frc.team2869.robot.util.auto.AutoModeEndedException;
 import java.util.Arrays;
 
 public class CenterSwitchMode extends AutoModeBase {
-
-    public CenterSwitchMode() {
-
-    }
 
     protected void routine() throws AutoModeEndedException {
         System.out.println("Starting Center Switch Mode");
@@ -57,14 +52,13 @@ public class CenterSwitchMode extends AutoModeBase {
                 new DelayAction(0.5, new MoveArmAction(RobotState.ArmState.SWITCH_PLACE)),
                 new DrivePathAction(9, false, false),
                 new DelayAction(
-                        getTime(9) - 0.65, new RollerAction(0.75, Constants.ARM.AUTO_INTAKE_OUT_ROLLER_SPEED / 1.5)))));
+                        getTime(9) - 0.475, new RollerAction(0.75, Constants.ARM.AUTO_INTAKE_OUT_ROLLER_SPEED / 1.5)))));
     }
 
     private double getTime(int pathNum) {
         return AutoChooser.autoPaths.get(
                 "CS-" + Integer.toString(pathNum) + ((RobotState.matchData.switchPosition
-                        == AutoChooser.GameObjectPosition.LEFT) ? "L" : "R") + ((RobotState.matchData.alliance
-                        == DriverStation.Alliance.Blue) ? "B" : "R")).getTime();
+                        == AutoChooser.GameObjectPosition.LEFT) ? "L" : "R")).getTime();
     }
 
 
