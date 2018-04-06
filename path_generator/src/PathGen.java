@@ -6,15 +6,15 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PathGenerator {
+public class PathGen {
 
     public static final HashMap<String, Path> robotPaths = new HashMap<>();
-    public static final Trajectory.Config fastConfig = new Trajectory.Config(
+    /*public static final Trajectory.Config fastConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
             0.005, 145, 135, 1500);
     public static final Trajectory.Config defaultConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config
-            .SAMPLES_HIGH, 0.005, 140, 95, 850);
+            .SAMPLES_HIGH, 0.005, 140, 95, 850); */
 
     public static final Trajectory.Config slowConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
@@ -37,7 +37,7 @@ public class PathGenerator {
         robotPaths.put("CS-2", new Path(new Waypoint[]{
                 new Waypoint(121, -59, Pathfinder.d2r(0)),
                 new Waypoint(40, 0, Pathfinder.d2r(0)),
-        }, fastConfig));
+        }, defaultConfig)); //for 3 cube fastconfig
 
         robotPaths.put("CS-3", new Path(new Waypoint[]{
                 new Waypoint(40, 0, Pathfinder.d2r(0)),
@@ -229,5 +229,17 @@ public class PathGenerator {
         }
 
     }
+    
+   
+    /* if I want to go slow copy this code
+     * 
+     *     public static final Trajectory.Config fastConfig = new Trajectory.Config(
+            Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
+            0.005, 120, 95, 800);
+    public static final Trajectory.Config defaultConfig = new Trajectory.Config(
+            Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config
+            .SAMPLES_HIGH,  0.005, 80, 40, 500);
+
+     */
 
 }
