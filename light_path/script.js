@@ -7,8 +7,8 @@ var width = 1656; //pixels
 var height = 823; //pixels
 var fieldWidth = 652; // in inches
 var fieldHeight = 324; // in inches
-var robotWidth = 34; //inches
-var robotHeight = 39.5; //inches
+var robotWidth = 34.5; //inches
+var robotHeight = 38.125; //inches
 var pointRadius = 5;
 var turnRadius = 30;
 var kEpsilon = 1e-9;
@@ -288,6 +288,26 @@ class Arc {
 }
 
 function init() {
+
+
+  var st = window.decodeURI(location.search.substr(1));
+
+
+    if(!isEmpty(st)) {
+      console.log("fs");
+      jd = JSON.parse(st);
+      $("tbody#points").empty();
+      jd.forEach((wpd) => {
+        let wp = new Waypoint(new Translation2d(wpd.position.x, wpd.position.y - 162), wpd.theta);
+      $("tbody#points").append("<tr>"
+          + "<td><input value='" + wp.position.x + "'></td>"
+          + "<td><input value='" + wp.position.y + "'></td>"
+          + "<td><input value='" + Math.round(wp.theta * (180 / Math.PI)) + "'></td>"
+          + "<td class='comments'><input placeholder='Comments'></td>"
+          + "<td><button onclick='$(this).parent().parent().remove();update()'>Delete</button></td></tr>");
+    })
+    }
+
     $("#field").css("width", width / 1.5 + "px");
     $("#field").css("height", height / 1.5 + "px");
     ctx = document.getElementById("field").getContext("2d");
@@ -327,6 +347,11 @@ function init() {
         $($("table tbody#points tr:last td input")[1]).prop("value", y - 162);
         update();
     });
+
+}
+
+function isEmpty(str) {
+  return (!str || 0 === str.length);
 }
 
 function clear() {
@@ -407,6 +432,15 @@ function update() {
     } else {
         $("td.time").text("0");
     }
+
+  var st = encodeURI(JSON.stringify(waypoints));
+
+  if (typeof (history.pushState) != "undefined") {
+    var obj = { Title: "Light", Url: '?' + st };
+    history.pushState(obj, obj.Title, obj.Url);
+  } else {
+    alert("Browser does not support HTML5.");
+  }
 
 }
 
@@ -586,8 +620,8 @@ function importData() {
                     "'></td>" +
                     "<td><button onclick='$(this).parent().parent().remove();''>Delete</button></td></tr>"
                 );
-            });
-            update();
+        })
+          update();
             $("input").unbind("change paste keyup");
             $("input").bind("change paste keyup", function () {
                 console.log("change");
@@ -598,22 +632,27 @@ function importData() {
             });
         };
         fr.readAsText(file);
-    });
+})
 }
 
 function getDataString() {
   var title = $("#title").val().length > 0 ? $("#title").val() : "UntitledPath";
-  var pathInit = "new Path(\"" + title + "\", new Waypoint[]{\n";
+  var pathInit = "robotPaths.put(\"" + title + "\",new Path(new Waypoint[]{\n";
   for (var i = 0; i < waypoints.length; i++) {
     pathInit += waypoints[i].toString() + "\n";
   }
-  pathInit += " }, \n"+
-  /*     "new Trajectory.Config(Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH, " +
-      parseFloat($("td.dt input").val()) + ", " +  parseFloat($("td.max_vel input").val()) + ", " +
-      parseFloat($("td.max_acc input").val()) + ", " +   parseFloat($("td.max_jerk input").val()) + ") \n"*/
-  "defaultConfig"
-      + "),";
+  pathInit += " }, fastConfig));";
   return pathInit;
+}
+
+function getReverseDataString() {
+    var title = $("#title").val().length > 0 ? $("#title").val() : "UntitledPath";
+    var pathInit = "robotPaths.put(\"" + title + "\",new Path(new Waypoint[]{\n";
+    for (var i = waypoints.length -1; i >= 0; i--) {
+        pathInit += waypoints[i].toString() + "\n";
+    }
+    pathInit += " }, fastConfig));";
+    return pathInit;
 }
 
 function getTXTString() {
@@ -643,7 +682,8 @@ function getTXTString() {
         right_segments += rsegment;
     });
 
-    var str =
+    // noinspection UnnecessaryLocalVariableJS
+  var str =
         `${title}  
 ${num_elements}
 ${left_segments}${right_segments}`;
@@ -677,7 +717,8 @@ function getReversedTXTString() {
         right_segments += rsegment;
     });
 
-    var str =
+    // noinspection UnnecessaryLocalVariableJS
+  var str =
         `${title}  
 ${num_elements}
 ${right_segments}${left_segments}`;
@@ -722,6 +763,21 @@ function showData() {
     var title = $("#title").val().length > 0 ? $("#title").val() : "UntitledPath";
     $("#modalTitle").html(title + ".java");
     $(".modal > pre").text(getDataString());
+    showModal();
+
+    var inp =document.createElement('input');
+    document.body.appendChild(inp)
+    inp.value = getDataString();
+    inp.select();
+    document.execCommand('copy',false);
+    inp.remove();
+}
+
+function showReverseData() {
+    update();
+    var title = $("#title").val().length > 0 ? $("#title").val() : "UntitledPath";
+    $("#modalTitle").html(title + ".java");
+    $(".modal > pre").text(getReverseDataString());
     showModal();
 }
 

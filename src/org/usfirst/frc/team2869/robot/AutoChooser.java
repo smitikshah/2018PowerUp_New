@@ -80,7 +80,7 @@ public class AutoChooser {
             }
             if (positionChooser.getSelected() == AutoPosition.CENTER) {
                 System.out.println("Getting Center Switch mode");
-                return new CenterSwitchMode(RobotState.matchData.switchPosition);
+                return new CenterSwitchMode();
             }
         } else {
             if (positionChooser.getSelected() == AutoPosition.LEFT
