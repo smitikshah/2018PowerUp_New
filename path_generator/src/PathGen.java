@@ -9,12 +9,12 @@ import java.util.Map;
 public class PathGen {
 
     public static final HashMap<String, Path> robotPaths = new HashMap<>();
-    /*public static final Trajectory.Config fastConfig = new Trajectory.Config(
+    public static final Trajectory.Config fastConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
             0.005, 145, 135, 1500);
     public static final Trajectory.Config defaultConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config
-            .SAMPLES_HIGH, 0.005, 140, 95, 850); */
+            .SAMPLES_HIGH, 0.005, 140, 95, 850); 
 
     public static final Trajectory.Config slowConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
