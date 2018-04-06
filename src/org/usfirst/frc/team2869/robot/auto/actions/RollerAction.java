@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2869.robot.auto.actions;
 
 import edu.wpi.first.wpilibj.Timer;
-import org.usfirst.frc.team2869.robot.Constants;
 import org.usfirst.frc.team2869.robot.subsystems.Arm;
 import org.usfirst.frc.team2869.robot.util.auto.Action;
 

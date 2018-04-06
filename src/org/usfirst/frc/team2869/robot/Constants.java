@@ -93,7 +93,17 @@ public final class Constants {
 
     public static class AUTO {
         public static final String pathPath = "/home/lvuser/paths/";
-        public static final String[] autoNames = {"DriveStraightL", "CS-1L", "CS-1R", "CS-2L", "CS-2R", "CS-3L", "CS-3R", "CS-4L", "CS-4R", "CS-5L", "CS-5R"};
+        public static final String[] autoNames = {
+                "CS-1",
+                "CS-2",
+                "CS-3",
+                "CS-4",
+                "CS-5",
+                "CS-6",
+                "CS-7",
+                "CS-8",
+                "CS-9",
+                "DriveStraight"};
     }
 
     public static class INPUT {
