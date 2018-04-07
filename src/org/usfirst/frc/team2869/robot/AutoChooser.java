@@ -33,8 +33,8 @@ public class AutoChooser {
         SmartDashboard.putData("Auto Action Chooser", actionChooser);
         SmartDashboard.putNumber("Auto Delay", 0.0);
         for (String pathName : Constants.AUTO.autoNames) {
-            autoPaths.put(pathName + "LB", DeserializePath.getPathFromFile(pathName + "L"));
-            autoPaths.put(pathName + "RB", DeserializePath.getPathFromFile(pathName + "R"));
+            autoPaths.put(pathName + "L", DeserializePath.getPathFromFile(pathName + "L"));
+            autoPaths.put(pathName + "R", DeserializePath.getPathFromFile(pathName + "R"));
         }
     }
 
