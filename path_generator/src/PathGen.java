@@ -9,7 +9,8 @@ import java.util.Map;
 public class PathGen {
 
     public static final HashMap<String, Path> robotPaths = new HashMap<>();
-    public static final Trajectory.Config fastConfig = new Trajectory.Config(
+   public static final Trajectory.Config fastConfig = new Trajectory.Config(
+		   //.005 is the dt, 145 is the velocity, 135 is the acceleration, 1500 is the jerk
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
             0.005, 145, 135, 1500);
     public static final Trajectory.Config defaultConfig = new Trajectory.Config(
