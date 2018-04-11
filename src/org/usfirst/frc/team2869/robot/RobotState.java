@@ -31,7 +31,7 @@ public class RobotState {
         ENABLE(0),
         INTAKE(20),
         SECOND_INTAKE(50),
-        SWITCH_PLACE(90),
+        SWITCH_PLACE(9),
         BACK_SWITCH_PLACE(180);
 
         public final double state;

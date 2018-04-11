@@ -12,14 +12,14 @@ public class PathGen {
    public static final Trajectory.Config fastConfig = new Trajectory.Config(
 		   //.005 is the dt, 145 is the velocity, 135 is the acceleration, 1500 is the jerk
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
-            0.005, 145, 135, 1500);
+            0.005, 145, 135/2, 1500);
     public static final Trajectory.Config defaultConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config
-            .SAMPLES_HIGH, 0.005, 140, 95, 850); 
+            .SAMPLES_HIGH, 0.005, 140, 95/2, 850); 
 
     public static final Trajectory.Config slowConfig = new Trajectory.Config(
             Trajectory.FitMethod.HERMITE_QUINTIC, Trajectory.Config.SAMPLES_HIGH,
-            0.005, 100, 85, 700);
+            0.005, 100, 85/2, 700);
 
     public static final double BLUE_LEFT_SWITCH_TO_SIDE_WALL = 0;
     public static final double BLUE_RIGHT_SWITCH_TO_SIDE_WALL = 0;
@@ -38,7 +38,7 @@ public class PathGen {
         robotPaths.put("CS-2", new Path(new Waypoint[]{
                 new Waypoint(121, -59, Pathfinder.d2r(0)),
                 new Waypoint(40, 0, Pathfinder.d2r(0)),
-        }, fastConfig)); //for 3 cube fastconfig
+        },defaultConfig)); //for 3 cube fastconfig
 
         robotPaths.put("CS-3", new Path(new Waypoint[]{
                 new Waypoint(40, 0, Pathfinder.d2r(0)),

@@ -44,7 +44,7 @@ public final class Constants {
 
         public static final double DRIVE_FOLLOWER_P = .9;
         public static final double DRIVE_FOLLOWER_A = 0.00125;
-        public static final double DRIVE_FOLLOWER_ANG = -1.3; //-1 to 2.5
+        public static final double DRIVE_FOLLOWER_ANG = -1.2; //-1 to 2.5
 
         public static final double LEFT_RPM_MAX = 500.0; //Observed Max Speed for Drivetrain in RPM
         public static final double RIGHT_RPM_MAX = 500.0; //Observed Max Speed for Drivetrain in RPM
@@ -86,8 +86,8 @@ public final class Constants {
         public static final double INTAKE_IN_ROLLER_SPEED = 1;
         public static final double INTAKE_OUT_ROLLER_SPEED = -.5;
         public static final double AUTO_INTAKE_OUT_ROLLER_SPEED = -.65;
-        public static final boolean LEFT_INTAKE_ROLLER_INVERT = true;
-        public static final boolean RIGHT_INTAKE_ROLLER_INVERT = false;
+        public static final boolean LEFT_INTAKE_ROLLER_INVERT = false;
+        public static final boolean RIGHT_INTAKE_ROLLER_INVERT = true;
 
         public static final int ARM_ZERO_POS = 538;
     }
