@@ -42,7 +42,7 @@ public final class Constants {
         public static final double PATH_ANGLE_TOL = 0.25;
 
 
-        public static final double DRIVE_FOLLOWER_P = .9;
+        public static final double DRIVE_FOLLOWER_P = .8;//was .9
         public static final double DRIVE_FOLLOWER_A = 0.00125;
         public static final double DRIVE_FOLLOWER_ANG = -1.2; //-1 to 2.5
 
@@ -51,7 +51,7 @@ public final class Constants {
 
         public static final double MAX_VEL =
                 (LEFT_RPM_MAX / 60) * (CIRCUMFERENCE); // Max Speed in Inches per second
-        public static final double DRIVE_P = 4.75 * (0.1 * 1023.0) / (700);
+        public static final double DRIVE_P = 4.5 * (0.1 * 1023.0) / (700);//was 4.75
         public static final double DRIVE_I = DRIVE_P / 100.0;
         public static final double DRIVE_D = 3 * DRIVE_P;
         public static final double LEFT_DRIVE_F = (1023.0 / ((LEFT_RPM_MAX / 60.0 / 10.0)

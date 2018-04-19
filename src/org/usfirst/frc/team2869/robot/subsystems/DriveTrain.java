@@ -135,14 +135,15 @@ public class DriveTrain extends Subsystem {
             setVelocitySetpoint(new DriveSignal(leftUpdate.getOutput(), rightUpdate.getOutput(),
                             brakePath),
                     leftUpdate.getArbFeed(), rightUpdate.getArbFeed());
-            System.out.println(leftUpdate.getSeg().velocity - rightUpdate.getSeg().velocity);
         } else {
             leftDrive.set(ControlMode.PercentOutput,
-                    ((1.0 / MkMath.RPMToInchesPerSec(DRIVE.RIGHT_RPM_MAX)) * leftUpdate.getOutput()), false,
+                    ((1.0 / 156.5) * leftUpdate.getSeg().velocity), false,
                     leftUpdate.getArbFeed());
             rightDrive.set(ControlMode.PercentOutput,
-                    ((1.0 / MkMath.RPMToInchesPerSec(DRIVE.LEFT_RPM_MAX)) * rightUpdate.getOutput()), false,
+                    ((1.0 / 156.5) * rightUpdate.getSeg().velocity), false,
                     rightUpdate.getArbFeed());
+            System.out.println("Out: " + (1.0 / 156.5) * leftUpdate.getSeg().velocity + " Vel: " + leftUpdate.getSeg().velocity);
+          // System.out.println((1.0 / 156.5) * rightUpdate.getSeg().velocity);
         }
     }
 
@@ -163,12 +164,11 @@ public class DriveTrain extends Subsystem {
             SmartDashboard.putNumber("Desired Heading", leftStatus.getSeg().heading);
             SmartDashboard.putNumber("Left Desired Position", leftStatus.getSeg().position);
             SmartDashboard.putNumber("Left Theoretical Vel", leftStatus.getSeg().velocity);
-
+            SmartDashboard.putNumber("Left Desired Velocity Error", leftStatus.getVelError());
             SmartDashboard.putNumber("Right Desired Position", leftStatus.getSeg().position);
             SmartDashboard.putNumber("Right Theoretical Vel", rightStatus.getSeg().velocity);
-             */
-            SmartDashboard.putNumber("Left Desired Velocity Error", leftStatus.getVelError());
-            SmartDashboard.putNumber("Right Desired Velocity Error", leftStatus.getVelError());
+            SmartDashboard.putNumber("Right Desired Velocity Error", leftStatus.getVelError()); */
+
             SmartDashboard.putNumber("Left Position Error", leftStatus.getPosError());
             SmartDashboard.putNumber("Right Position Error", rightStatus.getPosError());
         }

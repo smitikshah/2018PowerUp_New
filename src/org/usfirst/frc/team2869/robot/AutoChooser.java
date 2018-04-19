@@ -71,7 +71,7 @@ public class AutoChooser {
     private static AutoModeBase getSwitchMode() {
         System.out.println("Getting Switch mode");
         System.out.println("Encoders: " + DriveTrain.getInstance().isEncodersConnected() + " Gyro: " + DriveTrain.getInstance().isGyroConnected());
-        if (DriveTrain.getInstance().isEncodersConnected()) {
+        if (DriveTrain.getInstance().isEncodersConnected() && DriveTrain.getInstance().isGyroConnected()) {
             if (positionChooser.getSelected() == AutoPosition.LEFT) {
                 return new LeftSwitchMode(RobotState.matchData.switchPosition);
             }

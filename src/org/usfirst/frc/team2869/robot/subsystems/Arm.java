@@ -36,8 +36,8 @@ public class Arm extends Subsystem {
 
         armTalon.configNominalOutputForward(0, Constants.kTimeoutMs);
         armTalon.configNominalOutputReverse(0, Constants.kTimeoutMs);
-        armTalon.configPeakOutputForward(1, Constants.kTimeoutMs);
-        armTalon.configPeakOutputReverse(-1, Constants.kTimeoutMs);
+        armTalon.configPeakOutputForward(.9, Constants.kTimeoutMs);
+        armTalon.configPeakOutputReverse(-.9, Constants.kTimeoutMs);
 
         armTalon.selectProfileSlot(Constants.kSlotIdx, Constants.kPIDLoopIdx);
         armTalon.config_kF(Constants.kSlotIdx, ARM.ARM_F, Constants.kTimeoutMs);
